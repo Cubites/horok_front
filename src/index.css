@@ -41,6 +41,9 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+a{
+	-webkit-tap-highlight-color: transparent;
+}
 
 *{
 	text-decoration: none;
@@ -50,4 +53,9 @@ table {
 }
 html, body, #root {
 	height: 100svh;
+	width: 100%;
+	max-width: 500px;
+}
+#root{
+	position: relative;
 }
