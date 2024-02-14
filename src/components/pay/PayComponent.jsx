@@ -9,7 +9,7 @@ const PayComponent = () => {
   const navigate = useNavigate();
 
   const handleWriteReviewClick = (payId) => {
-    navigate(`/write?payid=${payId}`);
+    navigate(`/write/${payId}`);
   };
 
   const dateFormatting = (milliseconds) => {
