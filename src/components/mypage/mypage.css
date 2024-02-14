@@ -1,0 +1,244 @@
+.mypage {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.profile {
+  width: 120px;
+  height: 120px;
+  border-radius: 70%;
+  overflow: hidden;
+  left: 137px;
+  top: 30px;
+  position: absolute;
+}
+#uploadProfile {
+  display: none;
+}
+#ProfileUploadText {
+  /* 프로필 수정 */
+  position: absolute;
+  width: 80px;
+  height: 17px;
+  left: 160px;
+  top: 158px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.017em;
+
+  color: #263cff;
+}
+.mypage > #nick {
+  position: relative;
+  position: absolute;
+  width: 326px;
+  height: 67px;
+  left: 27px;
+  top: 194px;
+
+  background: #ffffff;
+  box-shadow: 0px 143px 57px rgba(0, 0, 0, 0.01),
+    0px 81px 48px rgba(0, 0, 0, 0.05), 0px 36px 36px rgba(0, 0, 0, 0.09),
+    0px 9px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+.mypage > #nick h2 {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  position: absolute;
+  left: 5px;
+  top: 250px;
+}
+.mypage > #nick > .nickname_box {
+  float: left;
+  width: 23%;
+  padding: 23px 0px 10px 28px;
+  /* top right bottom left */
+}
+.mypage > #nick > #nick_content {
+  float: left;
+  width: 28%;
+  padding: 23px 0px 10px 28px;
+  /* top right bottom left */
+}
+.mypage > #nick > #nick_title {
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 19px;
+  display: flex;
+  align-items: left;
+  text-align: center;
+  font-weight: bold;
+}
+.pencilImg {
+  position: absolute;
+  left: 85%;
+  right: 14.13%;
+  top: 33%;
+  bottom: 79.32%;
+  width: 20px;
+  height: 20px;
+}
+.noshow {
+  display: none;
+}
+
+.aaaa {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.bbbb {
+  position: absolute;
+  width: 266px;
+  height: 137px;
+  left: 59px;
+  /* left: calc(50% - 150px); */
+  top: 221px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+}
+.cccc > h1 {
+  position: absolute;
+  left: 68px;
+  top: 18px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.017em;
+
+  color: #000000;
+}
+#writeNick {
+  position: absolute;
+  left: 50px;
+  top: 53px;
+  border: none; /* 기본 테두리 제거 */
+  border-bottom: 1px solid #ccc; /* 하단 라인 추가 */
+}
+#nickChangeBtn {
+  position: absolute;
+  left: 75px;
+  top: 85px;
+  width: 120px;
+  height: 39px;
+  background: #e0e0e0;
+  border-radius: 20px;
+  border: none;
+  font-weight: bold;
+  font-size: 15px;
+}
+.mypage > #card {
+  position: absolute;
+  width: 326px;
+  /* height: 198px; */
+  left: 25px;
+  top: 297px;
+  background: #ffffff;
+  box-shadow: 0px 143px 57px rgba(0, 0, 0, 0.01),
+    0px 81px 48px rgba(0, 0, 0, 0.05), 0px 36px 36px rgba(0, 0, 0, 0.09),
+    0px 9px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 19px;
+
+  display: flex;
+  align-items: left;
+  text-align: center;
+  flex-direction: column;
+}
+#card > #card_title {
+  font-weight: bold;
+  font-size: 20px;
+  padding-top: 15px;
+  padding-left: 20px;
+  text-align: left;
+  padding-bottom: 10px;
+  justify-content: center;
+}
+.card_list {
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column; /*수직 정렬*/
+  /* align-items: center; */
+  justify-content: center;
+  width: 326px;
+  height: 61px;
+
+  background: #ffffff;
+}
+#card_list1.card_list {
+  justify-content: center;
+}
+.card_button {
+  margin-bottom: 5px;
+}
+.card_name {
+  font-size: 13px;
+}
+.card_num {
+  font-size: 13px;
+}
+.mypage > #status {
+  position: absolute;
+  width: 326px;
+  height: 492px;
+  left: 27px;
+  top: 650px;
+  background: #ffffff;
+  box-shadow: 0px 143px 57px rgba(0, 0, 0, 0.01),
+    0px 81px 48px rgba(0, 0, 0, 0.05), 0px 36px 36px rgba(0, 0, 0, 0.09),
+    0px 9px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+
+  font-family: "Inter";
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 19px;
+  display: flex;
+  align-items: left;
+  text-align: center;
+}
+
+.card_button {
+  margin-bottom: 5px;
+  width: 280px; /* 넓은 너비 설정 */
+  height: 15px; /* 작은 높이 설정 */
+  background-color: #d3d3d3; /* 배경색 */
+  color: white; /* 텍스트 색상 */
+  border: none;
+  border-radius: 20px;
+  font-size: 9;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* .card_button:hover {
+  background-color: #263cff; 
+} 
+*/
