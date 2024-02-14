@@ -4,14 +4,12 @@ import { useNavigate } from "react-router-dom";
 import "./payList.css";
 
 const PayComponent = () => {
-  const movePage = useNavigate();
-
   const [data, setData] = useState(null);
   const [totalCnt, setTotalCnt] = useState(0);
+  const navigate = useNavigate();
 
-  const writeReview = (payId) => {
-    //리뷰 작성 페이지로 이동
-    movePage("/write");
+  const handleWriteReviewClick = (payId) => {
+    navigate(`/write?payid=${payId}`);
   };
 
   const dateFormatting = (milliseconds) => {
@@ -83,7 +81,7 @@ const PayComponent = () => {
                           ? "reviewBtn isWritten"
                           : "reviewBtn isNotWritten"
                       }
-                      onClick={writeReview}
+                      onClick={() => handleWriteReviewClick(pay.payId)}
                     >
                       {pay.isWritten ? "리뷰 작성 완료" : "리뷰 작성하기"}
                     </button>
