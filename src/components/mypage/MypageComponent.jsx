@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const MypageComponent = () => {
   const createTest = () => {
@@ -15,7 +15,8 @@ const MypageComponent = () => {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    position: 'relative'
   }
   let scale = 60;
   const testBox = {
@@ -24,13 +25,32 @@ const MypageComponent = () => {
     margin: "5px",
     backgroundColor: "yellowgreen"
   }
+  const ShowModal = () => {
+    document.getElementById("asdf").classList.toggle('noShow');
+  }
+
   return (
     <div className='test1Container' style={testContainer}>
-      {
-        KeyList.map((num, i) => (
-          <div key={i} className='testBox' style={testBox}></div>
-        ))
-      }
+      <div style={{width: '90%', backgroundColor: '#ddd', padding: '10px'}}>
+        <div style={{width: '90%', height: '40px', backgroundColor: '#333', color: '#fff'}}>
+          asdghajsdhgkjasgd
+        </div>
+        <div style={{width: '90%', height: '40px', backgroundColor: '#333', color: '#fff'}}>
+          asdghajsdhgkjasgd
+        </div>
+        <div style={{width: '90%', height: '40px', backgroundColor: '#333', color: '#fff', display: 'none'}}>
+          asdghajsdhgkjasgd
+        </div>
+        <div style={{width: '90%', height: '40px', backgroundColor: '#333', color: '#fff', display: 'none'}}>
+          asdghajsdhgkjasgd
+        </div>
+        <div style={{width: '90%', height: '40px', backgroundColor: '#333', color: '#fff', display: 'none'}}>
+          asdghajsdhgkjasgd
+        </div>
+        <div style={{width: '90%', height: '40px', backgroundColor: '#333', color: '#fff', display: 'none'}}>
+          asdghajsdhgkjasgd
+        </div>
+      </div>
     </div>
   )
 }
