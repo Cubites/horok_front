@@ -133,7 +133,7 @@ const HomeComponent = () => {
                 <div className="moadlClose">
                   {/* <div onClick={Modal}> */}
                   <img
-                    src="/images/close.png"
+                    src="/images/main-close.png"
                     rel=""
                     style={{ width: "20%" }}
                     onClick={Modal}
