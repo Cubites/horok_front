@@ -32,7 +32,7 @@ const PayComponent = () => {
 
   const getList = () => {
     axios
-      .get("http://192.168.0.19:8080/api/pays/171") //{params:param} userid?
+      .get("http://192.168.0.24:8080/api/pays/paylist/171") //{params:param} userid?
       .then((res) => {
         setData(res.data);
         setTotalCnt(res.data.length);
