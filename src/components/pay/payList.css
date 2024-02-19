@@ -1,0 +1,113 @@
+.payContainer {
+  background-color: #f7f8fc;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.payContainer > #headerArea {
+  height: 100px;
+  width: 90%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.payContainer > #headerArea > #pageTitle {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.payContainer > #headerArea > #pageInfo {
+  font-size: 12px;
+  color: #787878;
+}
+
+.payContainer > #headerArea > #cntArea {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+.payContainer > #contentArea {
+  height: 75%;
+  width: 90%;
+}
+
+.payContainer > #contentArea > .payContent {
+  width: 100%;
+}
+
+.payContainer > #contentArea > .payContent > .payDate {
+  font-size: 13px;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+
+.payContainer > #contentArea > .payContent > .payContentCard {
+  width: 100%;
+  height: 115px;
+  background-color: #fff;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.payContainer > #contentArea > .payContent > .payContentCard > .left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: start;
+  margin-right: 30px;
+}
+.payContent > .payContentCard > .left > .cardInfo {
+  display: flex;
+  flex-direction: row;
+}
+
+.payContent > .payContentCard > .left > .cardName {
+  font-size: 12px;
+}
+
+.payContent > .payContentCard > .left > .storeName {
+  font-size: 20px;
+}
+
+.payContent > .payContentCard > .left > .storeCategory {
+  font-size: 10px;
+  color: #787878;
+}
+
+.payContainer > #contentArea > .payContent > .payContentCard > .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: end;
+}
+
+.payContent > .payContentCard > .right > .reviewBtn {
+  height: 40px;
+  border-radius: 5px;
+  border-width: 0;
+
+  color: #fff;
+}
+
+.payContent > .payContentCard > .right > .reviewBtn.isNotWritten {
+  background-color: #263cff;
+}
+.payContent > .payContentCard > .right > .reviewBtn.isWritten {
+  background-color: #808080;
+}
+
+.payContent > .payContentCard > .right > .payVal {
+  font-size: 30px;
+  font-weight: 700;
+}
