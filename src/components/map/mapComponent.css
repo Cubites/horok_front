@@ -4,21 +4,28 @@
   display: none;
 } */
 
-/* 전체 */
 #mapContainer{
   width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
 }
+
+/* 전체 */
+#mapViewContainer{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
 /* 지도 영역 */
-#mapContainer>#mapBox{
+#mapViewContainer>#mapBox{
   width: 100%;
   height: 100%;
   position: relative;
 }
-#mapContainer>#mapBox>#mapAreaFirst,
-#mapContainer>#mapBox>#mapAreaSecond{
+#mapViewContainer>#mapBox>#mapAreaFirst,
+#mapViewContainer>#mapBox>#mapAreaSecond{
   position: absolute;
   width: 100%;
   height: 100%;
@@ -26,11 +33,11 @@
   left: 0;
   background-color: transparent;
 }
-#mapContainer>#mapBox>#mapAreaFirst{z-index: 2;}
-#mapContainer>#mapBox>#mapAreaSecond{z-index:1;}
+#mapViewContainer>#mapBox>#mapAreaFirst{z-index: 2;}
+#mapViewContainer>#mapBox>#mapAreaSecond{z-index:1;}
 
 /* 폴더 목록 영역 */
-#mapContainer>#folderListBox{
+#mapViewContainer>#folderListBox{
   width: 35%;
   height: 50px;
   border-radius: 15px;
@@ -74,7 +81,7 @@
 }
 
 /* 리뷰 목록 영역 */
-#mapContainer>#reviewBox{
+#mapViewContainer>#reviewBox{
   width: 100%;
   height: 0;
   position: absolute;
@@ -86,7 +93,7 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, .3);
 }
 
-#mapContainer>#reviewBox.upAndDown{
+#mapViewContainer>#reviewBox.upAndDown{
   /* animation: upAndDown .5s ease both; */
   /* animation-timing-function: cubic-bezier(.68, 1.55, .265, 1); */
   /* transform: translateY(-40%); */
@@ -94,7 +101,7 @@
   transition: height .5s ease;
   /* transition-timing-function: cubic-bezier(.68, 1.55, .265, 1); */
 }
-#mapContainer>#reviewBox.upAndDow.downAnimation{
+#mapViewContainer>#reviewBox.upAndDow.downAnimation{
   height: 0;
   transition: height .5s ease;
 }
@@ -105,14 +112,14 @@
 }
 
 /* 리뷰 목록 영역 - 드래그 바 */
-#mapContainer>#reviewBox>#dragBar{
+#mapViewContainer>#reviewBox>#dragBar{
   width: 100%;
   height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-#mapContainer>#reviewBox>#dragBar>#barImg{
+#mapViewContainer>#reviewBox>#dragBar>#barImg{
   width: 30%;
   height: 6px;
   border-radius: 3px;
@@ -120,11 +127,11 @@
 }
 
 /* 리뷰 목록 영역 - 상호명 */
-#mapContainer>#reviewBox>#reviewArea{
+#mapViewContainer>#reviewBox>#reviewArea{
   width: 100%;
   height: calc(100% - 20px);
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewStoreName{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewStoreName{
   width: 100%;
   height: 40px;
   padding-top: 10px;
@@ -132,19 +139,25 @@
   font-size: 25px;
   font-weight: bold;
 }
+#mapViewContainer>#reviewBox>#reviewArea>#reviewStoreName>span{
+  margin-left: 5px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #999;
+}
 
 /* 리뷰 목록 영역 - 개별 리뷰 */
-#mapContainer .icon-star, 
-#mapContainer .icon-star-half-empty,
-#mapContainer .icon-star-empty{ 
+#mapViewContainer .icon-star, 
+#mapViewContainer .icon-star-half-empty,
+#mapViewContainer .icon-star-empty{ 
   color: #263CFF;
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewDetailsArea{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea{
   width: 100%;
   height: calc(100% - 60px);
   overflow-y: scroll;
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne{
   width: 100%;
   height: 130px;
   display: flex;
@@ -154,7 +167,7 @@
   box-shadow: 0 0 3px rgba(0, 0, 0, .3);
   margin: 10px 0;
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne img{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne img{
   display: block;
   width: 110px;
   height: 110px;
@@ -162,19 +175,19 @@
   margin-left: 20px;
   border-radius: 5px;
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight{
   width: calc(100% - 170px);
   margin-right: 20px;
   height: 110px;
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.paydateArea{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.paydateArea{
   width: 100%;
   height: 12px;
   color: #999;
   font-size: 12px;
   text-align: end;
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.starAndName{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.starAndName{
   width: 100%;
   height: 25px;
   display: flex;
@@ -182,7 +195,7 @@
   justify-content: space-between;
   align-items: center;
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.starAndName>.starArea{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.starAndName>.starArea{
   width: 40%;
   height: 100%;
   display: flex;
@@ -190,7 +203,7 @@
   justify-content: start;
   align-items: center;
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.starAndName>.nameArea{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.starAndName>.nameArea{
   width: 60%;
   height: 100%;
   display: flex;
@@ -199,7 +212,7 @@
   align-items: end;
   font-size: 13px;
 }
-#mapContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.reviewContentArea{
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.reviewContentArea{
   width: 100%;
   height: 65px;
   padding-top: 5px;

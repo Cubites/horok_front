@@ -9,10 +9,10 @@ import MapComponent from './components/map/MapComponent';
 import MypageComponent from './components/mypage/MypageComponent';
 
 function App() {
-  const [IsMapFirstLoad, setIsMapFirstLoad] = useState(true);
   const showCenterBtns = (e) => {
     e.preventDefault();
     document.getElementById("footerCenterBtnBox").classList.toggle('active');
+    document.getElementById("shadowBox").classList.toggle('displayBlock');
   }
   useEffect(() => {
     // initMapsAPIScript();
@@ -24,7 +24,7 @@ function App() {
           <Route path="/paylist" element={<PayComponent />} />
           <Route path="/folder/add" element={<FolderAddComponenet />} />
           <Route path="/folder/list" element={<FolderListComponent />} />
-          <Route path="/map" element={<MapComponent IsMapFirstLoad={IsMapFirstLoad} setIsMapFirstLoad={setIsMapFirstLoad} />} />
+          <Route path="/map" element={<MapComponent />} />
           <Route path="/mypage" element={<MypageComponent />} />
           <Route path="/" element={<HomeComponent />} />
         </Routes>
@@ -69,6 +69,7 @@ function App() {
             <span>내 정보</span>
           </Link>
         </div>
+        <div id='shadowBox' onMouseUp={showCenterBtns}></div>
       </div>
     </div>
   );
