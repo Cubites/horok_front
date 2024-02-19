@@ -1,6 +1,6 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import HomeComponent from './components/home/HomeComponent';
 import PayComponent from './components/pay/PayComponent';
 import FolderAddComponenet from './components/folder/FolderAddComponent';
@@ -12,9 +12,10 @@ function App() {
   const showCenterBtns = (e) => {
     e.preventDefault();
     document.getElementById("footerCenterBtnBox").classList.toggle('active');
+    document.getElementById("shadowBox").classList.toggle('displayBlock');
   }
   useEffect(() => {
-
+    // initMapsAPIScript();
   }, []);
   return (
     <div id="container">
@@ -46,11 +47,11 @@ function App() {
             <img src='/images/folder_icon.png' alt='folder_icon' />
           </div>
           <div id="footerCenterBtnBox">
-            <Link to={"/folder/add"} className='folderBtn'>
+            <Link to={"/folder/add"} className='folderBtn' onMouseUp={showCenterBtns}>
               <img src='/images/folder_add_icon.png' alt='folder_add_icon' />
               <span>폴더 추가</span>
             </Link>
-            <Link to={"/folder/list"} className='folderBtn'>
+            <Link to={"/folder/list"} className='folderBtn' onMouseUp={showCenterBtns}>
               <img src='/images/folder_list_icon.png' alt='folder_list_icon' />
               <span>폴더 목록</span>
             </Link>
@@ -68,9 +69,34 @@ function App() {
             <span>내 정보</span>
           </Link>
         </div>
+        <div id='shadowBox' onMouseUp={showCenterBtns}></div>
       </div>
     </div>
   );
+
+  // function load(url, cb, err) {
+  //   var element = document.createElement('script');
+  //   var parent = 'body';
+  //   var attr = 'src';
+
+  //   element.async = true;
+  //   element.onload = function () {
+  //     cb();
+  //   };
+  //   element.onerror = function () {
+  //     err();
+  //   };
+  //   element[attr] = url;
+  //   document[parent].appendChild(element);
+  // }
+
+  // function initMapsAPIScript() {
+  //   var clientId = process.env.REACT_APP_NAVER_MAP_API_CLIENT_ID;
+  //   var url = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + clientId;
+  //   load(url, () => {
+  //     console.log('init API script success');
+  //   });
+  // }
 }
 
 export default App;
