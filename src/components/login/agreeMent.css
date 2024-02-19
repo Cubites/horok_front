@@ -1,0 +1,131 @@
+#agreeMentContainer {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  width: 100%;
+  z-index: 120;
+  background-color: #f3f6fa;
+}
+#agreeMentContainer > .mainImg {
+  width: 20px;
+  height: 30px;
+}
+#agreeMentContainer > #agreementTop {
+  display: flex;
+  align-items: center;
+}
+#agreementTop > #horok {
+  margin-left: 10px;
+  font-size: 25px;
+  font-weight: bolder;
+}
+#agreementBoxs {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#agreementBoxs > #agreementText {
+  height: 20%;
+  width: 100%;
+  text-align: center;
+  line-height: 120px;
+  font-size: 18px;
+  font-weight: 600;
+}
+#agreementBoxs > #articleBox {
+  margin-top: 10px;
+  width: 95%;
+  height: 90%;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-content: space-evenly;
+}
+#articleBox > .horokArticle {
+  width: 100%;
+  height: 20%;
+  font-size: 13px;
+  font-weight: 400;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+  align-items: center;
+}
+.horokArticle > .agreecircle {
+  width: 15px;
+  height: 15px;
+}
+.horokArticle > .agreeText {
+  width: 70%;
+  padding-left: 10px;
+}
+.horokArticle > .lookArticle {
+  width: 15%;
+  text-align: right;
+  font-size: 12px;
+}
+#articleBox > #articleTitle {
+  width: 100%;
+  height: 15%;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+#agreeMentContainer > #agreeButton {
+  margin-top: 20px;
+  width: 200px;
+  height: 45px;
+  color: white;
+  background-color: #0038ff;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+#articleBox > #agreeAll > .agreecircle {
+  width: 20px;
+  height: 20px;
+}
+#articleBox > #agreeAll > .agreeText {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+#agreeMentContainer > .articleModal {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+#agreeMentContainer > .articleModal > .blackBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+
+  z-index: 121;
+}
+#agreeMentContainer > .articleModal > .blackBoxBottom {
+  position: absolute;
+  top: 77%;
+  left: 0;
+  width: 100%;
+  height: 30%;
+
+  z-index: 121;
+}
