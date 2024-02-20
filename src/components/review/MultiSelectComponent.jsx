@@ -8,7 +8,7 @@ const MultiSelectComponent = ({ onChange }) => {
 
   const getFolderList = () => {
     axios
-      .get(`http://192.168.0.24:8080/api/folders/user`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/user`)
       .then((res) => {
         const folderData = res.data.map((folder) => ({
           value: folder.folderId.toString(),

@@ -1,35 +1,3 @@
-// import { useState } from "react";
-
-// const FileUploadComponent = () => {
-//   const [postImg, setPostImg] = useState([]);
-//   const [previewImg, setPreviewImg] = useState([]);
-
-//   uploadFile = (e) => {
-//     let fileArrr = e.targe.files;
-//     setPostImg(Array.from(fileArrr));
-
-//     let fileUrl = [];
-//     for (let i = 0; i < fileArr.length; i++) {
-//       let fileReader = new FileReader();
-//       fileReader.onload = function () {
-//         fileUrl[i] = fileReader.result;
-//         setPreviewImg([...fileUrl]);
-//         fileReader.readAsDataURL(fileArr[i]);
-//       };
-//     }
-//   };
-
-//   return (
-//     <>
-//       <WriteInput
-//         accept=".png, .jpeg, .jpg"
-//         type="file"
-//         onChange={uploadFile}
-//       />
-//     </>
-//   );
-// };
-// export default FileUploadComponent;
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 

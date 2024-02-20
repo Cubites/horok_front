@@ -32,7 +32,7 @@ const PayComponent = () => {
 
   const getList = () => {
     axios
-      .get("http://192.168.0.24:8080/api/pays/paylist") //{params:param} userid?
+      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/paylist`) //{params:param} userid?
       .then((res) => {
         setData(res.data);
         setTotalCnt(res.data.length);
@@ -56,7 +56,7 @@ const PayComponent = () => {
           {/*이부분이 반복*/}
           {data &&
             data.map((pay, index) => (
-              <div className="payContent">
+              <div className="payContent" key={"paycontent" + index}>
                 <div className="payDate">{dateFormatting(pay.payDate)}</div>
                 <div className="payContentCard">
                   <div className="left">

@@ -13,7 +13,7 @@ const ReviewCompleteComponent = () => {
 
   const updateWrittenInfo = () => {
     axios
-      .patch(`http://192.168.0.24:8080/api/pays/${payId}`)
+      .patch(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`)
       .then((res) => {
         console.log(res.data);
       })

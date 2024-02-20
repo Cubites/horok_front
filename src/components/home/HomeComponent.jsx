@@ -33,7 +33,7 @@ const HomeComponent = () => {
 
   const getUser = () => {
     axios
-      .get("http://192.168.0.15:8080/api/users/info")
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`)
       .then((res) => {
         setUser(res.data);
         console.log(res.data);
@@ -44,7 +44,7 @@ const HomeComponent = () => {
   };
   const getFolderFavor = () => {
     axios
-      .get(`http://192.168.0.15:8080/api/folders/${is_favor}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
       .then((res) => {
         setFavor(res.data);
         console.log(res.data);
@@ -54,7 +54,7 @@ const HomeComponent = () => {
   const getFolder = () => {
     is_favor = false;
     axios
-      .get(`http://192.168.0.15:8080/api/folders/${is_favor}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
       .then((res) => {
         setFolder(res.data);
         initializeCheckedList(res.data); // 초기화
@@ -65,7 +65,7 @@ const HomeComponent = () => {
   const getFolderFavorUpdate = () => {
     //is_favor = false;
     axios
-      .patch("http://192.168.0.15:8080/api/folders/favor/edit", checkedList, {
+      .patch(`${process.env.REACT_APP_DEV_URL}/api/folders/favor/edit`, checkedList, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -137,6 +137,7 @@ const HomeComponent = () => {
                     rel=""
                     style={{ width: "20%" }}
                     onClick={Modal}
+                    alt="test"
                   ></img>
 
                   {/* </div> */}
@@ -207,6 +208,7 @@ const HomeComponent = () => {
                 rel=""
                 onClick={Modal}
                 style={{ width: "9%" }}
+                alt="test"
               />
             </div>
             <Link to={"/folder/list"} style={{ fontSize: "15px" }}>
@@ -222,6 +224,7 @@ const HomeComponent = () => {
                       <img
                         src={"/images/" + favor[l].folderImg + "-f.png"}
                         style={{ width: "80%" }}
+                        alt="test"
                       />
                     </Link>
                     <Link to={"/folder/list"}>

@@ -31,7 +31,7 @@ const ReviewWriteComponent = () => {
   // };
   const getPayInfo = () => {
     axios
-      .get(`http://192.168.0.24:8080/api/pays/${payId}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`)
       .then((res) => {
         setData(res.data);
         console.log(res.data);
@@ -62,11 +62,11 @@ const ReviewWriteComponent = () => {
     // });
 
     axios
-      .post("/api/reviews/write", formData, {
+      .post(`/api/reviews/write`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
         },
-        baseURL: "http://192.168.0.24:8080",
+        baseURL: process.env.REACT_APP_DEV_URL,
       })
       .then((response) => {
         console.log("성공");
@@ -133,9 +133,9 @@ const ReviewWriteComponent = () => {
           </div>
           <div className="scoreArea card">
             <div className="scoreTxt">평점</div>
-            <fieldset class="rating">
+            <fieldset className="rating">
               <input type="radio" id="star5" name="reviewScore" value="5" />
-              <label class="full" for="star5" title="Awesome - 5 stars"></label>
+              <label className="full" htmlFor="star5" title="Awesome - 5 stars"></label>
               <input
                 type="radio"
                 id="star4half"
@@ -143,14 +143,14 @@ const ReviewWriteComponent = () => {
                 value="4.5"
               />
               <label
-                class="half"
-                for="star4half"
+                className="half"
+                htmlFor="star4half"
                 title="Pretty good - 4.5 stars"
               ></label>
               <input type="radio" id="star4" name="reviewScore" value="4" />
               <label
-                class="full"
-                for="star4"
+                className="full"
+                htmlFor="star4"
                 title="Pretty good - 4 stars"
               ></label>
               <input
@@ -160,12 +160,12 @@ const ReviewWriteComponent = () => {
                 value="3.5"
               />
               <label
-                class="half"
-                for="star3half"
+                className="half"
+                htmlFor="star3half"
                 title="Meh - 3.5 stars"
               ></label>
               <input type="radio" id="star3" name="reviewScore" value="3" />
-              <label class="full" for="star3" title="Meh - 3 stars"></label>
+              <label className="full" htmlFor="star3" title="Meh - 3 stars"></label>
               <input
                 type="radio"
                 id="star2half"
@@ -173,14 +173,14 @@ const ReviewWriteComponent = () => {
                 value="2.5"
               />
               <label
-                class="half"
-                for="star2half"
+                className="half"
+                htmlFor="star2half"
                 title="Kinda bad - 2.5 stars"
               ></label>
               <input type="radio" id="star2" name="reviewScore" value="2" />
               <label
-                class="full"
-                for="star2"
+                className="full"
+                htmlFor="star2"
                 title="Kinda bad - 2 stars"
               ></label>
               <input
@@ -190,14 +190,14 @@ const ReviewWriteComponent = () => {
                 value="1.5"
               />
               <label
-                class="half"
-                for="star1half"
+                className="half"
+                htmlFor="star1half"
                 title="Meh - 1.5 stars"
               ></label>
               <input type="radio" id="star1" name="reviewScore" value="1" />
               <label
-                class="full"
-                for="star1"
+                className="full"
+                htmlFor="star1"
                 title="Sucks big time - 1 star"
               ></label>
               <input
@@ -207,8 +207,9 @@ const ReviewWriteComponent = () => {
                 value="0.5"
               />
               <label
-                class="half"
-                for="starhalf"
+                className="half"
+                
+                htmlFor="starhalf"
                 title="Sucks big time - 0.5 stars"
               ></label>
             </fieldset>
