@@ -10,6 +10,13 @@
   appearance: none;
   text-align: center;
 }
+.multiSelectBox > option {
+  border-bottom: 0.7px solid #e6e6e6 /*rgb(156, 156, 156)*/;
+}
+
+.multiSelectBox > option > select {
+  background-color: #beccff;
+}
 
 .multiSelectBox:focus {
   outline: none;

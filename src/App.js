@@ -8,6 +8,7 @@ import FolderListComponent from "./components/folder/FolderListComponent";
 import MapComponent from "./components/map/MapComponent";
 import MypageComponent from "./components/mypage/MypageComponent";
 import ReviewWriteComponent from "./components/review/ReviewWriteComponent";
+import ReviewCompleteComponent from "./components/review/ReviewCompleteComponent";
 
 function App() {
   const showCenterBtns = (e) => {
@@ -26,6 +27,10 @@ function App() {
           <Route path="/mypage" element={<MypageComponent />} />
           <Route path="/" element={<HomeComponent />} />
           <Route path="/write/:payId" element={<ReviewWriteComponent />} />
+          <Route
+            path="/complete/:payId"
+            element={<ReviewCompleteComponent />}
+          />
         </Routes>
       </div>
       <div id="footer">

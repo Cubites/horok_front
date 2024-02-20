@@ -33,7 +33,7 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-function FileUploadComponent() {
+function FileUploadComponent({ onFileUpload }) {
   const [images, setImages] = useState([]);
 
   const onDrop = (acceptedFiles) => {
@@ -41,11 +41,17 @@ function FileUploadComponent() {
       file,
       preview: URL.createObjectURL(file),
     }));
+
     setImages((prevImages) => [...prevImages, ...newImages]);
+
+    const imageFiles = newImages.map((image) => image.file);
+    onFileUpload([...imageFiles]);
   };
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: "image/*",
+    accept: {
+      "image/*": [".png", ".jpeg", ".jpg"],
+    },
     onDrop,
     multiple: true,
     maxFiles: 3,
@@ -55,7 +61,7 @@ function FileUploadComponent() {
     <>
       <div {...getRootProps()} style={dropzoneStyles}>
         <input {...getInputProps()} />
-        <p>이미지를 업로드하세요(최대 3장)</p>
+        <p style={fontStyle}>사진을 추가해주세요(최대 3장)</p>
       </div>
       <div style={imagesContainerStyles}>
         {images.map((image, index) => (
@@ -71,6 +77,11 @@ function FileUploadComponent() {
     </>
   );
 }
+
+const fontStyle = {
+  fontWeight: "600",
+  fontSize: "17px",
+};
 
 const dropzoneStyles = {
   border: "2px dashed #cccccc",

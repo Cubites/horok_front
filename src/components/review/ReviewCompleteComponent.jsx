@@ -1,11 +1,31 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+import "./complete.css";
 
 const ReviewCompleteComponent = () => {
   const movePage = useNavigate();
+  const { payId } = useParams();
 
   function goList() {
     movePage("/paylist");
   }
+
+  const updateWrittenInfo = () => {
+    axios
+      .patch(`http://192.168.0.24:8080/api/pays/${payId}`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error("error!!! : ", error);
+      });
+  };
+
+  useEffect(() => {
+    updateWrittenInfo();
+  }, [payId]);
+
   return (
     <>
       <div className="container">

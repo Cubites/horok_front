@@ -102,6 +102,7 @@
 
 .payContent > .payContentCard > .right > .reviewBtn.isNotWritten {
   background-color: #263cff;
+  cursor: pointer;
 }
 .payContent > .payContentCard > .right > .reviewBtn.isWritten {
   background-color: #808080;
