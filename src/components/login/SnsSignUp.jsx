@@ -63,11 +63,10 @@ async function SignupProcess() {
     formData.append('provider', provider);
     formData.append('nick', nick);
     formData.append('agreement', agreement);
-    formData.append(
-      'profile',
-      applyFile.files[0] === undefined ? null : applyFile.files[0]
-    );
-    console.log(applyFile.files[0]);
+    let profileImg = applyFile.files[0];
+    if (profileImg !== undefined) {
+      formData.append('profile', applyFile.files[0]);
+    }
     const response = await axios
       .post('http://192.168.0.70:8080/login/signup', formData, {
         headers: {
@@ -78,7 +77,7 @@ async function SignupProcess() {
         //location.href = '/login';
         console.log(response);
         if (response.status == 200) {
-          window.location.href = '/';
+          window.location.href = '/login';
         }
       })
       .catch(function (error) {});
