@@ -8,8 +8,8 @@ const PayComponent = () => {
   const [totalCnt, setTotalCnt] = useState(0);
   const navigate = useNavigate();
 
-  const handleWriteReviewClick = (payId) => {
-    navigate(`/write/${payId}`);
+  const handleWriteReviewClick = (payId, storeId) => {
+    navigate(`/write/${payId}`, { state: { storeId: storeId } });
   };
 
   const dateFormatting = (milliseconds) => {
@@ -32,7 +32,7 @@ const PayComponent = () => {
 
   const getList = () => {
     axios
-      .get("http://192.168.0.19:8080/api/pays/171") //{params:param} userid?
+      .get("http://192.168.0.24:8080/api/pays/paylist") //{params:param} userid?
       .then((res) => {
         setData(res.data);
         setTotalCnt(res.data.length);
@@ -81,7 +81,12 @@ const PayComponent = () => {
                           ? "reviewBtn isWritten"
                           : "reviewBtn isNotWritten"
                       }
-                      onClick={() => handleWriteReviewClick(pay.payId)}
+                      onClick={() =>
+                        pay.isWritten
+                          ? null
+                          : handleWriteReviewClick(pay.payId, pay.storeId)
+                      }
+                      disabled={pay.isWritten}
                     >
                       {pay.isWritten ? "리뷰 작성 완료" : "리뷰 작성하기"}
                     </button>
