@@ -8,7 +8,6 @@ const HomeComponent = () => {
   const [user, setUser] = useState({});
   const [favor, setFavor] = useState({});
   const [folder, setFolder] = useState({});
-  //  const [updateFavor, setupdateFavor] = useState({});
   const [checkedList, setCheckedList] = useState({});
   const [isChecked, setIsChecked] = useState(false);
 
@@ -33,7 +32,7 @@ const HomeComponent = () => {
 
   const getUser = () => {
     axios
-      .get("http://192.168.0.15:8080/api/users/info")
+      .get("http://192.168.0.16:8080/api/users/info")
       .then((res) => {
         setUser(res.data);
         console.log(res.data);
@@ -44,7 +43,7 @@ const HomeComponent = () => {
   };
   const getFolderFavor = () => {
     axios
-      .get(`http://192.168.0.15:8080/api/folders/${is_favor}`)
+      .get(`http://192.168.0.16:8080/api/folders/${is_favor}`)
       .then((res) => {
         setFavor(res.data);
         console.log(res.data);
@@ -54,7 +53,7 @@ const HomeComponent = () => {
   const getFolder = () => {
     is_favor = false;
     axios
-      .get(`http://192.168.0.15:8080/api/folders/${is_favor}`)
+      .get(`http://192.168.0.16:8080/api/folders/${is_favor}`)
       .then((res) => {
         setFolder(res.data);
         initializeCheckedList(res.data); // 초기화
@@ -65,7 +64,7 @@ const HomeComponent = () => {
   const getFolderFavorUpdate = () => {
     //is_favor = false;
     axios
-      .patch("http://192.168.0.15:8080/api/folders/favor/edit", checkedList, {
+      .patch("http://192.168.0.16:8080/api/folders/favor/edit", checkedList, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -124,10 +123,7 @@ const HomeComponent = () => {
           <div className="moadlView" onClick={Modal}>
             <div className="modalContent">
               <div className="modalHead">
-                <div
-                  className="modalName"
-                  style={{ margin: "30px 0 20px 10px" }}
-                >
+                <div className="modalName">
                   <h1>즐겨찾기 폴더</h1>
                 </div>
                 <div className="moadlClose">
@@ -145,14 +141,16 @@ const HomeComponent = () => {
                   </div>
                 </div>
               </div>
-              <div className="modalBody">
+              <div className="modalBody scrollBar">
                 <div style={{ width: "85%" }}>
                   {folder &&
                     folder.length > 0 &&
                     folder.map((list, i) => (
                       <li key={i} className="check">
                         <label htmlFor={list.folderParticipantsId}>
-                          {list.folderName}{" "}
+                          <div style={{ textAlign: "left" }}>
+                            {list.folderName}
+                          </div>
                         </label>
                         <input
                           type="checkbox"
@@ -165,6 +163,8 @@ const HomeComponent = () => {
                       </li>
                     ))}
                 </div>
+              </div>
+              <div className="favorEdit">
                 <button id="favorEditBtn" onClick={save}>
                   확인
                 </button>
@@ -173,10 +173,10 @@ const HomeComponent = () => {
           </div>
         </div>
       </div>
-      <div className="subContainer">
+      <div className="homeSubContainer">
         <div className="userInfoBox">
           <div className="userImg">
-            <img src={user.userProfile} alt="" />
+            <img src={user.userProfile} alt="" className="userImgContainer" />
           </div>
           <div className="userInfo">
             <div>{user.userNickname}</div>
@@ -218,14 +218,21 @@ const HomeComponent = () => {
               <div key={l} className="testBox">
                 {favor && favor.length > l && (
                   <React.Fragment>
-                    <Link to={"/folder/list"}>
+                    <Link to={`/folder/${favor[l].folderId}`}>
                       <img
                         src={"/images/" + favor[l].folderImg + "-f.png"}
                         style={{ width: "80%" }}
                       />
                     </Link>
                     <Link to={"/folder/list"}>
-                      <div style={{ lineHeight: "28px" }}>
+                      <div
+                        style={{
+                          lineHeight: "28px",
+                          whiteSpace: "noWrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
                         {favor[l].folderName}
                       </div>
                     </Link>
