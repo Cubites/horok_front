@@ -9,31 +9,45 @@ import MapComponent from "./components/map/MapComponent";
 import MypageComponent from "./components/mypage/MypageComponent";
 import ReviewWriteComponent from "./components/review/ReviewWriteComponent";
 import ReviewCompleteComponent from "./components/review/ReviewCompleteComponent";
-
+import LoginSNS from './components/login/LoginSNS';
+import SnsSignUp from './components/login/SnsSignUp';
+import LoginOrSignUp from './components/login/LoginOrSignUp';
+import Test from './components/login/Test';
+import AgreeMent from './components/login/AgreeMent';
 function App() {
   const showCenterBtns = (e) => {
     e.preventDefault();
-    document.getElementById("footerCenterBtnBox").classList.toggle("active");
-  };
-  useEffect(() => {}, []);
+
+    document.getElementById("footerCenterBtnBox").classList.toggle('active');
+    document.getElementById("shadowBox").classList.toggle('displayBlock');
+  }
+  useEffect(() => {
+    
+  }, []);
   return (
-    <div id="container">
-      <div id="mainContainer">
+    <div id='container'>
+      <div id='mainContainer'>
         <Routes>
           <Route path="/paylist" element={<PayComponent />} />
           <Route path="/folder/add" element={<FolderAddComponenet />} />
           <Route path="/folder/list" element={<FolderListComponent />} />
           <Route path="/map" element={<MapComponent />} />
           <Route path="/mypage" element={<MypageComponent />} />
-          <Route path="/" element={<HomeComponent />} />
           <Route path="/write/:payId" element={<ReviewWriteComponent />} />
           <Route
             path="/complete/:payId"
             element={<ReviewCompleteComponent />}
           />
+              
+          <Route path='/login' element={<LoginSNS />} />
+          <Route path='/signup' element={<SnsSignUp />} />
+          <Route path='/signup/agreement' element={<AgreeMent />} />
+          <Route path='/loginorsignup' element={<LoginOrSignUp />} />
+          <Route path='/test' element={<Test />} />
+          <Route path='/' element={<HomeComponent />} />
         </Routes>
       </div>
-      <div id="footer">
+      <div id='footer'>
         <div>
           <Link to={"/"}>
             <img src="/images/home_icon.png" alt="home_icon" />
@@ -41,41 +55,42 @@ function App() {
           </Link>
         </div>
         <div>
-          <Link to={"/paylist"}>
-            <img src="/images/receipt_icon.png" alt="receipt_icon" />
+          <Link to={'/paylist'}>
+            <img src='/images/receipt_icon.png' alt='receipt_icon' />
             <span>결제내역</span>
           </Link>
         </div>
-        <div id="footerCenter">
-          <div id="footerCenterTitle" onClick={showCenterBtns}>
-            <img src="/images/folder_icon.png" alt="folder_icon" />
+        <div id='footerCenter'>
+          <div id='footerCenterTitle' onClick={showCenterBtns}>
+            <img src='/images/folder_icon.png' alt='folder_icon' />
           </div>
           <div id="footerCenterBtnBox">
-            <Link to={"/folder/add"} className="folderBtn">
-              <img src="/images/folder_add_icon.png" alt="folder_add_icon" />
+            <Link to={"/folder/add"} className='folderBtn' onMouseUp={showCenterBtns}>
+              <img src='/images/folder_add_icon.png' alt='folder_add_icon' />
               <span>폴더 추가</span>
             </Link>
-            <Link to={"/folder/list"} className="folderBtn">
-              <img src="/images/folder_list_icon.png" alt="folder_list_icon" />
+            <Link to={"/folder/list"} className='folderBtn' onMouseUp={showCenterBtns}>
+              <img src='/images/folder_list_icon.png' alt='folder_list_icon' />
               <span>폴더 목록</span>
             </Link>
           </div>
         </div>
         <div>
-          <Link to={"/map"}>
-            <img src="/images/map_icon.png" alt="map_icon" />
+          <Link to={'/map'}>
+            <img src='/images/map_icon.png' alt='map_icon' />
             <span>지도</span>
           </Link>
         </div>
         <div>
-          <Link to={"/mypage"}>
+          <Link to={'/mypage'}>
             <img
-              src="/images/personal_menu_icon.png"
-              alt="personal_menu_icon"
+              src='/images/personal_menu_icon.png'
+              alt='personal_menu_icon'
             />
             <span>내 정보</span>
           </Link>
         </div>
+        <div id='shadowBox' onMouseUp={showCenterBtns}></div>
       </div>
     </div>
   );
