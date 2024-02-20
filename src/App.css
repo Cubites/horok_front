@@ -53,7 +53,7 @@
 #footer>#footerCenter{
   position: relative;
   width: 20%;
-  z-index: 102;
+  z-index: 110;
 }
 #footer>#footerCenter>#footerCenterTitle{
   position: absolute;

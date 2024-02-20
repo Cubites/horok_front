@@ -60,7 +60,7 @@ const MapComponent = () => {
           reviewsByFolderObject[`folder${review.folderId}`] = {
             folderId: review.folderId,
             folderName: review.folderName,
-            folderColor: `#${review.folderImg.split("_")[1].split(".")[0]}`
+            folderColor: `#${review.folderImg.split("-")[1]}`
           };
         }
       }

@@ -1,6 +1,6 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import HomeComponent from './components/home/HomeComponent';
 import PayComponent from './components/pay/PayComponent';
 import FolderAddComponenet from './components/folder/FolderAddComponent';
@@ -15,7 +15,7 @@ function App() {
     document.getElementById("shadowBox").classList.toggle('displayBlock');
   }
   useEffect(() => {
-    // initMapsAPIScript();
+    
   }, []);
   return (
     <div id="container">
@@ -73,30 +73,6 @@ function App() {
       </div>
     </div>
   );
-
-  // function load(url, cb, err) {
-  //   var element = document.createElement('script');
-  //   var parent = 'body';
-  //   var attr = 'src';
-
-  //   element.async = true;
-  //   element.onload = function () {
-  //     cb();
-  //   };
-  //   element.onerror = function () {
-  //     err();
-  //   };
-  //   element[attr] = url;
-  //   document[parent].appendChild(element);
-  // }
-
-  // function initMapsAPIScript() {
-  //   var clientId = process.env.REACT_APP_NAVER_MAP_API_CLIENT_ID;
-  //   var url = 'https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=' + clientId;
-  //   load(url, () => {
-  //     console.log('init API script success');
-  //   });
-  // }
 }
 
 export default App;
