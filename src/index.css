@@ -51,10 +51,15 @@ a{
 	font-family: 'Noto Sans KR', sans-serif;
 	color: black;
 }
+*::-webkit-scrollbar {
+	display: none;
+}
 html, body, #root {
 	height: 100svh;
 	width: 100%;
 	max-width: 500px;
+	overscroll-behavior: none;
+	-webkit-user-select: none;
 }
 #root{
 	position: relative;

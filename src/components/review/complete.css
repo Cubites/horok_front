@@ -1,0 +1,46 @@
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#textArea {
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  font-size: 50px;
+  font-weight: 600;
+}
+
+#imgArea {
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+#imgArea > img {
+  margin-top: 50px;
+}
+
+#buttonArea {
+  height: 50%;
+  width: 100svh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#buttonArea > #completeBtn {
+  width: 250px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: #263cff;
+  color: #fff;
+  border: 0;
+  font-size: 30px;
+}

@@ -1,37 +1,41 @@
-#container{
+#container {
   width: 100%;
   min-width: 300px;
   max-width: 500px;
   height: 100%;
   background-color: #f3f6fa;
 }
-#mainContainer{
+#mainContainer {
   width: 100%;
   height: calc(100% - 100px);
   overflow: scroll;
 }
+#mainContainer::-webkit-scrollbar {
+  display: none;
+}
 
 /* 하단 메뉴 */
-#footer{
+#footer {
   width: 100%;
   height: 100px;
   background: white;
   position: absolute;
-  z-index: 10000;
+  z-index: 100;
   bottom: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, .2);
 }
-#footer>div{
+#footer > div {
   width: 15%;
   height: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-#footer>div>a{
+#footer > div > a {
   width: 100%;
   height: 100%;
   display: flex;
@@ -40,45 +44,47 @@
   align-items: center;
   font-size: 15px;
 }
-#footer>div>a>img{
+#footer > div > a > img {
   width: 60%;
   margin-bottom: 5px;
 }
+
 /** 하단 메뉴 - 중앙 버튼 **/
-#footer>#footerCenter{
+#footer > #footerCenter {
   position: relative;
   width: 20%;
+  z-index: 110;
 }
-#footer>#footerCenter>#footerCenterTitle{
+#footer > #footerCenter > #footerCenterTitle {
   position: absolute;
   z-index: 100;
   top: -20px;
-  width: 90px;
-  height: 90px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  border: 10px solid #4E75FF;
+  border: 10px solid #4e75ff;
   background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 20px;
 }
-#footer>#footerCenter>#footerCenterTitle>img{
+#footer > #footerCenter > #footerCenterTitle > img {
   display: block;
   width: 60%;
 }
-#footer>#footerCenter>#footerCenterBtnBox{
+#footer > #footerCenter > #footerCenterBtnBox {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   top: -10px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
   overflow: hidden;
-  transition: transform .3s ease;
-  background-color: #BECCFF;
+  transition: transform 0.3s ease;
+  background-color: #beccff;
 }
-#footer>#footerCenter>#footerCenterBtnBox>a{
+#footer > #footerCenter > #footerCenterBtnBox > a {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -89,32 +95,46 @@
   justify-content: center;
   align-items: center;
 }
-#footer>#footerCenter>#footerCenterBtnBox>a>img{
+#footer > #footerCenter > #footerCenterBtnBox > a > img {
   width: 60%;
   margin-bottom: 1px;
 }
-#footer>#footerCenter>#footerCenterBtnBox>a:nth-child(1){
+#footer > #footerCenter > #footerCenterBtnBox > a:nth-child(1) {
   top: 3.8em;
   left: 3.4em;
 }
-#footer>#footerCenter>#footerCenterBtnBox>a:nth-child(2){
+#footer > #footerCenter > #footerCenterBtnBox > a:nth-child(2) {
   top: 3.8em;
   right: 3.4em;
 }
 /*** 하단 메뉴 - 중앙버튼 애니메이션 ***/
-#footer>#footerCenter>#footerCenterBtnBox.active{
+#footer > #footerCenter > #footerCenterBtnBox.active {
   transform: scale3d(3.5, 3.5, 1);
-  transition-timing-function: cubic-bezier(.68, 1.55, .265, 1);
+  transition-timing-function: cubic-bezier(0.68, 1.55, 0.265, 1);
 }
 
-#footer a:active img{
-  animation: bounce .3s ease;
+#footer a:active img {
+  animation: bounce 0.3s ease;
 }
 
-
-/* animation */
+/*** animation ***/
 @keyframes bounce {
   100% {
     width: 80%;
   }
+}
+
+/*** 하단 메뉴 - 중앙버튼 누르면 나오는 그림자 배경 ***/
+#footer>#shadowBox{
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .5);
+  z-index: 101;
+  display: none;
+}
+#footer>#shadowBox.displayBlock{
+  display: block;
 }
