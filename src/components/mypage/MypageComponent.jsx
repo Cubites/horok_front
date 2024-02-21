@@ -11,14 +11,16 @@ const MypageComponent = () => {
   const [userProfile, setUserProfile] = useState(null);
   //프로필 수정
   const [newProfile, setNewProfile] = useState("");
-  //전체 선택 체크박스가 클릭될 때 호출되는 함수 ( 모든 체크 박스의 상태를 전체 선택 체크박스와 동일하게 처리)
-  const [allChecked, setAllChecked] = useState(false);
-  const [cardChecked, setCardChecked] = useState([false, false, false]);
   //닉네임 수정
   const [newNickname, setNewNickname] = useState("");
   const [updateSuccess, setUpdateSuccess] = useState(false);
+
+  //전체 선택 체크박스가 클릭될 때 호출되는 함수 ( 모든 체크 박스의 상태를 전체 선택 체크박스와 동일하게 처리)
+  const [allChecked, setAllChecked] = useState(false);
+  const [cardChecked, setCardChecked] = useState([false, false, false]);
   //카드 리스트
   const [cardList, setCardList] = useState([]);
+
   // 더 많은 카드 보기 토글
   const [showAllCards, setShowAllCards] = useState(false);
   // 차트 표시 여부 상태
@@ -140,25 +142,44 @@ const MypageComponent = () => {
       });
   };
   //=========================통계=========================
-
   useEffect(() => {
+    //cardChecked 상태가 변경될 때마다 실행되는 함수
     const fetchData = async () => {
+      let cardNumberParam = "";
+      cardChecked.forEach((v, i) => {
+        if (v == true) {
+          if (cardNumberParam != "") {
+            cardNumberParam += ",";
+          }
+          cardNumberParam += cardList[i].cardNumber;
+        }
+      });
+      console.log(cardNumberParam);
+      // 서버에서 카드 사용 통계 데이터를 가져오는 역할
       try {
         const response = await axios.get(
-          "http://192.168.0.141:8080/api/users/cards/status"
+          "http://192.168.0.141:8080/api/users/cards/status",
+          {
+            params: {
+              cardNumber: cardNumberParam,
+            },
+          }
         );
-        setCardUsageStats(response.data);
-        renderChart(response.data);
+        setCardUsageStats(response.data); //가져온 카드 사용 통계 데이터를 상태로 설정
+        renderChart(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
       }
     };
     fetchData();
-  }, []);
-
+  }, [cardChecked]);
   const renderChart = (data) => {
-    const ctx = document.getElementById("myChart");
-    new Chart(ctx, {
+    const ctx = document.getElementById("monthChart");
+    let chart = Chart.getChart("monthChart");
+    if (chart != undefined) {
+      chart.destroy();
+    }
+    chart = new Chart(ctx, {
       type: "pie",
       data: {
         labels: data.map((stats) => stats[0]), // 카테고리 레이블
@@ -192,10 +213,83 @@ const MypageComponent = () => {
     });
   };
 
-  //return 화면
+  //=========================통계=========================
+
+  useEffect(() => {
+    //cardChecked 상태가 변경될 때마다 실행되는 함수
+    const fetchData = async () => {
+      let cardNumberParam = "";
+      cardChecked.forEach((v, i) => {
+        if (v == true) {
+          if (cardNumberParam != "") {
+            cardNumberParam += ",";
+          }
+          cardNumberParam += cardList[i].cardNumber;
+        }
+      });
+      console.log(cardNumberParam);
+      // 서버에서 카드 사용 통계 데이터를 가져오는 역할
+      try {
+        const response = await axios.get(
+          "http://192.168.0.141:8080/api/users/cards/status2",
+          {
+            params: {
+              cardNumber: cardNumberParam,
+            },
+          }
+        );
+        setCardUsageStats(response.data); //가져온 카드 사용 통계 데이터를 상태로 설정
+        renderChart2(response.data); // 차트를 렌더링
+      } catch (error) {
+        console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
+      }
+    };
+    fetchData();
+  }, [cardChecked]);
+
+  const renderChart2 = (data) => {
+    const ctx = document.getElementById("yearChart");
+    let chart = Chart.getChart("yearChart");
+    if (chart != undefined) {
+      chart.destroy();
+    }
+    chart = new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: data.map((stats) => stats[0]), // 카테고리 레이블
+        datasets: [
+          {
+            label: "Dataset 1",
+            data: data.map((stats) => stats[1]), // 결제금액 데이터
+            backgroundColor: [
+              "#FFBEBE",
+              "#FFDDBE",
+              "#D6F4B0",
+              "#BEE4FF",
+              "#D7BEFF",
+              "#FFFCBE",
+            ],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "top",
+          },
+          title: {
+            display: true,
+            text: "이번연도 카테고리별 소비내역",
+          },
+        },
+      },
+    });
+  };
+  //=====>>>>>>>>>>>>>>>>>  return 화면
   return (
     <div className="mypage" id="modalScroll">
-      {/* ===========================모달(배경 불투명 + 모달창 띄우기 + 내부 내용 )======================= */}
+      {/* ===========================모달_닉네임 수정 (배경 불투명 + 모달창 띄우기 + 내부 내용 )======================= */}
       <div className="aaaa noshow" id="modal" onClick={Modal}>
         <div className="bbbb" onClick={Modal}>
           <div className="cccc">
@@ -220,7 +314,7 @@ const MypageComponent = () => {
       </div>
       {/* =======================마이페이지 div 시작========================== */}
       <div id="mypageMain">
-        {/*프로필 수정*/}
+        {/*=============프로필 이미지 수정==========================*/}
         <div id="profileBox" onClick={UploadImage}>
           {uploadedImage ? (
             <img className="profile" src={uploadedImage} alt="프로필 없을때" />
@@ -234,6 +328,7 @@ const MypageComponent = () => {
           {/* 프로필 사진 파일 선택 input */}
           <input type="file" onChange={onChangeImage} id="uploadProfile" />
         </div>
+        {/* 프로필 수정( 텍스트 ) */}
         <div id="ProfileUploadText" onClick={UploadImage}>
           프로필 수정하기
         </div>
@@ -296,20 +391,28 @@ const MypageComponent = () => {
                   <img src="./images/open.png" alt="더보기 열기" />
                 )}
               </button>
+              <div className="marginBox"></div>
             </div>
           )}
         </div>
-
         {/* 카드별 사용 통계 */}
         <div id="status">
-          <div id="statusText">통계</div>
+          <div id="statusText">소비 통계 (월간/연간)</div>
           <div className="statusEx">
             위의 카드 리스트에서 통계를 보고 싶은 카드를 선택하세요.
           </div>
+          {/* 통계영역 */}
           <div>
-            <canvas id="myChart" width="400" height="400"></canvas>
+            <div>
+              <canvas id="monthChart" width="400" height="400"></canvas>
+            </div>
+            <div>
+              <canvas id="yearChart" width="400" height="400"></canvas>
+            </div>
           </div>
+          {/* 통계영역 */}
         </div>
+        <div className="marginBox"></div>
       </div>
     </div>
   );
