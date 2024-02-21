@@ -248,33 +248,7 @@ test ( div 위치 배치 )
   align-items: center;
   margin: auto;
 }
-/*
--------------------------
-test end
--------------------------
- */
-/* .mypage > #mypageMain > #card > .card_list {
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 30%;
-  background: #ffffff;
-}
-.card_list > .cardText {
-  font-size: 13px;
-}
 
-.mypage > #mypageMain > .card_button {
-  width: 280px;
-  height: 15px;
-  background-color: #d3d3d3;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-} */
 /*
 ==================
 통계
@@ -282,18 +256,41 @@ test end
  */
 .mypage > #mypageMain > #status {
   width: 326px;
-  /* height: 492px; */
   background: #ffffff;
   box-shadow: 0px 143px 57px rgba(0, 0, 0, 0.01),
     0px 81px 48px rgba(0, 0, 0, 0.05), 0px 36px 36px rgba(0, 0, 0, 0.09),
     0px 9px 20px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-
-  font-weight: 600;
-  font-size: 17px;
   line-height: 19px;
-  /* display: flex;
-  align-items: left;
-  text-align: center; */
   margin: 40px auto;
+}
+
+#status {
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#status > div {
+  margin-top: 10px; /* 각 요소 사이의 간격 설정 */
+}
+
+#status > div:first-child {
+  font-weight: bold; /* 텍스트 굵게 설정 */
+}
+#status > #statusText {
+  font-weight: bold;
+  font-size: 20px;
+  padding-top: 20px;
+  padding-left: 30px;
+}
+.statusEx {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  font-size: 14px;
+  color: #6c7091;
+  padding: 10px;
 }
