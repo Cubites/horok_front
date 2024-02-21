@@ -50,6 +50,7 @@
   font-size: 14px;
   color: #263cff;
   margin: auto;
+  text-align: center;
 }
 /*
 ==================
@@ -206,7 +207,6 @@
 input[type="checkbox"] {
   zoom: 1.5;
 }
-
 /*
 -------------------------
 test ( div 위치 배치 )
@@ -248,7 +248,10 @@ test ( div 위치 배치 )
   align-items: center;
   margin: auto;
 }
-
+.marginBox {
+  height: 10px;
+  background-color: transparent;
+}
 /*
 ==================
 통계
