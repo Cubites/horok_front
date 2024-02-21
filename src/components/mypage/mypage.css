@@ -1,8 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 .mypage {
   width: 100%;
   height: 100%;
-  /* position: relative; */
+  font-family: "Noto Sans KR", sans-serif;
 }
+
 /*
 ==================
 모달
@@ -63,8 +65,7 @@
   height: 67px;
   background: #ffffff;
   box-shadow: 0px 143px 57px rgba(0, 0, 0, 0.01),
-    0px 81px 48px rgba(0, 0, 0, 0.05), 0px 36px 36px rgba(0, 0, 0, 0.09),
-    0px 9px 20px rgba(0, 0, 0, 0.1);
+    0px 81px 48px rgba(0, 0, 0, 0.05), 0px 15px 15px rgba(0, 0, 0, 0.09);
   border-radius: 20px;
   margin: 30px auto;
 }
@@ -102,6 +103,7 @@
   align-items: left;
   text-align: center;
   font-weight: bold;
+  font-family: "Noto Sans KR", sans-serif;
 }
 /* 닉네임 수정 느낌 주려고 연필 이미지 넣음  */
 .pencilImg {
@@ -139,6 +141,7 @@
 }
 #nickT {
   margin: 20px auto;
+  font-family: "Noto Sans KR", sans-serif;
 }
 /*
 --------------------------------
@@ -233,6 +236,7 @@ test ( div 위치 배치 )
   align-items: center;
   text-align: center;
   font-size: 13px;
+  font-family: "Noto Sans KR", sans-serif;
 }
 .card_button {
   width: 300px;
@@ -266,6 +270,7 @@ test ( div 위치 배치 )
   border-radius: 20px;
   line-height: 19px;
   margin: 40px auto;
+  padding-bottom: 30px;
 }
 
 #status {
@@ -286,6 +291,7 @@ test ( div 위치 배치 )
   font-weight: bold;
   font-size: 20px;
   padding-top: 20px;
+  padding-bottom: 10px;
   padding-left: 30px;
 }
 .statusEx {
@@ -294,6 +300,9 @@ test ( div 위치 배치 )
   align-items: center;
   text-align: left;
   font-size: 14px;
-  color: #6c7091;
+  font-weight: bold;
+  color: #000000;
   padding: 10px;
+  background-color: rgb(201, 234, 255);
+  font-family: "Noto Sans KR", sans-serif;
 }
