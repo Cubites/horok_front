@@ -32,7 +32,6 @@ const MypageComponent = () => {
   //이미지 수정
   const onChangeImage = (e) => {
     const file = e.target.files[0];
-    console.log(file);
     //const imageUrl = newProfile.imageUrl.file;
     //setUploadedImage(imageUrl);
     //setNewProfile(imageUrl);
@@ -85,10 +84,9 @@ const MypageComponent = () => {
   // 리액트랑 스프링부트 연동하는거니까
   const getUser = () => {
     axios
-      .get(`http://192.168.0.141:8080/api/users`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users`)
       .then((res) => {
         setUser(res.data);
-        console.log(res.data);
         setCardList(res.data.cardsList);
         setUserProfile(res.data.userProfile);
       })
@@ -105,9 +103,10 @@ const MypageComponent = () => {
     var formData = new FormData();
     formData.append("userId", userId);
     formData.append("userProfile", file);
-    console.log(Array.from(formData));
     axios
-      .post(`http://192.168.0.141:8080/api/users/profile`, formData, {
+      // .post(`http://192.168.0.141:8080/api/users/profile`, formData, {
+
+      .post(`${process.env.REACT_APP_DEV_URL}/api/users/profile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
           charset: "utf-8",
@@ -115,7 +114,7 @@ const MypageComponent = () => {
       })
       .then((res) => {
         if (res.status === 201) {
-          console.log("사진 수정 성공함");
+          //사진 수정 성공함
           setUpdateSuccess(true);
           getUser();
         }
@@ -128,13 +127,13 @@ const MypageComponent = () => {
   //닉네임 업로드 axios
   const updateNickname = (userId, newNickname) => {
     axios
-      .post(`http://192.168.0.141:8080/api/users/nickname`, {
+      .post(`${process.env.REACT_APP_DEV_URL}/api/users/nickname`, {
         userId: userId,
         userNickname: newNickname,
       })
       .then((res) => {
         if (res.status === 201) {
-          console.log("닉네임 수정 성공함");
+          //닉네임 수정 성공함
           setUpdateSuccess(true);
           Modal();
           getUser();
@@ -167,7 +166,6 @@ const MypageComponent = () => {
           cardNumberParam += cardList[i].cardNumber;
         }
       });
-      console.log(cardNumberParam);
       // 서버에서 카드 사용 통계 데이터를 가져오는 역할
       try {
         const response = await axios.get(
@@ -246,7 +244,6 @@ const MypageComponent = () => {
           document.getElementById("statisticsBox").classList.add("noshow");
         }
       });
-      console.log(cardNumberParam);
       // 서버에서 카드 사용 통계 데이터를 가져오는 역할
       try {
         const response = await axios.get(
