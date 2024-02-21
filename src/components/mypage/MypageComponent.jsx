@@ -1,14 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./mypage.css";
 import axios from "axios";
-
-//chart.js 사용할거임
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import Chart from "chart.js/auto";
 import { Pie } from "react-chartjs-2";
-ChartJS.register(ArcElement, Tooltip, Legend);
-{
-  /* <Pie data={...} /> */
-}
 
 const MypageComponent = () => {
   const [user, setUser] = useState({});
@@ -17,8 +11,6 @@ const MypageComponent = () => {
   const [userProfile, setUserProfile] = useState(null);
   //프로필 수정
   const [newProfile, setNewProfile] = useState("");
-  //등록한 카드 리스트 확인하기(더보기 누르고, 닫기 누르면 상태에 맞게 동작)
-  const [isOpen, setIsOpen] = useState(false);
   //전체 선택 체크박스가 클릭될 때 호출되는 함수 ( 모든 체크 박스의 상태를 전체 선택 체크박스와 동일하게 처리)
   const [allChecked, setAllChecked] = useState(false);
   const [cardChecked, setCardChecked] = useState([false, false, false]);
@@ -29,6 +21,9 @@ const MypageComponent = () => {
   const [cardList, setCardList] = useState([]);
   // 더 많은 카드 보기 토글
   const [showAllCards, setShowAllCards] = useState(false);
+  // 차트 표시 여부 상태
+  const [showChart, setShowChart] = useState(false);
+  const [cardUsageStats, setCardUsageStats] = useState([]);
 
   //이미지 수정
   const onChangeImage = (e) => {
@@ -73,6 +68,11 @@ const MypageComponent = () => {
   const handleAllCheck = (event) => {
     const { checked } = event.target;
     setAllChecked(checked);
+
+    // 전체 선택 체크박스가 선택되면 차트 보이도록 설정
+    setShowChart(checked);
+
+    // 카드 체크박스 상태 업데이트
     if (cardList.length > 0) {
       setCardChecked(Array(cardList.length).fill(checked));
     }
@@ -139,6 +139,58 @@ const MypageComponent = () => {
         console.log("수정 실패:", error);
       });
   };
+  //=========================통계=========================
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://192.168.0.141:8080/api/users/cards/status"
+        );
+        setCardUsageStats(response.data);
+        renderChart(response.data);
+      } catch (error) {
+        console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const renderChart = (data) => {
+    const ctx = document.getElementById("myChart");
+    new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: data.map((stats) => stats[0]), // 카테고리 레이블
+        datasets: [
+          {
+            label: "Dataset 1",
+            data: data.map((stats) => stats[1]), // 결제금액 데이터
+            backgroundColor: [
+              "#FFBEBE",
+              "#FFDDBE",
+              "#D6F4B0",
+              "#BEE4FF",
+              "#D7BEFF",
+              "#FFFCBE",
+            ],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "top",
+          },
+          title: {
+            display: true,
+            text: "이번달 카테고리별 소비내역",
+          },
+        },
+      },
+    });
+  };
 
   //return 화면
   return (
@@ -182,7 +234,9 @@ const MypageComponent = () => {
           {/* 프로필 사진 파일 선택 input */}
           <input type="file" onChange={onChangeImage} id="uploadProfile" />
         </div>
-
+        <div id="ProfileUploadText" onClick={UploadImage}>
+          프로필 수정하기
+        </div>
         {/* 닉네임 수정 => 닉네임 관련 div 선택시 modal 작동하도록 */}
         <div id="nick" onClick={Modal}>
           <div className="nickname_box" id="nick_title">
@@ -232,7 +286,6 @@ const MypageComponent = () => {
                 </div>
               </div>
             ))}
-
           {/* 더보기 버튼 */}
           {cardList.length > 2 && (
             <div>
@@ -248,7 +301,15 @@ const MypageComponent = () => {
         </div>
 
         {/* 카드별 사용 통계 */}
-        <div id="status">통계</div>
+        <div id="status">
+          <div id="statusText">통계</div>
+          <div className="statusEx">
+            위의 카드 리스트에서 통계를 보고 싶은 카드를 선택하세요.
+          </div>
+          <div>
+            <canvas id="myChart" width="400" height="400"></canvas>
+          </div>
+        </div>
       </div>
     </div>
   );
