@@ -117,7 +117,7 @@ const MypageComponent = () => {
         if (res.status === 201) {
           console.log("사진 수정 성공함");
           setUpdateSuccess(true);
-          window.location.reload();
+          getUser();
         }
       })
       .catch((error) => {
@@ -136,7 +136,8 @@ const MypageComponent = () => {
         if (res.status === 201) {
           console.log("닉네임 수정 성공함");
           setUpdateSuccess(true);
-          window.location.reload(); //이거는 정상작동하고 통계까지 완성하고 다시 수정해보기
+          Modal();
+          getUser();
         }
       })
       .catch((error) => {
