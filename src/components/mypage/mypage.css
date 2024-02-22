@@ -1,25 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 .mypage {
   width: 100%;
   height: 100%;
-  /* position: relative; */
+  font-family: "Noto Sans KR", sans-serif;
 }
+
 /*
 ==================
 모달
 ==================
  */
-#mypageMain {
+.mypage #mypageMain {
   width: 100%;
   height: 100%;
   position: relative;
 }
-.hidden {
-  height: 100%;
-  min-height: 100%;
-  overflow: hidden !important;
-  touch-action: none;
-}
-.noshow {
+.mypage .noshow {
   display: none;
 }
 /*
@@ -32,16 +28,14 @@
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  /* margin: 30px auto; */
   margin: 30px auto 20px auto;
-  /* top right bottom left */
 }
-.profile {
+.mypage .profile {
   width: 100%;
   height: 100%;
   display: block;
 }
-#uploadProfile {
+.mypage #uploadProfile {
   display: none;
 }
 .mypage > #mypageMain > #ProfileUploadText {
@@ -50,6 +44,7 @@
   font-size: 14px;
   color: #263cff;
   margin: auto;
+  text-align: center;
 }
 /*
 ==================
@@ -62,8 +57,7 @@
   height: 67px;
   background: #ffffff;
   box-shadow: 0px 143px 57px rgba(0, 0, 0, 0.01),
-    0px 81px 48px rgba(0, 0, 0, 0.05), 0px 36px 36px rgba(0, 0, 0, 0.09),
-    0px 9px 20px rgba(0, 0, 0, 0.1);
+    0px 81px 48px rgba(0, 0, 0, 0.05), 0px 15px 15px rgba(0, 0, 0, 0.09);
   border-radius: 20px;
   margin: 30px auto;
 }
@@ -90,7 +84,6 @@
   float: left;
   width: 28%;
   padding: 23px 0px 10px 28px;
-  /* top right bottom left */
 }
 .mypage > #mypageMain > #nick > #nick_title {
   font-family: "Inter";
@@ -101,9 +94,10 @@
   align-items: left;
   text-align: center;
   font-weight: bold;
+  font-family: "Noto Sans KR", sans-serif;
 }
 /* 닉네임 수정 느낌 주려고 연필 이미지 넣음  */
-.pencilImg {
+.mypage .pencilImg {
   position: absolute;
   left: 85%;
   right: 14.13%;
@@ -118,14 +112,14 @@
 --------------------------------
  */
 /* 닉네임 작성하는 input */
-#writeNick {
+.mypage #writeNick {
   display: block;
   border: none; /* 기본 테두리 제거 */
   border-bottom: 1px solid #ccc; /* 하단 라인 추가 */
   margin: 0 auto;
 }
 /* 확인버튼 */
-#nickChangeBtn {
+.mypage #nickChangeBtn {
   position: absolute;
   width: 120px;
   height: 39px;
@@ -136,33 +130,33 @@
   font-size: 15px;
   margin: 90px 0 10px 75px;
 }
-#nickT {
+.mypage #nickT {
   margin: 20px auto;
+  font-family: "Noto Sans KR", sans-serif;
 }
 /*
 --------------------------------
 모달창 ( 닉네임 수정 모달 페이지 )
 -------------------------
  */
-.aaaa {
+.mypage .aaaa {
   position: absolute;
-  z-index: 1000000000;
+  z-index: 110;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
-.bbbb {
+.mypage .bbbb {
   width: 266px;
   height: 137px;
-  /* left: 59px; */
-  /* left: calc(50% - 150px); */
-  /* top: 221px; */
   background-color: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   margin: 180px auto;
 }
-.cccc {
+.mypage .cccc {
   font-weight: 700;
   font-size: 20px;
   line-height: 19px;
@@ -194,7 +188,7 @@
 카드 리스트 영역 내부
 -------------------------
  */
-#card > #card_title {
+.mypage #card > #card_title {
   font-weight: bold;
   font-size: 20px;
   padding-top: 20px;
@@ -203,10 +197,9 @@
   padding-bottom: 10px;
   justify-content: center;
 }
-input[type="checkbox"] {
+.mypage input[type="checkbox"] {
   zoom: 1.5;
 }
-
 /*
 -------------------------
 test ( div 위치 배치 )
@@ -217,24 +210,22 @@ test ( div 위치 배치 )
   align-items: center;
   margin: 15px 20px;
 }
-.cardImage {
+.mypage .cardImage {
   flex: 0 0 70px;
 
   display: flex;
   justify-content: center; /* 수평 가운데 정렬 */
   align-items: center; /* 수직 가운데 정렬 */
 }
-.cardText {
+.mypage .cardText {
   flex: 1;
-  /* display: flex;
-  flex-direction: column;
-  */
   display: flex;
   align-items: center;
   text-align: center;
-  font-size: 15px;
+  font-size: 13px;
+  font-family: "Noto Sans KR", sans-serif;
 }
-.card_button {
+.mypage .card_button {
   width: 300px;
   height: 15px;
   background-color: #d3d3d3;
@@ -248,33 +239,10 @@ test ( div 위치 배치 )
   align-items: center;
   margin: auto;
 }
-/*
--------------------------
-test end
--------------------------
- */
-/* .mypage > #mypageMain > #card > .card_list {
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 30%;
-  background: #ffffff;
+.mypage .marginBox {
+  height: 10px;
+  background-color: transparent;
 }
-.card_list > .cardText {
-  font-size: 13px;
-}
-
-.mypage > #mypageMain > .card_button {
-  width: 280px;
-  height: 15px;
-  background-color: #d3d3d3;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-} */
 /*
 ==================
 통계
@@ -282,18 +250,46 @@ test end
  */
 .mypage > #mypageMain > #status {
   width: 326px;
-  /* height: 492px; */
   background: #ffffff;
   box-shadow: 0px 143px 57px rgba(0, 0, 0, 0.01),
     0px 81px 48px rgba(0, 0, 0, 0.05), 0px 36px 36px rgba(0, 0, 0, 0.09),
     0px 9px 20px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-
-  font-weight: 600;
-  font-size: 17px;
   line-height: 19px;
-  /* display: flex;
-  align-items: left;
-  text-align: center; */
   margin: 40px auto;
+  padding-bottom: 30px;
+}
+
+.mypage #status {
+  margin-top: 20px;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.mypage #status > div {
+  margin-top: 10px; /* 각 요소 사이의 간격 설정 */
+}
+
+.mypage #status > div:first-child {
+  font-weight: bold; /* 텍스트 굵게 설정 */
+}
+.mypage #status > #statusText {
+  font-weight: bold;
+  font-size: 20px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+}
+.mypage .statusEx {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000000;
+  padding: 10px;
+  background-color: rgb(201, 234, 255);
+  font-family: "Noto Sans KR", sans-serif;
 }

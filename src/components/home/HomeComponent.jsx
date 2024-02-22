@@ -8,7 +8,6 @@ const HomeComponent = () => {
   const [user, setUser] = useState({});
   const [favor, setFavor] = useState({});
   const [folder, setFolder] = useState({});
-  //  const [updateFavor, setupdateFavor] = useState({});
   const [checkedList, setCheckedList] = useState({});
   const [isChecked, setIsChecked] = useState(false);
 
@@ -65,12 +64,16 @@ const HomeComponent = () => {
   const getFolderFavorUpdate = () => {
     //is_favor = false;
     axios
-      .patch(`${process.env.REACT_APP_DEV_URL}/api/folders/favor/edit`, checkedList, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(checkedList),
-      })
+      .patch(
+        `${process.env.REACT_APP_DEV_URL}/api/folders/favor/edit`,
+        checkedList,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(checkedList),
+        }
+      )
       .then((res) => {
         console.log(res.data);
         getFolderFavor();
@@ -124,10 +127,7 @@ const HomeComponent = () => {
           <div className="moadlView" onClick={Modal}>
             <div className="modalContent">
               <div className="modalHead">
-                <div
-                  className="modalName"
-                  style={{ margin: "30px 0 20px 10px" }}
-                >
+                <div className="modalName">
                   <h1>즐겨찾기 폴더</h1>
                 </div>
                 <div className="moadlClose">
@@ -146,14 +146,16 @@ const HomeComponent = () => {
                   </div>
                 </div>
               </div>
-              <div className="modalBody">
+              <div className="modalBody scrollBar">
                 <div style={{ width: "85%" }}>
                   {folder &&
                     folder.length > 0 &&
                     folder.map((list, i) => (
                       <li key={i} className="check">
                         <label htmlFor={list.folderParticipantsId}>
-                          {list.folderName}{" "}
+                          <div style={{ textAlign: "left" }}>
+                            {list.folderName}
+                          </div>
                         </label>
                         <input
                           type="checkbox"
@@ -166,6 +168,8 @@ const HomeComponent = () => {
                       </li>
                     ))}
                 </div>
+              </div>
+              <div className="favorEdit">
                 <button id="favorEditBtn" onClick={save}>
                   확인
                 </button>
@@ -174,10 +178,15 @@ const HomeComponent = () => {
           </div>
         </div>
       </div>
-      <div className="subContainer">
+      <div className="homeSubContainer">
         <div className="userInfoBox">
           <div className="userImg">
-            <img src={user.userProfile} alt="" />
+            {/* <img src={user.userProfile} alt="" className="userImgContainer" /> */}
+            <img
+              src={`${process.env.REACT_APP_DEV_URL}/show/image?imageName=${user.userProfile}`}
+              alt=""
+              className="userImgContainer"
+            />
           </div>
           <div className="userInfo">
             <div>{user.userNickname}</div>
@@ -220,7 +229,7 @@ const HomeComponent = () => {
               <div key={l} className="testBox">
                 {favor && favor.length > l && (
                   <React.Fragment>
-                    <Link to={"/folder/list"}>
+                    <Link to={`/folder/${favor[l].folderId}`}>
                       <img
                         src={"/images/" + favor[l].folderImg + "-f.png"}
                         style={{ width: "80%" }}
@@ -228,7 +237,14 @@ const HomeComponent = () => {
                       />
                     </Link>
                     <Link to={"/folder/list"}>
-                      <div style={{ lineHeight: "28px" }}>
+                      <div
+                        style={{
+                          lineHeight: "28px",
+                          whiteSpace: "noWrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
                         {favor[l].folderName}
                       </div>
                     </Link>

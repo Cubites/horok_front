@@ -1,0 +1,68 @@
+.folderListContainer {
+  width: 100%;
+  height: 100%;
+
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: #f7f8fc;
+}
+.folderListContainer .folderListsubContainer {
+  width: 80%;
+  height: 80%;
+}
+
+.folderListContainer .folderBox {
+  width: 33.3%;
+  text-align: center;
+  font-size: 1em;
+  position: relative;
+}
+
+.folderListContainer .partiText {
+  position: absolute;
+  top: 54%;
+  left: 45%;
+}
+
+.folderListContainer .folderListBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.folderListContainer .folderListName {
+  display: flex;
+  margin: 30px 5px 15px 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.folderListContainer .addFolder {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #fff;
+  height: 20%;
+}
+
+.folderListContainer .folderContainer h2 {
+  font-weight: bold;
+  font-size: 21px;
+  line-height: 38px;
+}
+.folderListContainer .folderContainer p {
+  font-size: 12px;
+  color: #808080;
+}
+.folderListContainer .folderlistText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 55%;
+}

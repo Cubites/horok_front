@@ -7,6 +7,7 @@ import FolderAddComponenet from "./components/folder/FolderAddComponent";
 import FolderListComponent from "./components/folder/FolderListComponent";
 import MapComponent from "./components/map/MapComponent";
 import MypageComponent from "./components/mypage/MypageComponent";
+import FolderShareComponent from "./components/folder/FolderShareComponent";
 import ReviewWriteComponent from "./components/review/ReviewWriteComponent";
 import ReviewCompleteComponent from "./components/review/ReviewCompleteComponent";
 import LoginSNS from "./components/login/LoginSNS";
@@ -16,6 +17,7 @@ import Test from "./components/login/Test";
 import AgreeMent from "./components/login/AgreeMent";
 import ReviewListComponent from "./components/review/ReviewListComponent";
 import ReviewDetailComponent from "./components/review/ReviewDetailComponent";
+import ReviewReplyComponent from "./components/review/ReviewReplyComponent";
 
 function App() {
   const [filter, setFilter] = useState("0");
@@ -28,6 +30,7 @@ function App() {
     document.getElementById("shadowBox").classList.toggle("displayBlock");
   };
   useEffect(() => {}, []);
+
   return (
     <div id="container">
       <div id="mainContainer">
@@ -37,6 +40,7 @@ function App() {
           <Route path="/folder/list" element={<FolderListComponent />} />
           <Route path="/map" element={<MapComponent />} />
           <Route path="/mypage" element={<MypageComponent />} />
+          <Route path="/folder/share" element={<FolderShareComponent />} />
           <Route path="/write/:payId" element={<ReviewWriteComponent />} />
           <Route
             path="/complete/:payId"
@@ -52,13 +56,16 @@ function App() {
             path="/folder/:folderId/:reviewId"
             element={<ReviewDetailComponent filter={filter} />}
           />
-
           <Route path="/login" element={<LoginSNS />} />
           <Route path="/signup" element={<SnsSignUp />} />
           <Route path="/signup/agreement" element={<AgreeMent />} />
           <Route path="/loginorsignup" element={<LoginOrSignUp />} />
           <Route path="/test" element={<Test />} />
           <Route path="/" element={<HomeComponent />} />
+          <Route
+            path="/review/reply/:folderId/:reviewId"
+            element={<ReviewReplyComponent />}
+          />
         </Routes>
       </div>
       <div id="footer">

@@ -3,9 +3,13 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './loginSNS.css';
 
-export const BASE_IP = 'http://192.168.0.70';
+export const BASE_IP =
+  process.env.REACT_APP_DEV_URL.split(':')[0] +
+  ':' +
+  process.env.REACT_APP_DEV_URL.split(':')[1];
+
 //서버로 인증을 요청할 uri (서버의 webSecurityConfig의 base uri와 일치해야 한다)
-export const API_BASE_URL = BASE_IP + ':8080';
+export const API_BASE_URL = process.env.REACT_APP_DEV_URL;
 
 //서버에서 인증을 완료한 후에 프론트엔드로 돌아올 redirect uri (app.oauth2.authorized-redirect-uri와 일치해야 한다)
 export let OAUTH2_REDIRECT_URI = BASE_IP + ':3000/loginorsignup';
@@ -65,16 +69,20 @@ const LoginSNS = () => {
             />
           </Link>
 
-          <img
-            className='socialImg'
-            alt='profile'
-            src={process.env.PUBLIC_URL + '/images/kakaoLogin.png'}
-          />
-          <img
-            className='socialImg'
-            alt='profile'
-            src={process.env.PUBLIC_URL + '/images/googleLogin.png'}
-          />
+          <Link to={KAKAO_AUTH_URL}>
+            <img
+              className='socialImg'
+              alt='profile'
+              src={process.env.PUBLIC_URL + '/images/kakaoLogin.png'}
+            />
+          </Link>
+          <Link to={GOOGLE_AUTH_URL}>
+            <img
+              className='socialImg'
+              alt='profile'
+              src={process.env.PUBLIC_URL + '/images/googleLogin.png'}
+            />
+          </Link>
         </div>
       </div>
     </>

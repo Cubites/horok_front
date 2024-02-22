@@ -1,7 +1,6 @@
 .homeContainer {
   width: 100%;
-  height: 90%;
-
+  height: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -11,13 +10,12 @@
   background-color: #f7f8fc;
 }
 
-.subContainer {
+.homeSubContainer {
   width: 80%;
-  height: 85%;
-  /* margin: 15px 0 0 0; */
+  height: 90%;
 }
 
-.userInfoBox {
+.homeContainer .userInfoBox {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -25,42 +23,47 @@
   width: 100%;
   justify-content: space-between;
 }
-
-.testBox {
+.homeContainer .testBox {
   width: 33%;
-  /* height: 150px; */
   text-align: center;
   font-size: 1em;
   position: relative;
 }
-
-.partiText {
+.homeContainer .partiText {
   position: absolute;
   top: 54%;
   left: 45%;
 }
-
-.favorBox {
+.homeContainer .favorBox {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.favorName {
+.homeContainer .favorName {
   display: flex;
-  margin: 35px 5px 20px 5px;
+  margin: 35px 5px 10px 5px;
   justify-content: space-between;
   font-size: 1.3em;
   align-items: center;
 }
 
-.userImg {
+.homeContainer .userImg {
   display: flex;
-  width: 45%;
+  width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.homeContainer .userImgContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.userInfo {
+.homeContainer .userInfo {
   height: 60px;
   width: 55%;
   display: flex;
@@ -68,17 +71,17 @@
   justify-content: space-between;
 }
 
-.cntInfo {
+.homeContainer .cntInfo {
   display: flex;
   width: 150px;
   justify-content: space-between;
 }
 
 /* modal css */
-.modalContainer {
+.homeContainer .modalContainer {
   z-index: 10001;
 }
-.modalSubContainer {
+.modalContainer .modalSubContainer {
   position: fixed;
   top: 0;
   left: 0;
@@ -89,39 +92,35 @@
   align-items: center;
   justify-content: center;
 }
-.moadlView {
+.modalContainer .moadlView {
   width: 90%;
   height: 95%;
   background-color: #fff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
 }
-.modalContent {
+.modalContainer .modalContent {
   display: flex;
   align-items: center;
   text-align: center;
   height: 100%;
   flex-direction: column;
 }
-.modalName {
+.modalContainer .modalName {
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
   font-size: 25px;
   line-height: 19px;
   letter-spacing: -0.017em;
+  margin: 30px 0 20px 10px;
 }
-.modalHead {
-  /* height: 3%; */
+.modalContainer .modalHead {
   width: 90%;
   display: flex;
-  /* align-items: baseline; */
   justify-content: space-between;
-
-  /* position: relative; */
-  /* margin: 30px; */
 }
-.moadlClose {
+.modalContainer .moadlClose {
   height: 100%;
   margin: 0;
   display: flex;
@@ -129,19 +128,18 @@
   align-items: flex-end;
   justify-content: space-around;
 }
-.modalBody {
+.modalContainer .modalBody {
   background-color: #f7f8fc;
-  height: 100%;
+  height: 80%;
   width: 100%;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 20px;
   justify-content: space-between;
 }
-#favorEditBtn {
+
+.modalContainer #favorEditBtn {
   background-color: #263cff;
   border-radius: 20px;
   color: #fff;
@@ -150,7 +148,7 @@
   width: 250px;
   height: 40px;
 }
-.hidden {
+.modalContainer .hidden {
   position: relative;
   height: 100%;
   min-height: 100%;
@@ -158,11 +156,11 @@
   touch-action: none;
 }
 
-.noshow {
+.modalContainer .noshow {
   display: none;
 }
 
-.check {
+.modalContainer .check {
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -170,4 +168,35 @@
   margin-top: 27px;
   border-bottom: 1px solid #d3d3d3;
   padding-bottom: 5px;
+  /* padding-right: 20px; */
+}
+
+.modalContainer .scrollBar {
+  /* width: 85%; */
+  height: 100%;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.modalContainer .favorEdit {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modalContainer .scrollBar::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.modalContainer .scrollBar::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #263cff; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+.modalContainer .scrollBar::-webkit-scrollbar-track {
+  background: #d5dbef; /*스크롤바 뒷 배경 색상*/
 }
