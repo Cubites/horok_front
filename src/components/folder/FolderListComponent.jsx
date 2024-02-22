@@ -10,7 +10,7 @@ const FolderListComponent = () => {
   const getFolder = () => {
     is_favor = false;
     axios
-      .get(`http://192.168.0.16:8080/api/folders/${is_favor}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
       .then((res) => {
         setFolder(res.data);
         console.log(res.data);
