@@ -11,13 +11,14 @@ const MapComponent = () => {
   const [ReviewListByStore, setReviewListByStore] = useState({}); // (선택한 폴더의) 가게별 리뷰 목록
   const [FolderList, setFolderList] = useState({}); // 폴더 목록
   const [ReviewNumMax, setReviewNumMax] = useState(0);
+  const [CenterLatLon, setCenterLatLon] = useState([38.55936730016966, 126.92245453461447]);
 
   /* 선택한 폴더 리뷰만 가게별로 묶기 */
   const collectReviewsByStore = (reviews, selectFolder) => {
     let reviewsByStore = {};
-    for(let review of reviews) {
-      if(selectFolder === 0 || review.folderId === selectFolder) {
-        if(reviewsByStore[`store${review.storeId}`]) {
+    for (let review of reviews) {
+      if (selectFolder === 0 || review.folderId === selectFolder) {
+        if (reviewsByStore[`store${review.storeId}`]) {
           reviewsByStore[`store${review.storeId}`].reviews.push(review);
         } else {
           reviewsByStore[`store${review.storeId}`] = {
@@ -36,7 +37,7 @@ const MapComponent = () => {
 
   /* 리뷰 데이터 요청 */
   async function searchReviews() {
-    try{
+    try {
       let reviews = await axios.post(`${process.env.REACT_APP_DEV_URL}/api/users/reviews`, {
         folderId: ShowFolderId === 0 ? null : ShowFolderId
       });
@@ -45,18 +46,18 @@ const MapComponent = () => {
 
       // 가게별 리뷰
       let reviewsByStore = collectReviewsByStore(reviews.data, 0);
-      
+
       let mostReviewNum = 0;
-      for(let store of Object.keys(reviewsByStore)) {
-        if(mostReviewNum < reviewsByStore[store].reviews.length) {
+      for (let store of Object.keys(reviewsByStore)) {
+        if (mostReviewNum < reviewsByStore[store].reviews.length) {
           mostReviewNum = reviewsByStore[store].reviews.length;
         }
       }
 
       // 폴더 목록
       let reviewsByFolderObject = {};
-      for(let review of reviews.data) {
-        if(reviewsByFolderObject[`folder${review.folderId}`] !== null) {
+      for (let review of reviews.data) {
+        if (reviewsByFolderObject[`folder${review.folderId}`] !== null) {
           reviewsByFolderObject[`folder${review.folderId}`] = {
             folderId: review.folderId,
             folderName: review.folderName,
@@ -65,22 +66,40 @@ const MapComponent = () => {
         }
       }
       let reviewsByFolder = [];
-      for(let folderKey in reviewsByFolderObject) {
+      for (let folderKey in reviewsByFolderObject) {
         reviewsByFolder.push(reviewsByFolderObject[folderKey]);
       }
 
-      return {reviewsAll, reviewsByStore, reviewsByFolder, mostReviewNum};
-    } catch(error) {
-      console.log(error);
+      return { reviewsAll, reviewsByStore, reviewsByFolder, mostReviewNum };
+    } catch (error) {
+      console.error("Error that get review data.", error);
+    }
+  }
+
+  /* 현재 위치의 위도, 경도 값 반환 */
+  const getLocation = () => {
+    if (navigator.geolocation) { // GPS를 지원하면
+      navigator.geolocation.getCurrentPosition(function (position) {
+        setCenterLatLon([position.coords.latitude, position.coords.longitude]);
+      }, function (error) {
+        console.error("Error that get geoLocation values(latitude, longitude).", error);
+      }, {
+        enableHighAccuracy: false,
+        maximumAge: 0,
+        timeout: Infinity
+      });
+    } else {
+      alert('GPS를 지원하지 않습니다');
     }
   }
 
   /* 리뷰 데이터 요청 */
   useEffect(() => {
     console.log("ReviewList.length: " + ReviewList.length);
-    if(ReviewList.length === 0) {
+    if (ReviewList.length === 0) {
       searchReviews()
         .then(data => {
+          getLocation();
           setReviewList(data.reviewsAll);
           setReviewListByStore(data.reviewsByStore);
           setFolderList(data.reviewsByFolder);
@@ -92,11 +111,12 @@ const MapComponent = () => {
   }, [ShowFolderId]);
   return (
     <div id="mapContainer">
-      <MapViewComponent 
-        ShowFolderId={ShowFolderId} setShowFolderId = {setShowFolderId}
+      <MapViewComponent
+        ShowFolderId={ShowFolderId} setShowFolderId={setShowFolderId}
         ReviewListByStore={ReviewListByStore}
         FolderList={FolderList}
         ReviewNumMax={ReviewNumMax}
+        CenterLatLon={CenterLatLon}
       />
     </div>
   )

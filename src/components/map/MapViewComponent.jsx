@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 
-const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, FolderList, ReviewNumMax}) => {
+const MapViewComponent = ({ ShowFolderId, setShowFolderId, ReviewListByStore, FolderList, ReviewNumMax, CenterLatLon }) => {
   const { naver } = window;
-  
+
   const markerColor = [[234, 30, 57], [234, 100, 57]];
-  const [CenterLatLon, setCenterLatLon] = useState([37.55936730016966, 126.92245453461447]);
 
   /* 지도 생성 함수 */
-  const mapLoad = (ReviewListByStore, folderId, inputTag) => {
+  const mapLoad = (ReviewListByStore, inputTag) => {
     /** 지도 생성 **/
     let map = new naver.maps.Map(inputTag, {
       center: new naver.maps.LatLng(CenterLatLon[0], CenterLatLon[1]),
@@ -16,7 +15,7 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
     let markers = [];
 
     /** 마커 생성 **/
-    for(let store in ReviewListByStore){
+    for (let store in ReviewListByStore) {
       /*** 마커 커스텀 옵션 지정 ***/
       let markerOptions = {
         position: new naver.maps.LatLng(ReviewListByStore[store].latitude, ReviewListByStore[store].longitude),
@@ -25,7 +24,7 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
         draggable: false,
         icon: {
           content: [ // 마커 디자인(HTML 태그)
-              `
+            `
               <div class="storeMarker">
                 <div 
                   class='storePin storePin${ReviewListByStore[store].storeId}'
@@ -34,8 +33,8 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
                     height: 36px; 
                     border-radius: 50%; 
                     background-color: hsl(234, 
-                      ${20 + (80 / (ReviewNumMax-1) * (ReviewListByStore[store].reviews.length-1))}%, 
-                      ${70 - (50 / (ReviewNumMax-1) * (ReviewListByStore[store].reviews.length-1))}%); 
+                      ${20 + (80 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1))}%, 
+                      ${70 - (50 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1))}%); 
                     display: flex; 
                     justify-content: center; 
                     align-items: center;
@@ -49,7 +48,7 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
                     border-radius: 50%; 
                     background-color: hsl(234, 
                       ${20 + (80 / ReviewNumMax * ReviewListByStore[store].reviews.length)}%, 
-                      ${70 - (50 / (ReviewNumMax-1) * (ReviewListByStore[store].reviews.length-1))}%);
+                      ${70 - (50 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1))}%);
                     display: flex; 
                     justify-content: center; 
                     align-items: center; 
@@ -83,18 +82,18 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
         /*** 누른 마커 위치로 이동(누른 마커가 화면 정중앙보다 조금 위에 오게 이동) ***/
         map.panTo(new naver.maps.LatLng(e.coord._lat - 0.002, e.coord._lng));
         /*** 리뷰 팝업 창에 가게 리뷰 표시 ***/
-        for(let review of ReviewListByStore[`store${storeVal[0].innerHTML}`].reviews){
+        for (let review of ReviewListByStore[`store${storeVal[0].innerHTML}`].reviews) {
           // 가게 이름
           storeName = `${storeVal[1].innerHTML}<span>${storeVal[2].innerHTML}</span>`;
           // 평점 표시
           let starText = '';
-          for(let i=0; i<Math.floor(review.reviewScore); i++) {
+          for (let i = 0; i < Math.floor(review.reviewScore); i++) {
             starText += '<i class="icon-star"></i>';
           }
-          if(Math.floor(review.reviewScore) !== Math.round(review.reviewScore)) {
+          if (Math.floor(review.reviewScore) !== Math.round(review.reviewScore)) {
             starText += '<i class="icon-star-half-empty"></i>';
           }
-          for(let i=0; i<(5-Math.round(review.reviewScore)); i++){
+          for (let i = 0; i < (5 - Math.round(review.reviewScore)); i++) {
             starText += '<i class="icon-star-empty"></i>';
           }
           // 리뷰 박스
@@ -118,7 +117,7 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
         }
         // 드래그로 생성된 style.height 값 삭제
         reviewBox.style = '';
-        if(reviewBox.classList.contains('upAndDown')){
+        if (reviewBox.classList.contains('upAndDown')) {
           reviewBox.classList.toggle('upAndDown');
         }
         reviewBox.classList.toggle('upAndDown');
@@ -131,7 +130,7 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
     naver.maps.Event.addListener(map, 'click', (e) => {
       let reviewBox = document.getElementById('reviewBox');
       reviewBox.style = '';
-      if(reviewBox.classList.contains('upAndDown')) {
+      if (reviewBox.classList.contains('upAndDown')) {
         reviewBox.classList.add('downAnimation');
       }
       reviewBox.classList.remove('upAndDown');
@@ -162,9 +161,9 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
     const reviewBox = document.getElementById("reviewBox")
     let currentHeight = e.changedTouches[0].clientY;
     let wholeHeight = document.getElementById("mapContainer").offsetHeight;
-    if(wholeHeight * 0.5 < currentHeight) {
+    if (wholeHeight * 0.5 < currentHeight) {
       reviewBox.style = '';
-    } else if(wholeHeight * 0.5 > currentHeight) {
+    } else if (wholeHeight * 0.5 > currentHeight) {
       reviewBox.style.height = '100%';
     } else {
       reviewBox.style.height = '50%';
@@ -173,34 +172,17 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
 
   /* 화면에 지도 표시 - 데이터가 달라지면 동작 */
   useEffect(() => {
-    /* function getLocation() {
-      if (navigator.geolocation) { // GPS를 지원하면
-        navigator.geolocation.getCurrentPosition(function(position) {
-          alert(position.coords.latitude + ' ' + position.coords.longitude);
-        }, function(error) {
-          console.error(error);
-        }, {
-          enableHighAccuracy: false,
-          maximumAge: 0,
-          timeout: Infinity
-        });
-      } else {
-        alert('GPS를 지원하지 않습니다');
-      }
-    }
-    getLocation(); */
-    
     mapLoadPromise()
       .then(() => {
-        mapLoad(ReviewListByStore, ShowFolderId, 'mapAreaFirst');
+        mapLoad(ReviewListByStore, 'mapAreaFirst');
       })
       .then(() => {
-        if(document.getElementById('mapAreaSecond')){
+        if (document.getElementById('mapAreaSecond')) {
           document.getElementById('mapAreaSecond').remove();
         }
         document.getElementById('mapAreaFirst').id = 'mapAreaSecond';
       });
-  }, [ShowFolderId, ReviewListByStore]);
+  }, [ShowFolderId, ReviewListByStore, CenterLatLon]);
 
   return (
     <div id='mapViewContainer'>
@@ -208,17 +190,17 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
 
       </div>
       <div id="folderBox">
-        
+
       </div>
       <div id="folderListBox">
-        <div 
+        <div
           className='folderIconOuterStyle'
-          style={{backgroundColor: '#999'}}
+          style={{ backgroundColor: '#999' }}
           onClick={() => setShowFolderId(0)}
         >
-          <div 
-            className='folderIconInnerStyle' 
-            style={{backgroundColor: '#999', fontSize: '10px'}}
+          <div
+            className='folderIconInnerStyle'
+            style={{ backgroundColor: '#999', fontSize: '10px' }}
             onClick={() => setShowFolderId(0)}
           >
             전체
@@ -227,18 +209,18 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
         {
           FolderList.length &&
           FolderList.map((folder, index) => (
-            <div key={'folder' + index} 
-              className='folderIconOuterStyle' 
-              style={{backgroundColor: folder?.folderColor}}
+            <div key={'folder' + index}
+              className='folderIconOuterStyle'
+              style={{ backgroundColor: folder?.folderColor }}
               onClick={() => {
-                if(ShowFolderId === folder.folderId) {
+                if (ShowFolderId === folder.folderId) {
                   setShowFolderId(0);
                 } else {
                   setShowFolderId(folder.folderId)
                 }
               }}
             >
-              <div className='folderIconInnerStyle' style={{backgroundColor: folder.folderColor}}>
+              <div className='folderIconInnerStyle' style={{ backgroundColor: folder.folderColor }}>
                 {folder.folderName.substring(0, 1)}
               </div>
             </div>
@@ -246,7 +228,7 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
         }
       </div>
       <div id="reviewBox">
-        <div id="dragBar" 
+        <div id="dragBar"
           onTouchMove={(e) => ReviewPopupDrag(e)}
           onTouchEnd={(e) => ReviewPopupDragEnd(e)}
         >
@@ -254,7 +236,7 @@ const MapViewComponent = ({ShowFolderId, setShowFolderId, ReviewListByStore, Fol
         </div>
         <div id="reviewArea">
           <div id="reviewStoreName">
-            
+
           </div>
           <div id="reviewDetailsArea">
 
