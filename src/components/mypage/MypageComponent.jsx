@@ -1,37 +1,29 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./mypage.css";
 import axios from "axios";
 import Chart from "chart.js/auto";
-import { Pie } from "react-chartjs-2";
 
 const MypageComponent = () => {
   const [user, setUser] = useState({});
   //이미지 업로드
   const [uploadedImage, setUploadedImage] = useState(null); //uploadImage 상태 초기화
-  const [userProfile, setUserProfile] = useState(null);
-  //프로필 수정
-  const [newProfile, setNewProfile] = useState("");
+  //닉네임 수정
+  const [newNickname, setNewNickname] = useState("");
   //전체 선택 체크박스가 클릭될 때 호출되는 함수 ( 모든 체크 박스의 상태를 전체 선택 체크박스와 동일하게 처리)
   const [allChecked, setAllChecked] = useState(false);
   const [cardChecked, setCardChecked] = useState([false, false, false]);
-  //닉네임 수정
-  const [newNickname, setNewNickname] = useState("");
-  const [updateSuccess, setUpdateSuccess] = useState(false);
   //카드 리스트
   const [cardList, setCardList] = useState([]);
+
   // 더 많은 카드 보기 토글
   const [showAllCards, setShowAllCards] = useState(false);
-  // 차트 표시 여부 상태
-  const [showChart, setShowChart] = useState(false);
-  const [cardUsageStats, setCardUsageStats] = useState([]);
+
+  //체크박스 선택이 되면 false->true 변경 (status 사용)
+  let checkedCard = false;
 
   //이미지 수정
   const onChangeImage = (e) => {
     const file = e.target.files[0];
-    console.log(file);
-    //const imageUrl = newProfile.imageUrl.file;
-    //setUploadedImage(imageUrl);
-    //setNewProfile(imageUrl);
     updateProfile(user.userId, file);
   };
 
@@ -43,7 +35,6 @@ const MypageComponent = () => {
   //닉네임 수정 모달창(화면 불투명 +  닉네임 수정 모달창 뜸 )
   const Modal = () => {
     document.getElementById("modal").classList.toggle("noshow");
-    document.getElementById("modalScroll").classList.toggle("hidden");
   };
 
   const handleCardCheck = (event) => {
@@ -69,9 +60,6 @@ const MypageComponent = () => {
     const { checked } = event.target;
     setAllChecked(checked);
 
-    // 전체 선택 체크박스가 선택되면 차트 보이도록 설정
-    setShowChart(checked);
-
     // 카드 체크박스 상태 업데이트
     if (cardList.length > 0) {
       setCardChecked(Array(cardList.length).fill(checked));
@@ -81,12 +69,10 @@ const MypageComponent = () => {
   // 리액트랑 스프링부트 연동하는거니까
   const getUser = () => {
     axios
-      .get(`http://192.168.0.16:8080/api/users`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users`)
       .then((res) => {
         setUser(res.data);
-        console.log(res.data);
         setCardList(res.data.cardsList);
-        setUserProfile(res.data.userProfile);
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);
@@ -101,9 +87,8 @@ const MypageComponent = () => {
     var formData = new FormData();
     formData.append("userId", userId);
     formData.append("userProfile", file);
-    console.log(Array.from(formData));
     axios
-      .post(`http://192.168.0.16:8080/api/users/profile`, formData, {
+      .post(`${process.env.REACT_APP_DEV_URL}/api/users/profile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
           charset: "utf-8",
@@ -111,9 +96,8 @@ const MypageComponent = () => {
       })
       .then((res) => {
         if (res.status === 201) {
-          console.log("사진 수정 성공함");
-          setUpdateSuccess(true);
-          window.location.reload();
+          //사진 수정 성공함
+          getUser();
         }
       })
       .catch((error) => {
@@ -124,41 +108,69 @@ const MypageComponent = () => {
   //닉네임 업로드 axios
   const updateNickname = (userId, newNickname) => {
     axios
-      .post(`http://192.168.0.16:8080/api/users/nickname`, {
+      .post(`${process.env.REACT_APP_DEV_URL}/api/users/nickname`, {
         userId: userId,
         userNickname: newNickname,
       })
       .then((res) => {
         if (res.status === 201) {
-          console.log("닉네임 수정 성공함");
-          setUpdateSuccess(true);
-          window.location.reload(); //이거는 정상작동하고 통계까지 완성하고 다시 수정해보기
+          //닉네임 수정 성공함
+          Modal();
+          getUser();
         }
       })
       .catch((error) => {
         console.log("수정 실패:", error);
       });
   };
-  //=========================통계=========================
-
+  //=========================월간 통계=========================
   useEffect(() => {
+    /*
+      * 체크하면 통계가 나타나는 이유
+        - 체크가 하나라도 있으면 판별하는 변수인 checkedCard 값이 true로 바뀜
+        => noshow 클래스가 사라져서 안보이던 통계 태그가 나타남
+      * 체크를 해제하면 통계가 사라지는 이유
+        - 체크를 해제하면 State인 cardChecked 값이 바뀜
+        => useEffect의 두번째 인자이 이 값이 있어서 이 컴포넌트가 리랜더링 됨
+        => checkedCard는 State값이 아니라 리랜더링되면 다시 생성됨(초기값 false)
+        => false가 되었으므로 noshow 클래스가 사라지지 않아 통계 태그가 보이지 않음
+        >> 정확히는 사라진게 아니라 리랜더링되서 처음부터 표시가 되지 않은 것임
+    */
     const fetchData = async () => {
+      let cardNumberParam = "";
+      cardChecked.forEach((v, i) => {
+        if (v === true) {
+          if (cardNumberParam != "") {
+            cardNumberParam += ",";
+          }
+          cardNumberParam += cardList[i].cardNumber;
+        }
+      });
+      // 서버에서 카드 사용 통계 데이터를 가져오는 역할
       try {
         const response = await axios.get(
-          "http://192.168.0.16:8080/api/users/cards/status"
+          `${process.env.REACT_APP_DEV_URL}/api/users/cards/status`,
+          {
+            params: {
+              cardNumber: cardNumberParam,
+            },
+          }
         );
-        setCardUsageStats(response.data);
-        renderChart(response.data);
+        renderChart(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
       }
     };
     fetchData();
-  }, []);
+  }, [cardChecked]);
 
   const renderChart = (data) => {
-    const ctx = document.getElementById("myChart");
-    new Chart(ctx, {
+    const ctx = document.getElementById("monthChart");
+    let chart = Chart.getChart("monthChart");
+    if (chart != undefined) {
+      chart.destroy();
+    }
+    chart = new Chart(ctx, {
       type: "pie",
       data: {
         labels: data.map((stats) => stats[0]), // 카테고리 레이블
@@ -167,12 +179,12 @@ const MypageComponent = () => {
             label: "Dataset 1",
             data: data.map((stats) => stats[1]), // 결제금액 데이터
             backgroundColor: [
-              "#FFBEBE",
-              "#FFDDBE",
-              "#D6F4B0",
-              "#BEE4FF",
+              "#B5DBF6",
+              "#0080DC",
+              "#0A06BE",
+              "#0080DC",
               "#D7BEFF",
-              "#FFFCBE",
+              "#353739",
             ],
           },
         ],
@@ -192,10 +204,86 @@ const MypageComponent = () => {
     });
   };
 
-  //return 화면
+  //=====================연간 통계=========================
+
+  useEffect(() => {
+    //cardChecked 상태가 변경될 때마다 실행되는 함수
+    const fetchData = async () => {
+      let cardNumberParam = "";
+      cardChecked.forEach((v, i) => {
+        if (v === true) {
+          checkedCard = true;
+          if (cardNumberParam != "") {
+            cardNumberParam += ",";
+          }
+          cardNumberParam += cardList[i].cardNumber;
+        }
+        document.getElementById("statisticsBox").classList = "";
+        if (!checkedCard) {
+          document.getElementById("statisticsBox").classList.add("noshow");
+        }
+      });
+      // 서버에서 카드 사용 통계 데이터를 가져오는 역할
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_DEV_URL}/api/users/cards/status2`,
+          {
+            params: {
+              cardNumber: cardNumberParam,
+            },
+          }
+        );
+        renderChart2(response.data); // 차트를 렌더링
+      } catch (error) {
+        console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
+      }
+    };
+    fetchData();
+  }, [cardChecked]);
+
+  const renderChart2 = (data) => {
+    const ctx = document.getElementById("yearChart");
+    let chart = Chart.getChart("yearChart");
+    if (chart != undefined) {
+      chart.destroy();
+    }
+    chart = new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: data.map((stats) => stats[0]), // 카테고리 레이블
+        datasets: [
+          {
+            label: "Dataset 1",
+            data: data.map((stats) => stats[1]), // 결제금액 데이터
+            backgroundColor: [
+              "#FF8A8A",
+              "#FFBA7B",
+              "#FAF46E",
+              "#8CC345",
+              "#5077FE",
+              "#7F33FB",
+            ],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "top",
+          },
+          title: {
+            display: true,
+            text: "이번연도 카테고리별 소비내역",
+          },
+        },
+      },
+    });
+  };
+  //=====>>>>>>>>>>>>>>>>>  return 화면
   return (
     <div className="mypage" id="modalScroll">
-      {/* ===========================모달(배경 불투명 + 모달창 띄우기 + 내부 내용 )======================= */}
+      {/* ===========================모달_닉네임 수정 (배경 불투명 + 모달창 띄우기 + 내부 내용 )======================= */}
       <div className="aaaa noshow" id="modal" onClick={Modal}>
         <div className="bbbb" onClick={Modal}>
           <div className="cccc">
@@ -220,7 +308,7 @@ const MypageComponent = () => {
       </div>
       {/* =======================마이페이지 div 시작========================== */}
       <div id="mypageMain">
-        {/*프로필 수정*/}
+        {/*=============프로필 이미지 수정==========================*/}
         <div id="profileBox" onClick={UploadImage}>
           {uploadedImage ? (
             <img className="profile" src={uploadedImage} alt="프로필 없을때" />
@@ -234,6 +322,7 @@ const MypageComponent = () => {
           {/* 프로필 사진 파일 선택 input */}
           <input type="file" onChange={onChangeImage} id="uploadProfile" />
         </div>
+        {/* 프로필 수정( 텍스트 ) */}
         <div id="ProfileUploadText" onClick={UploadImage}>
           프로필 수정하기
         </div>
@@ -261,7 +350,6 @@ const MypageComponent = () => {
               onChange={handleAllCheck}
             />
           </div>
-
           {/* 카드 리스트 동적 생성 */}
           {cardList
             .slice(0, showAllCards ? cardList.length : 2)
@@ -279,6 +367,7 @@ const MypageComponent = () => {
                 <div className="cardImage">
                   <img src={card.cardImg} alt="카드 이미지" />
                 </div>
+
                 {/* 카드 정보 */}
                 <div>
                   <div className="cardText">{card.cardName}</div>
@@ -298,18 +387,31 @@ const MypageComponent = () => {
               </button>
             </div>
           )}
+          <div className="marginBox"></div>
         </div>
-
         {/* 카드별 사용 통계 */}
         <div id="status">
-          <div id="statusText">통계</div>
+          <div id="statusText">소비 통계</div>
           <div className="statusEx">
-            위의 카드 리스트에서 통계를 보고 싶은 카드를 선택하세요.
+            위의 카드 리스트에서 통계를 <br /> 확인하고 카드를 선택하면 <br />
+            연간/월간 통계 확인 가능해요.
+            <img src="./images/horokImg.png" alt="더보기 열기" />
           </div>
+          {/* 통계영역 */}
           <div>
-            <canvas id="myChart" width="400" height="400"></canvas>
+            <div id="statisticsBox" className="noshow">
+              <div>
+                <canvas id="monthChart" width="400" height="400"></canvas>
+              </div>
+              <br />
+              <div>
+                <canvas id="yearChart" width="400" height="400"></canvas>
+              </div>
+            </div>
           </div>
+          {/* 통계영역 */}
         </div>
+        <div className="marginBox"></div>
       </div>
     </div>
   );
