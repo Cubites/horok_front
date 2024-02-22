@@ -1,6 +1,6 @@
 import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import HomeComponent from "./components/home/HomeComponent";
 import PayComponent from "./components/pay/PayComponent";
 import FolderAddComponenet from "./components/folder/FolderAddComponent";
@@ -15,8 +15,14 @@ import SnsSignUp from "./components/login/SnsSignUp";
 import LoginOrSignUp from "./components/login/LoginOrSignUp";
 import Test from "./components/login/Test";
 import AgreeMent from "./components/login/AgreeMent";
+import ReviewListComponent from "./components/review/ReviewListComponent";
+import ReviewDetailComponent from "./components/review/ReviewDetailComponent";
 import ReviewReplyComponent from "./components/review/ReviewReplyComponent";
+
 function App() {
+  const [filter, setFilter] = useState("0");
+  const [longitude, setLongitude] = useState("0");
+  const [latitude, setLatitude] = useState("0");
   const showCenterBtns = (e) => {
     e.preventDefault();
 
@@ -39,6 +45,16 @@ function App() {
           <Route
             path="/complete/:payId"
             element={<ReviewCompleteComponent />}
+          />
+          <Route
+            path="/folder/:folderId"
+            element={
+              <ReviewListComponent filter={filter} setFilter={setFilter} />
+            }
+          />
+          <Route
+            path="/folder/:folderId/:reviewId"
+            element={<ReviewDetailComponent filter={filter} />}
           />
           <Route path="/login" element={<LoginSNS />} />
           <Route path="/signup" element={<SnsSignUp />} />
