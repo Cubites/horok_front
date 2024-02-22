@@ -39,7 +39,7 @@ const FolderAddComponent = () => {
   const foldermake = () => {
     axios
       .post(
-        "http://192.168.0.16:8080/api/folders/make",
+        `${process.env.REACT_APP_DEV_URL}/api/folders/make`,
         {
           // 전달할 데이터를 객체로 정의
           folderName: inputText,

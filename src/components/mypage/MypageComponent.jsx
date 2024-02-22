@@ -1,19 +1,14 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./mypage.css";
 import axios from "axios";
 import Chart from "chart.js/auto";
-import { Pie } from "react-chartjs-2";
 
 const MypageComponent = () => {
   const [user, setUser] = useState({});
   //이미지 업로드
   const [uploadedImage, setUploadedImage] = useState(null); //uploadImage 상태 초기화
-  const [userProfile, setUserProfile] = useState(null);
-  //프로필 수정
-  const [newProfile, setNewProfile] = useState("");
   //닉네임 수정
   const [newNickname, setNewNickname] = useState("");
-  const [updateSuccess, setUpdateSuccess] = useState(false);
   //전체 선택 체크박스가 클릭될 때 호출되는 함수 ( 모든 체크 박스의 상태를 전체 선택 체크박스와 동일하게 처리)
   const [allChecked, setAllChecked] = useState(false);
   const [cardChecked, setCardChecked] = useState([false, false, false]);
@@ -22,9 +17,6 @@ const MypageComponent = () => {
 
   // 더 많은 카드 보기 토글
   const [showAllCards, setShowAllCards] = useState(false);
-  // 차트 표시 여부 상태
-  const [showChart, setShowChart] = useState(false);
-  const [cardUsageStats, setCardUsageStats] = useState([]);
 
   //체크박스 선택이 되면 false->true 변경 (status 사용)
   let checkedCard = false;
@@ -32,9 +24,6 @@ const MypageComponent = () => {
   //이미지 수정
   const onChangeImage = (e) => {
     const file = e.target.files[0];
-    //const imageUrl = newProfile.imageUrl.file;
-    //setUploadedImage(imageUrl);
-    //setNewProfile(imageUrl);
     updateProfile(user.userId, file);
   };
 
@@ -46,7 +35,6 @@ const MypageComponent = () => {
   //닉네임 수정 모달창(화면 불투명 +  닉네임 수정 모달창 뜸 )
   const Modal = () => {
     document.getElementById("modal").classList.toggle("noshow");
-    document.getElementById("modalScroll").classList.toggle("hidden");
   };
 
   const handleCardCheck = (event) => {
@@ -72,9 +60,6 @@ const MypageComponent = () => {
     const { checked } = event.target;
     setAllChecked(checked);
 
-    // 전체 선택 체크박스가 선택되면 차트 보이도록 설정
-    setShowChart(checked);
-
     // 카드 체크박스 상태 업데이트
     if (cardList.length > 0) {
       setCardChecked(Array(cardList.length).fill(checked));
@@ -88,7 +73,6 @@ const MypageComponent = () => {
       .then((res) => {
         setUser(res.data);
         setCardList(res.data.cardsList);
-        setUserProfile(res.data.userProfile);
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);
@@ -104,8 +88,6 @@ const MypageComponent = () => {
     formData.append("userId", userId);
     formData.append("userProfile", file);
     axios
-      // .post(`http://192.168.0.141:8080/api/users/profile`, formData, {
-
       .post(`${process.env.REACT_APP_DEV_URL}/api/users/profile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
@@ -115,7 +97,6 @@ const MypageComponent = () => {
       .then((res) => {
         if (res.status === 201) {
           //사진 수정 성공함
-          setUpdateSuccess(true);
           getUser();
         }
       })
@@ -134,7 +115,6 @@ const MypageComponent = () => {
       .then((res) => {
         if (res.status === 201) {
           //닉네임 수정 성공함
-          setUpdateSuccess(true);
           Modal();
           getUser();
         }
@@ -169,14 +149,13 @@ const MypageComponent = () => {
       // 서버에서 카드 사용 통계 데이터를 가져오는 역할
       try {
         const response = await axios.get(
-          "http://192.168.0.141:8080/api/users/cards/status",
+          `${process.env.REACT_APP_DEV_URL}/api/users/cards/status`,
           {
             params: {
               cardNumber: cardNumberParam,
             },
           }
         );
-        setCardUsageStats(response.data); //가져온 카드 사용 통계 데이터를 상태로 설정
         renderChart(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
@@ -247,14 +226,13 @@ const MypageComponent = () => {
       // 서버에서 카드 사용 통계 데이터를 가져오는 역할
       try {
         const response = await axios.get(
-          "http://192.168.0.141:8080/api/users/cards/status2",
+          `${process.env.REACT_APP_DEV_URL}/api/users/cards/status2`,
           {
             params: {
               cardNumber: cardNumberParam,
             },
           }
         );
-        setCardUsageStats(response.data); //가져온 카드 사용 통계 데이터를 상태로 설정
         renderChart2(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);

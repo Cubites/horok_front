@@ -37,11 +37,8 @@ const MapComponent = () => {
 
   /* 리뷰 데이터 요청 */
   async function searchReviews() {
-    try {
-      let reviews = await axios.post(`${process.env.REACT_APP_DEV_URL}/api/users/reviews`, {
-        folderId: ShowFolderId === 0 ? null : ShowFolderId
-      });
-
+    try{
+      let reviews = await axios.post(`${process.env.REACT_APP_DEV_URL}/api/users/reviews`);
       let reviewsAll = reviews.data;
 
       // 가게별 리뷰
@@ -89,21 +86,22 @@ const MapComponent = () => {
         timeout: Infinity
       });
     } else {
-      alert('GPS를 지원하지 않습니다');
+      alert('현재 위치를 표시하려면 위치 설정을 켜주세요.');
     }
   }
 
   /* 리뷰 데이터 요청 */
   useEffect(() => {
-    console.log("ReviewList.length: " + ReviewList.length);
-    if (ReviewList.length === 0) {
+    if(ReviewList.length === 0) {
       searchReviews()
         .then(data => {
           getLocation();
-          setReviewList(data.reviewsAll);
-          setReviewListByStore(data.reviewsByStore);
-          setFolderList(data.reviewsByFolder);
-          setReviewNumMax(data.mostReviewNum);
+          if(data) {
+            setReviewList(data.reviewsAll);
+            setReviewListByStore(data.reviewsByStore);
+            setFolderList(data.reviewsByFolder);
+            setReviewNumMax(data.mostReviewNum);
+          }
         });
     } else {
       setReviewListByStore(collectReviewsByStore(ReviewList, ShowFolderId));

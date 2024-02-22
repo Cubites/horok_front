@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 const MapViewComponent = ({ ShowFolderId, setShowFolderId, ReviewListByStore, FolderList, ReviewNumMax, CenterLatLon }) => {
   const { naver } = window;
 
-  const markerColor = [[234, 30, 57], [234, 100, 57]];
-
   /* 지도 생성 함수 */
   const mapLoad = (ReviewListByStore, inputTag) => {
     /** 지도 생성 **/
@@ -134,7 +132,6 @@ const MapViewComponent = ({ ShowFolderId, setShowFolderId, ReviewListByStore, Fo
         reviewBox.classList.add('downAnimation');
       }
       reviewBox.classList.remove('upAndDown');
-      // reviewBox.classList.remove('downAnimation');
     });
     return true;
   }
