@@ -64,12 +64,16 @@ const HomeComponent = () => {
   const getFolderFavorUpdate = () => {
     //is_favor = false;
     axios
-      .patch(`${process.env.REACT_APP_DEV_URL}/api/folders/favor/edit`, checkedList, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(checkedList),
-      })
+      .patch(
+        `${process.env.REACT_APP_DEV_URL}/api/folders/favor/edit`,
+        checkedList,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(checkedList),
+        }
+      )
       .then((res) => {
         console.log(res.data);
         getFolderFavor();
@@ -177,7 +181,12 @@ const HomeComponent = () => {
       <div className="homeSubContainer">
         <div className="userInfoBox">
           <div className="userImg">
-            <img src={user.userProfile} alt="" className="userImgContainer" />
+            {/* <img src={user.userProfile} alt="" className="userImgContainer" /> */}
+            <img
+              src={`${process.env.REACT_APP_DEV_URL}/show/image?imageName=${user.userProfile}`}
+              alt=""
+              className="userImgContainer"
+            />
           </div>
           <div className="userInfo">
             <div>{user.userNickname}</div>

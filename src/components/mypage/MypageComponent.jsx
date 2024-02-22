@@ -81,7 +81,7 @@ const MypageComponent = () => {
   // 리액트랑 스프링부트 연동하는거니까
   const getUser = () => {
     axios
-      .get(`http://192.168.0.141:8080/api/users`)
+      .get(`http://192.168.0.16:8080/api/users`)
       .then((res) => {
         setUser(res.data);
         console.log(res.data);
@@ -103,7 +103,7 @@ const MypageComponent = () => {
     formData.append("userProfile", file);
     console.log(Array.from(formData));
     axios
-      .post(`http://192.168.0.141:8080/api/users/profile`, formData, {
+      .post(`http://192.168.0.16:8080/api/users/profile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
           charset: "utf-8",
@@ -124,7 +124,7 @@ const MypageComponent = () => {
   //닉네임 업로드 axios
   const updateNickname = (userId, newNickname) => {
     axios
-      .post(`http://192.168.0.141:8080/api/users/nickname`, {
+      .post(`http://192.168.0.16:8080/api/users/nickname`, {
         userId: userId,
         userNickname: newNickname,
       })
@@ -145,7 +145,7 @@ const MypageComponent = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://192.168.0.141:8080/api/users/cards/status"
+          "http://192.168.0.16:8080/api/users/cards/status"
         );
         setCardUsageStats(response.data);
         renderChart(response.data);
