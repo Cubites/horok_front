@@ -37,10 +37,7 @@ const MapComponent = () => {
   /* 리뷰 데이터 요청 */
   async function searchReviews() {
     try{
-      let reviews = await axios.post(`${process.env.REACT_APP_DEV_URL}/api/users/reviews`, {
-        folderId: ShowFolderId === 0 ? null : ShowFolderId
-      });
-
+      let reviews = await axios.post(`${process.env.REACT_APP_DEV_URL}/api/users/reviews`);
       let reviewsAll = reviews.data;
 
       // 가게별 리뷰
@@ -71,20 +68,21 @@ const MapComponent = () => {
 
       return {reviewsAll, reviewsByStore, reviewsByFolder, mostReviewNum};
     } catch(error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
   /* 리뷰 데이터 요청 */
   useEffect(() => {
-    console.log("ReviewList.length: " + ReviewList.length);
     if(ReviewList.length === 0) {
       searchReviews()
         .then(data => {
-          setReviewList(data.reviewsAll);
-          setReviewListByStore(data.reviewsByStore);
-          setFolderList(data.reviewsByFolder);
-          setReviewNumMax(data.mostReviewNum);
+          if(data) {
+            setReviewList(data.reviewsAll);
+            setReviewListByStore(data.reviewsByStore);
+            setFolderList(data.reviewsByFolder);
+            setReviewNumMax(data.mostReviewNum);
+          }
         });
     } else {
       setReviewListByStore(collectReviewsByStore(ReviewList, ShowFolderId));
