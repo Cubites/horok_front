@@ -9,6 +9,7 @@ const MapViewComponent = ({
 
   /* 지도 생성 함수 */
   const mapLoad = (ReviewListByStore, inputTag) => {
+    console.log('ReviewListByStore: ', ReviewListByStore);
     /** 지도 생성 **/
     let map = new naver.maps.Map(inputTag, {
       center: new naver.maps.LatLng(CenterLatLon[0], CenterLatLon[1]),
@@ -18,6 +19,7 @@ const MapViewComponent = ({
 
     /** 마커 생성 **/
     for (let store in ReviewListByStore) {
+      console.log('store: ', store);
       /*** 마커 커스텀 옵션 지정 ***/
       let markerOptions = {
         position: new naver.maps.LatLng(ReviewListByStore[store].latitude, ReviewListByStore[store].longitude),
@@ -35,8 +37,8 @@ const MapViewComponent = ({
                     height: 36px; 
                     border-radius: 50%; 
                     background-color: hsl(234, 
-                      ${20 + (80 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1))}%, 
-                      ${70 - (50 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1))}%); 
+                      ${20 + (ReviewNumMax === 1 ? 80 : (80 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1)))}%, 
+                      ${70 - (ReviewNumMax === 1 ? 50 : (50 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1)))}%); 
                     display: flex; 
                     justify-content: center; 
                     align-items: center;
@@ -49,8 +51,8 @@ const MapViewComponent = ({
                     border: 2px solid #fff; 
                     border-radius: 50%; 
                     background-color: hsl(234, 
-                      ${20 + (80 / ReviewNumMax * ReviewListByStore[store].reviews.length)}%, 
-                      ${70 - (50 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1))}%);
+                      ${20 + (ReviewNumMax === 1 ? 80 : (80 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1)))}%, 
+                      ${70 - (ReviewNumMax === 1 ? 50 : (50 / (ReviewNumMax - 1) * (ReviewListByStore[store].reviews.length - 1)))}%);
                     display: flex; 
                     justify-content: center; 
                     align-items: center; 
@@ -211,7 +213,7 @@ const MapViewComponent = ({
           </div>
         </div>
         {
-          FolderList.length &&
+          FolderList.length !== 0 &&
           FolderList.map((folder, index) => (
             <div key={'folder' + index}
               className='folderIconOuterStyle'

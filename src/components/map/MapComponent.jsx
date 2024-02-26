@@ -8,7 +8,7 @@ const MapComponent = ({latLon, setLatLon}) => {
   const [ShowFolderId, setShowFolderId] = useState(0); // 화면에 표시할 폴더의 id
   const [ReviewList, setReviewList] = useState([]); // 모든 리뷰 목록
   const [ReviewListByStore, setReviewListByStore] = useState({}); // (선택한 폴더의) 가게별 리뷰 목록
-  const [FolderList, setFolderList] = useState({}); // 폴더 목록
+  const [FolderList, setFolderList] = useState([]); // 폴더 목록
   const [ReviewNumMax, setReviewNumMax] = useState(0);
   const [CenterLatLon, setCenterLatLon] = useState(latLon);
 
@@ -66,6 +66,9 @@ const MapComponent = ({latLon, setLatLon}) => {
         reviewsByFolder.push(reviewsByFolderObject[folderKey]);
       }
 
+      console.log("reviewsAll: ", reviewsAll);
+      console.log("reviewsByStore: ", reviewsByStore)
+      console.log('reviewsByFolderObject: ', reviewsByFolderObject);
       return { reviewsAll, reviewsByStore, reviewsByFolder, mostReviewNum };
     } catch (error) {
       console.error("Error that get review data.", error);
