@@ -5,18 +5,18 @@ import "./folderShare.css";
 
 const FolderShareComponent = (props) => {
   let location = useLocation();
-  console.log(location.state.folderName);
-  useEffect(() => {}, []);
+  const shareFolderId = location.state.folderId;
+  const [user, setUser] = useState({});
 
   const handleShare = async () => {
     try {
+      const token = await getToken();
       if (navigator.share) {
         await navigator.share({
-          title: "핸디의 개발 블로그",
-          text: "이 글은 SNS 공유하기에 대한 글입니다.",
-          url: "https://all-dev-kang.tistory.com/",
+          title: "호록",
+          url: `https://horok.link/invite/${token}`,
+          text: `\'${user.userNickname}\' 님이 \"${location.state.folderName}\" 폴더에 초대하셨어요. <br><br> 참가해주세요!`.trim(),
         });
-        console.log("공유 성공");
       } else {
         console.log("Web Share API를 지원하지 않는 브라우저입니다.");
       }
@@ -24,6 +24,32 @@ const FolderShareComponent = (props) => {
       console.error("공유 실패", error);
     }
   };
+
+  const getToken = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_DEV_URL}/api/folders/invite/${shareFolderId}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("토큰 가져오기 실패", error);
+    }
+  };
+
+  const getUser = () => {
+    axios
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`)
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((error) => {
+        console.log("Error fetching user data:", error);
+      });
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   return (
     <div className="shareContainer">

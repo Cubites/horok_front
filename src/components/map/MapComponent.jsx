@@ -3,15 +3,14 @@ import './mapComponent.css';
 import axios from 'axios';
 import MapViewComponent from './MapViewComponent';
 
-const MapComponent = () => {
+const MapComponent = ({latLon, setLatLon}) => {
 
   const [ShowFolderId, setShowFolderId] = useState(0); // 화면에 표시할 폴더의 id
-
   const [ReviewList, setReviewList] = useState([]); // 모든 리뷰 목록
   const [ReviewListByStore, setReviewListByStore] = useState({}); // (선택한 폴더의) 가게별 리뷰 목록
-  const [FolderList, setFolderList] = useState({}); // 폴더 목록
+  const [FolderList, setFolderList] = useState([]); // 폴더 목록
   const [ReviewNumMax, setReviewNumMax] = useState(0);
-  const [CenterLatLon, setCenterLatLon] = useState([38.55936730016966, 126.92245453461447]);
+  const [CenterLatLon, setCenterLatLon] = useState(latLon);
 
   /* 선택한 폴더 리뷰만 가게별로 묶기 */
   const collectReviewsByStore = (reviews, selectFolder) => {
@@ -67,6 +66,9 @@ const MapComponent = () => {
         reviewsByFolder.push(reviewsByFolderObject[folderKey]);
       }
 
+      console.log("reviewsAll: ", reviewsAll);
+      console.log("reviewsByStore: ", reviewsByStore)
+      console.log('reviewsByFolderObject: ', reviewsByFolderObject);
       return { reviewsAll, reviewsByStore, reviewsByFolder, mostReviewNum };
     } catch (error) {
       console.error("Error that get review data.", error);
@@ -95,7 +97,9 @@ const MapComponent = () => {
     if(ReviewList.length === 0) {
       searchReviews()
         .then(data => {
-          getLocation();
+          if(CenterLatLon[0] === 0 && CenterLatLon[1] === 0) {
+            getLocation();
+          }
           if(data) {
             setReviewList(data.reviewsAll);
             setReviewListByStore(data.reviewsByStore);
@@ -107,6 +111,7 @@ const MapComponent = () => {
       setReviewListByStore(collectReviewsByStore(ReviewList, ShowFolderId));
     }
   }, [ShowFolderId]);
+  
   return (
     <div id="mapContainer">
       <MapViewComponent
@@ -115,6 +120,7 @@ const MapComponent = () => {
         FolderList={FolderList}
         ReviewNumMax={ReviewNumMax}
         CenterLatLon={CenterLatLon}
+        setLatLon={setLatLon}
       />
     </div>
   )

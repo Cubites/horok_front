@@ -3,33 +3,45 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './loginSNS.css';
 
-export const BASE_IP =
-  process.env.REACT_APP_DEV_URL.split(':')[0] +
-  ':' +
-  process.env.REACT_APP_DEV_URL.split(':')[1];
+let NAVER_AUTH_URL = '';
+let KAKAO_AUTH_URL = '';
+let GOOGLE_AUTH_URL = '';
+
+// export const BASE_IP = process.env.REACT_APP_FRONT_URL.split(':')[0];
 
 //서버로 인증을 요청할 uri (서버의 webSecurityConfig의 base uri와 일치해야 한다)
 export const API_BASE_URL = process.env.REACT_APP_DEV_URL;
 
 //서버에서 인증을 완료한 후에 프론트엔드로 돌아올 redirect uri (app.oauth2.authorized-redirect-uri와 일치해야 한다)
-export let OAUTH2_REDIRECT_URI = BASE_IP + ':3000/loginorsignup';
+let OAUTH2_REDIRECT_URI = process.env.REACT_APP_FRONT_URL + '/loginorsignup';
 
-export const GOOGLE_AUTH_URL =
-  API_BASE_URL +
-  '/oauth2/authorization/google?redirect_uri=' +
-  OAUTH2_REDIRECT_URI;
-export const FACEBOOK_AUTH_URL =
-  API_BASE_URL +
-  '/oauth2/authorization/facebook?redirect_uri=' +
-  OAUTH2_REDIRECT_URI;
-export const NAVER_AUTH_URL =
-  API_BASE_URL +
-  '/oauth2/authorization/naver?redirect_uri=' +
-  OAUTH2_REDIRECT_URI;
-export const KAKAO_AUTH_URL =
-  API_BASE_URL +
-  '/oauth2/authorization/kakao?redirect_uri=' +
-  OAUTH2_REDIRECT_URI;
+function readQueryParam() {
+  const query = new URLSearchParams(window.location.search);
+  const uri = query.get('redirect_uri');
+  console.log(uri);
+  if (uri !== null) {
+    OAUTH2_REDIRECT_URI = process.env.REACT_APP_FRONT_URL + uri;
+  }
+  NAVER_AUTH_URL =
+    API_BASE_URL +
+    '/oauth2/authorization/naver?redirect_uri=' +
+    OAUTH2_REDIRECT_URI;
+
+  KAKAO_AUTH_URL =
+    API_BASE_URL +
+    '/oauth2/authorization/kakao?redirect_uri=' +
+    OAUTH2_REDIRECT_URI;
+
+  GOOGLE_AUTH_URL =
+    API_BASE_URL +
+    '/oauth2/authorization/google?redirect_uri=' +
+    OAUTH2_REDIRECT_URI;
+}
+console.log(API_BASE_URL);
+console.log(OAUTH2_REDIRECT_URI);
+function locationOAuth2(path) {
+  window.location.href = path;
+}
 
 const LoginSNS = () => {
   useEffect(() => {
@@ -61,39 +73,30 @@ const LoginSNS = () => {
           </span>
         </div>
         <div id='loginImgBox'>
-          <Link to={NAVER_AUTH_URL}>
-            <img
-              className='socialImg'
-              alt='profile'
-              src={process.env.PUBLIC_URL + '/images/naverLoginIng.jpg'}
-            />
-          </Link>
+          <img
+            className='socialImg'
+            alt='profile'
+            src={process.env.PUBLIC_URL + '/images/naverLoginIng.jpg'}
+            onClick={() => locationOAuth2(NAVER_AUTH_URL)}
+          />
 
-          <Link to={KAKAO_AUTH_URL}>
-            <img
-              className='socialImg'
-              alt='profile'
-              src={process.env.PUBLIC_URL + '/images/kakaoLogin.png'}
-            />
-          </Link>
-          <Link to={GOOGLE_AUTH_URL}>
-            <img
-              className='socialImg'
-              alt='profile'
-              src={process.env.PUBLIC_URL + '/images/googleLogin.png'}
-            />
-          </Link>
+          <img
+            className='socialImg'
+            alt='profile'
+            src={process.env.PUBLIC_URL + '/images/kakaoLogin.png'}
+            onClick={() => locationOAuth2(KAKAO_AUTH_URL)}
+          />
+
+          <img
+            className='socialImg'
+            alt='profile'
+            src={process.env.PUBLIC_URL + '/images/googleLogin.png'}
+            onClick={() => locationOAuth2(GOOGLE_AUTH_URL)}
+          />
         </div>
       </div>
     </>
   );
 };
 
-function readQueryParam() {
-  const query = new URLSearchParams(window.location.search);
-  const uri = query.get('redirect_uri');
-  if (uri !== null) {
-    OAUTH2_REDIRECT_URI = BASE_IP + ':3000?redirect_uri=' + uri;
-  }
-}
 export default LoginSNS;

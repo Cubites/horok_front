@@ -104,7 +104,6 @@ const ReviewReplyComponent = ({ folderName }) => {
               width: "82%",
               fontWeight: "bold",
               fontSize: "21px",
-              //   lineHeight: "38px",
               marginTop: "15px",
               marginBottom: "5px",
             }}

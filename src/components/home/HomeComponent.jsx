@@ -35,7 +35,6 @@ const HomeComponent = ({ folderName, setFolderName }) => {
       .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`)
       .then((res) => {
         setUser(res.data);
-        console.log(res.data);
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);
@@ -46,7 +45,6 @@ const HomeComponent = ({ folderName, setFolderName }) => {
       .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
       .then((res) => {
         setFavor(res.data);
-        console.log(res.data);
       });
   };
 
@@ -57,12 +55,10 @@ const HomeComponent = ({ folderName, setFolderName }) => {
       .then((res) => {
         setFolder(res.data);
         initializeCheckedList(res.data); // 초기화
-        console.log(res.data);
       });
   };
 
   const getFolderFavorUpdate = () => {
-    //is_favor = false;
     axios
       .patch(
         `${process.env.REACT_APP_DEV_URL}/api/folders/favor/edit`,
@@ -75,7 +71,6 @@ const HomeComponent = ({ folderName, setFolderName }) => {
         }
       )
       .then((res) => {
-        console.log(res.data);
         getFolderFavor();
         Modal();
       });
@@ -94,18 +89,14 @@ const HomeComponent = ({ folderName, setFolderName }) => {
   };
 
   const save = () => {
-    console.log(checkedList);
     const favorCnt = Object.values(checkedList).filter(
       (value) => value === true
     ).length;
-    console.log(favorCnt);
     if (favorCnt > 9) {
       if (window.confirm("최대 9개까지 선택 가능합니다")) {
       }
     } else {
-      //if (window.confirm("변경 ")) {
       getFolderFavorUpdate();
-      //}
     }
   };
 
@@ -131,7 +122,6 @@ const HomeComponent = ({ folderName, setFolderName }) => {
                   <h1>즐겨찾기 폴더</h1>
                 </div>
                 <div className="moadlClose">
-                  {/* <div onClick={Modal}> */}
                   <img
                     src="/images/main-close.png"
                     rel=""
@@ -139,8 +129,6 @@ const HomeComponent = ({ folderName, setFolderName }) => {
                     onClick={Modal}
                     alt="test"
                   ></img>
-
-                  {/* </div> */}
                   <div style={{ fontSize: "10px" }}>
                     최대 9개 선택 가능해요.
                   </div>
@@ -181,7 +169,6 @@ const HomeComponent = ({ folderName, setFolderName }) => {
       <div className="homeSubContainer">
         <div className="userInfoBox">
           <div className="userImg">
-            {/* <img src={user.userProfile} alt="" className="userImgContainer" /> */}
             <img
               src={`${process.env.REACT_APP_DEV_URL}/show/image?imageName=${user.userProfile}`}
               alt=""
@@ -195,7 +182,8 @@ const HomeComponent = ({ folderName, setFolderName }) => {
                 리뷰
                 <span style={{ fontWeight: "600" }}>
                   {" "}
-                  {user.userReviewCnt}{" "}
+                  {user.userReviewCnt}
+                  {"     "}
                 </span>
               </div>
               <div>
