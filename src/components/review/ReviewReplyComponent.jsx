@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./reply.css";
 import axios from "axios";
 
-const ReviewReplyComponent = () => {
+const ReviewReplyComponent = ({ folderName }) => {
   const navigate = useNavigate(); //변수 할당시켜서 사용
   const [replyList, setreplyList] = useState({});
   const [replyInputValue, setReplyInputValue] = useState("");
   const { folderId, reviewId } = useParams();
+  const location = useLocation();
 
   const handleGoBack = () => {
     navigate(-1); // 바로 이전 페이지로 이동, '/main' 등 직접 지정도 당연히 가능
@@ -28,7 +29,6 @@ const ReviewReplyComponent = () => {
         `${process.env.REACT_APP_DEV_URL}/api/reviews/replies/${folderId}/${reviewId}`
       )
       .then((res) => {
-        console.log(res.data);
         setreplyList(res.data);
       });
   };
@@ -44,7 +44,7 @@ const ReviewReplyComponent = () => {
         null, // body는 null로 설정
         {
           params: {
-            folderReviewId: replyList[0].folderReviewId,
+            folderReviewId: location.state.folderReviewId, //replyList[0].folderReviewId,
             replyContent: replyInputValue,
           },
         },
@@ -95,7 +95,7 @@ const ReviewReplyComponent = () => {
                 onClick={handleGoBack}
               />
             </div>
-            <div className="headerTxt">폴폴폴</div>
+            <div className="headerTxt">{folderName}</div>
           </div>
         </div>
         <div className="replyBody scrollBar">

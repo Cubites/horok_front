@@ -4,7 +4,7 @@ import "./home.css";
 import axios from "axios";
 import React, { Fragment } from "react";
 
-const HomeComponent = () => {
+const HomeComponent = ({ folderName, setFolderName }) => {
   const [user, setUser] = useState({});
   const [favor, setFavor] = useState({});
   const [folder, setFolder] = useState({});
@@ -229,7 +229,12 @@ const HomeComponent = () => {
               <div key={l} className="testBox">
                 {favor && favor.length > l && (
                   <React.Fragment>
-                    <Link to={`/folder/${favor[l].folderId}`}>
+                    <Link
+                      to={`/folder/${favor[l].folderId}`}
+                      onClick={() => {
+                        setFolderName(favor[l].folderName);
+                      }}
+                    >
                       <img
                         src={"/images/" + favor[l].folderImg + "-f.png"}
                         style={{ width: "80%" }}

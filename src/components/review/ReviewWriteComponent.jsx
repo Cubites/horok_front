@@ -34,7 +34,6 @@ const ReviewWriteComponent = () => {
       .get(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`)
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
       })
       .catch((error) => {
         console.error("error!!! : ", error);
@@ -46,21 +45,11 @@ const ReviewWriteComponent = () => {
     setUploadedImages(images);
   };
   const submitForm = (formData) => {
-    //이미지를 폼 데이터에 추가
-    //formData.append("images", uploadedImages);
-    // console.log(uploadedImages);
-    //console.log(uploadedImages[0] instanceof File);
-
     uploadedImages.forEach((image, index) => {
       formData.append("images", image);
     });
 
     formData.append("storeId", storeId);
-    // uploadedImages.forEach((image, index) => {
-    //   formData.append(`image${index + 1}`, image);
-    //   console.log([...formData.entries()]);
-    // });
-
     axios
       .post(`/api/reviews/write`, formData, {
         headers: {
@@ -69,7 +58,7 @@ const ReviewWriteComponent = () => {
         baseURL: process.env.REACT_APP_DEV_URL,
       })
       .then((response) => {
-        console.log("성공");
+        // 리뷰 작성 성공
         movePage(`/complete/${payId}`);
       })
       .catch((error) => {
@@ -135,7 +124,11 @@ const ReviewWriteComponent = () => {
             <div className="scoreTxt">평점</div>
             <fieldset className="rating">
               <input type="radio" id="star5" name="reviewScore" value="5" />
-              <label className="full" htmlFor="star5" title="Awesome - 5 stars"></label>
+              <label
+                className="full"
+                htmlFor="star5"
+                title="Awesome - 5 stars"
+              ></label>
               <input
                 type="radio"
                 id="star4half"
@@ -165,7 +158,11 @@ const ReviewWriteComponent = () => {
                 title="Meh - 3.5 stars"
               ></label>
               <input type="radio" id="star3" name="reviewScore" value="3" />
-              <label className="full" htmlFor="star3" title="Meh - 3 stars"></label>
+              <label
+                className="full"
+                htmlFor="star3"
+                title="Meh - 3 stars"
+              ></label>
               <input
                 type="radio"
                 id="star2half"
@@ -208,7 +205,6 @@ const ReviewWriteComponent = () => {
               />
               <label
                 className="half"
-                
                 htmlFor="starhalf"
                 title="Sucks big time - 0.5 stars"
               ></label>

@@ -18,9 +18,12 @@ import AgreeMent from "./components/login/AgreeMent";
 import ReviewListComponent from "./components/review/ReviewListComponent";
 import ReviewDetailComponent from "./components/review/ReviewDetailComponent";
 import ReviewReplyComponent from "./components/review/ReviewReplyComponent";
+import MyReviewComponent from "./components/review/MyReviewComponent";
+import MyReviewDetailComponent from "./components/review/MyReviewDetailComponent";
 
 function App() {
   const [filter, setFilter] = useState("0");
+  const [folderName, setFolderName] = useState("");
   const [longitude, setLongitude] = useState("0");
   const [latitude, setLatitude] = useState("0");
   const showCenterBtns = (e) => {
@@ -37,7 +40,15 @@ function App() {
         <Routes>
           <Route path="/paylist" element={<PayComponent />} />
           <Route path="/folder/add" element={<FolderAddComponenet />} />
-          <Route path="/folder/list" element={<FolderListComponent />} />
+          <Route
+            path="/folder/list"
+            element={
+              <FolderListComponent
+                folderName={folderName}
+                setFolderName={setFolderName}
+              />
+            }
+          />
           <Route path="/map" element={<MapComponent />} />
           <Route path="/mypage" element={<MypageComponent />} />
           <Route path="/folder/share" element={<FolderShareComponent />} />
@@ -49,22 +60,51 @@ function App() {
           <Route
             path="/folder/:folderId"
             element={
-              <ReviewListComponent filter={filter} setFilter={setFilter} />
+              <ReviewListComponent
+                folderName={folderName}
+                filter={filter}
+                setFilter={setFilter}
+              />
+            }
+          />
+          <Route
+            path="/myreview"
+            element={
+              <MyReviewComponent filter={filter} setFilter={setFilter} />
+            }
+          />
+          <Route
+            path="/myreview/:reviewId"
+            element={
+              <MyReviewDetailComponent
+                filter={filter}
+                folderName={folderName}
+              />
             }
           />
           <Route
             path="/folder/:folderId/:reviewId"
-            element={<ReviewDetailComponent filter={filter} />}
+            element={
+              <ReviewDetailComponent filter={filter} folderName={folderName} />
+            }
           />
           <Route path="/login" element={<LoginSNS />} />
           <Route path="/signup" element={<SnsSignUp />} />
           <Route path="/signup/agreement" element={<AgreeMent />} />
           <Route path="/loginorsignup" element={<LoginOrSignUp />} />
           <Route path="/test" element={<Test />} />
-          <Route path="/" element={<HomeComponent />} />
+          <Route
+            path="/"
+            element={
+              <HomeComponent
+                folderName={folderName}
+                setFolderName={setFolderName}
+              />
+            }
+          />
           <Route
             path="/review/reply/:folderId/:reviewId"
-            element={<ReviewReplyComponent />}
+            element={<ReviewReplyComponent folderName={folderName} />}
           />
         </Routes>
       </div>

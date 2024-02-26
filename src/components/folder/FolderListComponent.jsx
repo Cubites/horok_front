@@ -4,7 +4,7 @@ import "./folderList.css";
 import axios from "axios";
 import React, { Fragment } from "react";
 
-const FolderListComponent = () => {
+const FolderListComponent = ({ folderName, setFolderName }) => {
   const [folder, setFolder] = useState({});
   let is_favor = true;
   const getFolder = () => {
@@ -90,7 +90,12 @@ const FolderListComponent = () => {
                 <div key={l} className="folderBox">
                   {folder && folder.length > l && (
                     <React.Fragment>
-                      <Link to={`/folder/${folder[l].folderId}`}>
+                      <Link
+                        to={`/folder/${folder[l].folderId}`}
+                        onClick={() => {
+                          setFolderName(folder[l].folderName);
+                        }}
+                      >
                         {folder[l].folderFavor && (
                           <img
                             src={"/images/" + folder[l].folderImg + "-f.png"}

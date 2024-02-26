@@ -27,7 +27,7 @@
 }
 
 #reviewListContainer > .inFolderHeader > .wrapper > .headerTxt {
-  font-size: 30px;
+  font-size: 27px;
   font-weight: 600;
   margin-bottom: 3px;
 }
@@ -40,7 +40,7 @@
 }
 
 #reviewListContainer > .filterArea > select {
-  font-size: 25px;
+  font-size: 17.5px;
   border-radius: 5px;
   border: 1px solid rgba(223, 223, 223, 0.933);
   background-color: #fff;
