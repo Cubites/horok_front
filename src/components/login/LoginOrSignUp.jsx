@@ -23,7 +23,7 @@ function LoginOrSignUp() {
     }
   };
 
-  return <div>LoginOrSignUp</div>;
+  return <div></div>;
 }
 
 export default LoginOrSignUp;

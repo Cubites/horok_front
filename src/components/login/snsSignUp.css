@@ -1,15 +1,60 @@
 #signUpContainer {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  width: 100%;
+  z-index: 120;
+  background-color: #f3f6fa;
+}
+#signUpContainer > #signUpTop {
+  display: flex;
+  align-items: center;
   justify-content: center;
+  width: 100%;
+  padding-bottom: 10px;
+  margin-bottom: 20%;
+}
+
+#signUpContainer > #signUpTop > .mainImg {
+  width: 15px;
+  height: 20px;
+}
+#signUpContainer > #signUpTop > .backImg {
+  width: 30px;
+  margin-right: 5%;
+  margin-left: 2%;
+}
+#signUpTop > #horok {
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 25px;
+}
+
+#signUpContainer > #signUpTop > #oneAndTwoImgBox {
+  width: 65%;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  margin-right: 10px;
+}
+#signUpContainer > #signUpTop > #oneAndTwoImgBox > .oneAndtwo {
+  width: 30px;
+  height: 30px;
+}
+#signUpContainer > #signUpTop > #oneAndTwoImgBox > .grayLine {
+  width: 10px;
 }
 
 #signUpContainer > #imgAndtext {
   width: 100%;
-  height: 70%;
+  height: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
