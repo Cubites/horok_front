@@ -18,25 +18,39 @@ import ReviewListComponent from './components/review/ReviewListComponent';
 import ReviewDetailComponent from './components/review/ReviewDetailComponent';
 import ReviewReplyComponent from './components/review/ReviewReplyComponent';
 import InviteComponent from "./components/invite/InviteComponent";
+import MyReviewComponent from "./components/review/MyReviewComponent";
+import MyReviewDetailComponent from "./components/review/MyReviewDetailComponent";
 
 function App() {
   const [filter, setFilter] = useState('0');
   const [latLon, setLatLon] = useState([0, 0]);
+  const [folderName, setFolderName] = useState("");
   const showCenterBtns = (e) => {
     e.preventDefault();
 
     document.getElementById('footerCenterBtnBox').classList.toggle('active');
     document.getElementById('shadowBox').classList.toggle('displayBlock');
   };
-  useEffect(() => {}, []);
 
   return (
     <div id='container'>
       <div id='mainContainer'>
         <Routes>
-          <Route path='/paylist' element={<PayComponent />} />
-          <Route path='/folder/add' element={<FolderAddComponenet />} />
-          <Route path='/folder/list' element={<FolderListComponent />} />
+          <Route path="/paylist" element={<PayComponent />} />
+          <Route path="/folder/add" element={<FolderAddComponenet />} />
+          <Route
+            path="/folder/list"
+            element={
+              <FolderListComponent
+                folderName={folderName}
+                setFolderName={setFolderName}
+              />
+            }
+          />
+          <Route path="/map" element={<MapComponent />} />
+          <Route path="/mypage" element={<MypageComponent />} />
+          <Route path="/folder/share" element={<FolderShareComponent />} />
+          <Route path="/write/:payId" element={<ReviewWriteComponent />} />
           <Route
             path='/map'
             element={<MapComponent latLon={latLon} setLatLon={setLatLon} />}
@@ -51,22 +65,50 @@ function App() {
           <Route
             path='/folder/:folderId'
             element={
-              <ReviewListComponent filter={filter} setFilter={setFilter} />
+              <ReviewListComponent
+                folderName={folderName}
+                filter={filter}
+                setFilter={setFilter}
+              />
             }
           />
           <Route
-            path='/folder/:folderId/:reviewId'
-            element={<ReviewDetailComponent filter={filter} />}
+            path="/myreview"
+            element={
+              <MyReviewComponent filter={filter} setFilter={setFilter} />
+            }
           />
-          <Route path='/login' element={<LoginSNS />} />
-          <Route path='/signup' element={<SnsSignUp />} />
-          <Route path='/signup/agreement' element={<AgreeMent />} />
-          <Route path='/loginorsignup' element={<LoginOrSignUp />} />
-
-          <Route path='/' element={<HomeComponent />} />
           <Route
-            path='/review/reply/:folderId/:reviewId'
-            element={<ReviewReplyComponent />}
+            path="/myreview/:reviewId"
+            element={
+              <MyReviewDetailComponent
+                filter={filter}
+                folderName={folderName}
+              />
+            }
+          />
+          <Route
+            path="/folder/:folderId/:reviewId"
+            element={
+              <ReviewDetailComponent filter={filter} folderName={folderName} />
+            }
+          />
+          <Route path="/login" element={<LoginSNS />} />
+          <Route path="/signup" element={<SnsSignUp />} />
+          <Route path="/signup/agreement" element={<AgreeMent />} />
+          <Route path="/loginorsignup" element={<LoginOrSignUp />} />
+          <Route
+            path="/"
+            element={
+              <HomeComponent
+                folderName={folderName}
+                setFolderName={setFolderName}
+              />
+            }
+          />
+          <Route
+            path="/review/reply/:folderId/:reviewId"
+            element={<ReviewReplyComponent folderName={folderName} />}
           />
           <Route path="/invite/:inviteToken" element={<InviteComponent />} />
         </Routes>

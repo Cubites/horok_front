@@ -12,12 +12,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const ReviewListComponent = ({ filter, setFilter, folderName }) => {
-  const { folderId } = useParams();
+const MyReviewComponent = ({ filter, setFilter }) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
+  //리뷰 정렬 함수
   const sortReviews = (reviews) => {
     return reviews.slice().sort((a, b) => {
       switch (filter) {
@@ -56,15 +56,17 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
     return date1 - date2;
   };
 
+  //썸네일 클릭 시 피드로 이동 -> 클릭한 리뷰가 먼저 보이도록
   const handleViewReview = (reviewId) => {
-    navigate(`/folder/${folderId}/${reviewId}`, {
+    navigate(`/myreview/${reviewId}`, {
       state: { reviewId: reviewId, reviews: sortReviews(data) },
     });
   };
 
-  const getReview = () => {
+  //리뷰 가져오는 함수
+  const getMyReview = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/${folderId}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`)
       .then((res) => {
         setData(res.data);
       });
@@ -78,8 +80,8 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
     if (location.state && location.state.filter) {
       setFilter(location.state.filter);
     }
-    getReview();
-  }, [folderId, filter, location.state]);
+    getMyReview();
+  }, [filter, location.state]);
 
   return (
     <div id="reviewListContainer">
@@ -93,16 +95,9 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
               onClick={handleGoFolderList}
             />
           </div>
-          <div className="headerTxt">{folderName}</div>
+          <div className="headerTxt">내 리뷰</div>
         </div>
-        <div className="settingBtn cursorToPointer">
-          <img
-            src="/images/menudots.png"
-            className="reviewThumbnail"
-            alt="menuBtn"
-            height="40"
-          />
-        </div>
+        <div className="settingBtn"></div>
       </div>
       <div className="filterArea cursorToPointer">
         <select value={filter} onChange={(e) => setFilter(e.target.value)}>
@@ -143,4 +138,4 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
     </div>
   );
 };
-export default ReviewListComponent;
+export default MyReviewComponent;

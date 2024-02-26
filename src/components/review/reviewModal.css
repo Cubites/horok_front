@@ -1,0 +1,84 @@
+/* 모달창을 화면 중앙. 최상단에 노출 */
+
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* backdrop의 배경색과 투명도를 설정합니다. */
+  background-color: rgba(0, 0, 0, 0.5); /* 검은색과 50%의 투명도 */
+  /* backdrop을 모달 위로 올려서 모달을 제외한 영역에만 클릭이벤트가 동작하도록 설정합니다. */
+  z-index: 998; /* 모달보다 한 단계 낮은 z-index 값을 설정합니다. */
+  /* backdrop이 클릭되었을 때 기본 커서가 보이지 않도록 설정합니다. */
+  cursor: default;
+}
+
+.reviewModalContainer {
+  /* 모달창 크기 */
+  width: 300px;
+  height: 100px;
+
+  /* 최상단 위치 */
+  z-index: 999;
+
+  /* 중앙 배치 */
+  /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
+  /* translate는 본인의 크기 기준으로 작동한다. */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* 모달창 디자인 */
+  background-color: rgb(255, 255, 255);
+  /* /// border: 1px solid black; */
+  border-radius: 8px;
+}
+
+/* 모달창 내부 X버튼 */
+/* .modalContainer > .closeBtn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border-radius: 15px;
+} */
+
+.reviewModalContainer > .closeArea {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 800;
+  background-color: #beccff;
+  border-radius: 8px 8px 0 0;
+  height: 25%;
+}
+
+.reviewModalContainer > .closeArea > .closeBtn {
+  color: white;
+  margin-right: 10px;
+}
+.reviewModalContainer > .btnArea {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 75%;
+  width: 100%;
+}
+
+.reviewModalContainer > .btnArea > .editBtn,
+.delBtn {
+  font-size: 25px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45%;
+  cursor: pointer;
+}
+
+.reviewModalContainer > .btnArea > .editBtn {
+  border-bottom: 1px solid #d3d3d3;
+}

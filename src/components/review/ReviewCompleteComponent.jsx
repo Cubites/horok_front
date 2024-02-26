@@ -15,7 +15,7 @@ const ReviewCompleteComponent = () => {
     axios
       .patch(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((error) => {
         console.error("error!!! : ", error);

@@ -1,42 +1,64 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, ReactDOM } from "react";
 import axios from "axios";
 import "./reviewDetail.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStar,
   faStarHalfAlt,
+  faVolumeXmark,
   // faStarEmpty,
 } from "@fortawesome/free-solid-svg-icons";
+import ImageSwiper from "./ImageSwiper";
+import { render } from "@testing-library/react";
 
-const ReviewComponent = ({ filter }) => {
+const ReviewComponent = ({ filter, folderName }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [reviewList, setReviewList] = useState([]);
   const { folderId, reviewId } = useParams();
   const [favors, setFavors] = useState([]);
 
+  //좋아요 정보 가져오기 <- 리뷰 정보가 업데이트 되면
   useEffect(() => {
     if (location.state && location.state.reviews) {
-      setReviewList(location.state.reviews);
+      getFavors(folderId);
     }
   }, [location.state]);
 
+  //리뷰 정보 업데이트 <- 좋아요 add,remove 이벤트 발생시
   useEffect(() => {
-    if (location.state && location.state.reviewId) {
-      console.log("scrollToReview 호출");
-      scrollToReview(location.state.reviewId);
-    }
-  }, [reviewList]);
+    updateReviewList(favors);
+  }, [favors]);
 
-  useEffect(() => {
-    // 리뷰 목록과 favors 정보가 모두 준비되면 각 리뷰에 favors 정보를 추가합니다.
-    if (reviewList && reviewList.length > 0 && favors.length > 0) {
+  //좋아요 정보 불러와 리뷰정보에 추가
+  const getFavors = (folderId) => {
+    axios
+      .get(`${process.env.REACT_APP_DEV_URL}/api/favors/${folderId}`)
+      .then((res) => {
+        setFavors(res.data);
+        updateReviewList(res.data);
+      })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
+  };
+
+  //리뷰 정보에 좋아요 정보 추가
+  const updateReviewList = (favors) => {
+    if (location.state && location.state.reviews) {
+      const updatedReviewList = location.state.reviews.map((review) => {
+        const favor = favors[review.folderReviewId];
+        // 찾은 favors 정보를 리뷰에 추가합니다.
+        return {
+          ...review,
+          favor: favor || null, // 해당하는 favors 정보가 없으면 null로 설정합니다.
+        };
+      });
+      setReviewList(updatedReviewList);
+    } else if (reviewList !== null) {
       const updatedReviewList = reviewList.map((review) => {
-        // 리뷰의 folderReviewId를 기준으로 favors에서 해당 정보를 찾습니다.
-        const favor = favors.find(
-          (favor) => favor.folderReviewId === review.folderReviewId
-        );
+        const favor = favors[review.folderReviewId];
         // 찾은 favors 정보를 리뷰에 추가합니다.
         return {
           ...review,
@@ -45,36 +67,17 @@ const ReviewComponent = ({ filter }) => {
       });
       setReviewList(updatedReviewList);
     }
-  }, [favors]);
-
-  const getFavors = (folderId) => {
-    axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/favors/${folderId}`)
-      .then((res) => {
-        setFavors(res.data);
-        // getReviews(folderId);
-      })
-      .catch((error) => {
-        console.error("error: ", error);
-      });
   };
 
-  const getReviews = (folderId) => {
-    // 리뷰 목록을 서버에서 가져옴
-    axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/${folderId}`)
-      .then((res) => {
-        setReviewList(res.data);
-      })
-      .catch((error) => {
-        console.error("error: ", error);
-      });
-  };
+  useEffect(() => {
+    if (location.state && location.state.reviewId) {
+      scrollToReview(location.state.reviewId);
+    }
+  }, [reviewList]);
 
+  //클릭한 리뷰 위취에 스크롤 위치
   const scrollToReview = (reviewId) => {
-    console.log("reviewId: ", reviewId);
     const element = document.getElementById(`review-${reviewId}`);
-    console.log(element);
     if (element) {
       element.scrollIntoView({ behavior: "auto", block: "start" });
     }
@@ -151,17 +154,9 @@ const ReviewComponent = ({ filter }) => {
       })
       .then((response) => {
         if (response.data === true) {
-          console.log("좋아요 성공");
-          // getFavors(folderId);
-          //setReviewList([...reviewList]);
-          const updatedReviewList = reviewList.map((review) =>
-            review.reviewId === reviewId
-              ? { ...review, favor: [{ folderReviewId }] }
-              : review
-          );
-          setReviewList(updatedReviewList);
-
+          //좋아요 성공
           navigate(`/folder/${folderId}/${reviewId}`);
+          getFavors(folderId);
         }
       })
       .catch((error) => {
@@ -181,12 +176,9 @@ const ReviewComponent = ({ filter }) => {
       )
       .then((response) => {
         if (response.data === true) {
-          console.log("좋아요 취소 성공");
-          // 리뷰 목록에서 해당 리뷰의 favor 정보 제거
-          const updatedReviewList = reviewList.map((review) =>
-            review.reviewId === reviewId ? { ...review, favor: null } : review
-          );
-          setReviewList(updatedReviewList);
+          //좋아요 취소 성공
+          navigate(`/folder/${folderId}/${reviewId}`);
+          getFavors(folderId);
         }
       })
       .catch((error) => {
@@ -206,7 +198,7 @@ const ReviewComponent = ({ filter }) => {
               onClick={handleClickBackBtn}
             />
           </div>
-          <div className="headerTxt">폴폴폴</div>
+          <div className="headerTxt">{folderName}</div>
         </div>
       </div>
       <div className="feedArea">
@@ -237,11 +229,11 @@ const ReviewComponent = ({ filter }) => {
               <div className="reviewContentArea">
                 <div className="top">
                   <div className="reviewImgArea">
-                    <img
-                      src="\images\review_image_sample.jpg"
-                      className="reviewImg"
-                      alt="reviewImg"
-                    />
+                    {
+                      <ImageSwiper
+                        images={[review.image1, review.image2, review.image3]}
+                      />
+                    }
                   </div>
                 </div>
                 <div className="middle">
@@ -271,22 +263,30 @@ const ReviewComponent = ({ filter }) => {
                         className="replyBtn"
                         alt="test"
                         height="25"
+                        onClick={() => {
+                          navigate(
+                            `/review/reply/${folderId}/${review.reviewId}`,
+                            {
+                              state: { folderReviewId: review.folderReviewId },
+                            }
+                          );
+                        }}
                       />
                       {review.replyCnt}개
                     </div>
                     <div className="favorBtn cursorToPointer">
-                      {review.favor ? (
+                      {review.favor && review.favor.isFavor ? (
                         <img
                           src="/images/favorBtn_fill.png"
                           className="favorBtn fill"
                           alt="test"
                           height="25"
-                          onClick={() =>
+                          onClick={() => {
                             handleRemoveFavor(
                               review.folderReviewId,
                               review.reviewId
-                            )
-                          }
+                            );
+                          }}
                         />
                       ) : (
                         <img
@@ -302,7 +302,10 @@ const ReviewComponent = ({ filter }) => {
                           }
                         />
                       )}
-                      {review.favor ? review.favor.length : 0}개
+                      {review.favor && review.favor.favorCnt > 0
+                        ? review.favor.favorCnt
+                        : 0}
+                      개
                     </div>
                   </div>
                 </div>
