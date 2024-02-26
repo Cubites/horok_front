@@ -21,8 +21,7 @@ import ReviewReplyComponent from "./components/review/ReviewReplyComponent";
 
 function App() {
   const [filter, setFilter] = useState("0");
-  const [longitude, setLongitude] = useState("0");
-  const [latitude, setLatitude] = useState("0");
+  const [latLon, setLatLon] = useState([0, 0]);
   const showCenterBtns = (e) => {
     e.preventDefault();
 
@@ -38,7 +37,7 @@ function App() {
           <Route path="/paylist" element={<PayComponent />} />
           <Route path="/folder/add" element={<FolderAddComponenet />} />
           <Route path="/folder/list" element={<FolderListComponent />} />
-          <Route path="/map" element={<MapComponent />} />
+          <Route path="/map" element={<MapComponent latLon={latLon} setLatLon={setLatLon} />} />
           <Route path="/mypage" element={<MypageComponent />} />
           <Route path="/folder/share" element={<FolderShareComponent />} />
           <Route path="/write/:payId" element={<ReviewWriteComponent />} />
