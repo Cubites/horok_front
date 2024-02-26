@@ -17,6 +17,7 @@ import AgreeMent from './components/login/AgreeMent';
 import ReviewListComponent from './components/review/ReviewListComponent';
 import ReviewDetailComponent from './components/review/ReviewDetailComponent';
 import ReviewReplyComponent from './components/review/ReviewReplyComponent';
+import InviteComponent from "./components/invite/InviteComponent";
 
 function App() {
   const [filter, setFilter] = useState('0');
@@ -67,6 +68,7 @@ function App() {
             path='/review/reply/:folderId/:reviewId'
             element={<ReviewReplyComponent />}
           />
+          <Route path="/invite/:inviteToken" element={<InviteComponent />} />
         </Routes>
       </div>
       <div id='footer'>

@@ -40,11 +40,11 @@ const FolderAddComponent = () => {
     axios
       .post(
         `${process.env.REACT_APP_DEV_URL}/api/folders/make`,
-        {
+        JSON.stringify({
           // 전달할 데이터를 객체로 정의
           folderName: inputText,
           folderImg: selectedValue,
-        },
+        }),
         {
           headers: {
             "Content-Type": "application/json",
@@ -52,8 +52,9 @@ const FolderAddComponent = () => {
         }
       )
       .then((res) => {
-        if (res.data === true) {
-          navigate("/folder/share", { state: { folderName: inputText } });
+        if (res.data) {
+          console.log(res.data);
+          navigate("/folder/share", { state: { folderName: inputText , folderId: res.data} });
         } else {
           if (
             window.confirm("폴더 생성에 실패하였습니다. 다시 시도해주세요.")
