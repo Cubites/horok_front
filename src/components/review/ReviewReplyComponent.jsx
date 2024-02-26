@@ -26,7 +26,7 @@ const ReviewReplyComponent = ({ folderName }) => {
   const getReplies = () => {
     axios
       .get(
-        `${process.env.REACT_APP_DEV_URL}/api/reviews/replies/${folderId}/${reviewId}`
+        `${process.env.REACT_APP_DEV_URL}/api/reviews/replies/${folderId}/${reviewId}`, {withCredential: true}
       )
       .then((res) => {
         setreplyList(res.data);
@@ -47,6 +47,7 @@ const ReviewReplyComponent = ({ folderName }) => {
             folderReviewId: location.state.folderReviewId, //replyList[0].folderReviewId,
             replyContent: replyInputValue,
           },
+          withCredentials: true
         },
         {
           headers: {
@@ -68,7 +69,7 @@ const ReviewReplyComponent = ({ folderName }) => {
   const deleteReplyClick = (e) => {
     const rId = e.target.getAttribute("data");
     axios
-      .delete(`${process.env.REACT_APP_DEV_URL}/api/replies/${rId}`)
+      .delete(`${process.env.REACT_APP_DEV_URL}/api/replies/${rId}`, {withCredential: true})
 
       .then((res) => {
         if (res.data === true) {

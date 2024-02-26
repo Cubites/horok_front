@@ -28,7 +28,7 @@ const FolderShareComponent = (props) => {
   const getToken = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_DEV_URL}/api/folders/invite/${shareFolderId}`
+        `${process.env.REACT_APP_DEV_URL}/api/folders/invite/${shareFolderId}`, {withCredential: true}
       );
       return response.data;
     } catch (error) {
@@ -38,7 +38,7 @@ const FolderShareComponent = (props) => {
 
   const getUser = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {withCredential: true})
       .then((res) => {
         setUser(res.data);
       })

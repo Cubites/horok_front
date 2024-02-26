@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
 function LoginOrSignUp() {
   // 페이지가 로드될 때 실행되는 useEffect

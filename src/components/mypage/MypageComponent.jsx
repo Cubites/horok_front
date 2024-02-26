@@ -69,7 +69,7 @@ const MypageComponent = () => {
   // 리액트랑 스프링부트 연동하는거니까
   const getUser = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/users`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users`, {withCredential: true})
       .then((res) => {
         setUser(res.data);
         setCardList(res.data.cardsList);
@@ -93,6 +93,7 @@ const MypageComponent = () => {
           "Content-Type": "multipart/form-data;",
           charset: "utf-8",
         },
+        withCredentials: true
       })
       .then((res) => {
         if (res.status === 201) {
@@ -111,7 +112,7 @@ const MypageComponent = () => {
       .post(`${process.env.REACT_APP_DEV_URL}/api/users/nickname`, {
         userId: userId,
         userNickname: newNickname,
-      })
+      }, {withCredentials: true})
       .then((res) => {
         if (res.status === 201) {
           //닉네임 수정 성공함
@@ -155,6 +156,7 @@ const MypageComponent = () => {
             params: {
               cardNumber: cardNumberParam,
             },
+            withCredentials: true
           }
         );
         renderChart(response.data); // 차트를 렌더링
@@ -232,6 +234,7 @@ const MypageComponent = () => {
             params: {
               cardNumber: cardNumberParam,
             },
+            withCredentials: true
           }
         );
         renderChart2(response.data); // 차트를 렌더링

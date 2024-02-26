@@ -8,7 +8,7 @@ const MultiSelectComponent = ({ onChange }) => {
 
   const getFolderList = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/user`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/user`, {withCredential: true})
       .then((res) => {
         const folderData = res.data.map((folder) => ({
           value: folder.folderId.toString(),
