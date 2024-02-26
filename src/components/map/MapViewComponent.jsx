@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 
-const MapViewComponent = ({ ShowFolderId, setShowFolderId, ReviewListByStore, FolderList, ReviewNumMax, CenterLatLon }) => {
+const MapViewComponent = ({ 
+  ShowFolderId, setShowFolderId, 
+  ReviewListByStore, FolderList, ReviewNumMax, 
+  CenterLatLon, setLatLon
+}) => {
   const { naver } = window;
 
   /* 지도 생성 함수 */
@@ -178,6 +182,9 @@ const MapViewComponent = ({ ShowFolderId, setShowFolderId, ReviewListByStore, Fo
           document.getElementById('mapAreaSecond').remove();
         }
         document.getElementById('mapAreaFirst').id = 'mapAreaSecond';
+      })
+      .then(() => {
+        setLatLon([0, 0]);
       });
   }, [ShowFolderId, ReviewListByStore, CenterLatLon]);
 
