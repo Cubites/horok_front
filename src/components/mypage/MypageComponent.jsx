@@ -123,7 +123,7 @@ const MypageComponent = () => {
         console.log("수정 실패:", error);
       });
   };
-  //=========================월간 통계=========================
+  //월간 통계
   useEffect(() => {
     /*
       * 체크하면 통계가 나타나는 이유
@@ -136,7 +136,6 @@ const MypageComponent = () => {
         => false가 되었으므로 noshow 클래스가 사라지지 않아 통계 태그가 보이지 않음
         >> 정확히는 사라진게 아니라 리랜더링되서 처음부터 표시가 되지 않은 것임
     */
-
     const fetchData = async () => {
       let cardNumberParam = "";
       cardChecked.forEach((v, i) => {
@@ -206,7 +205,7 @@ const MypageComponent = () => {
     });
   };
 
-  //=====================연간 통계=========================
+  //연간 통계
 
   useEffect(() => {
     //cardChecked 상태가 변경될 때마다 실행되는 함수
@@ -282,10 +281,10 @@ const MypageComponent = () => {
       },
     });
   };
-  //=====>>>>>>>>>>>>>>>>>  return 화면
+  //>>>>>>>return 화면
   return (
     <div className="mypage" id="modalScroll">
-      {/* ===========================모달_닉네임 수정 (배경 불투명 + 모달창 띄우기 + 내부 내용 )======================= */}
+      {/* =======모달_닉네임 수정 (배경 불투명 + 모달창 띄우기 + 내부 내용 )======== */}
       <div className="aaaa noshow" id="modal" onClick={Modal}>
         <div className="bbbb" onClick={Modal}>
           <div className="cccc">
@@ -308,9 +307,9 @@ const MypageComponent = () => {
           </div>
         </div>
       </div>
-      {/* =======================마이페이지 div 시작========================== */}
+      {/* ==============마이페이지 div시작========================== */}
       <div id="mypageMain">
-        {/*=============프로필 이미지 수정==========================*/}
+        {/*=============프로필 이미지 수정===========================*/}
         <div id="profileBox" onClick={UploadImage}>
           {uploadedImage ? (
             <img className="profile" src={uploadedImage} alt="프로필 없을때" />
@@ -339,7 +338,7 @@ const MypageComponent = () => {
           </div>
         </div>
 
-        {/* 등록한 카드 리스트(+토글) */}
+        {/* 등록한 카드 리스트 (+토글버튼) */}
         <div id="card">
           <div id="card_title">
             카드
@@ -352,7 +351,7 @@ const MypageComponent = () => {
               onChange={handleAllCheck}
             />
           </div>
-          {/* 카드 리스트 동적 생성 */}
+          {/* 카드 리스트 개수에 따른 동적 생성 */}
           {cardList
             .slice(0, showAllCards ? cardList.length : 2)
             .map((card, index) => (
