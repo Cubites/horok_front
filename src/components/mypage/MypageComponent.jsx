@@ -136,6 +136,7 @@ const MypageComponent = () => {
         => false가 되었으므로 noshow 클래스가 사라지지 않아 통계 태그가 보이지 않음
         >> 정확히는 사라진게 아니라 리랜더링되서 처음부터 표시가 되지 않은 것임
     */
+
     const fetchData = async () => {
       let cardNumberParam = "";
       cardChecked.forEach((v, i) => {
@@ -146,6 +147,7 @@ const MypageComponent = () => {
           cardNumberParam += cardList[i].cardNumber;
         }
       });
+
       // 서버에서 카드 사용 통계 데이터를 가져오는 역할
       try {
         const response = await axios.get(
@@ -395,7 +397,7 @@ const MypageComponent = () => {
           <div className="statusEx">
             위의 카드 리스트에서 통계를 <br /> 확인하고 카드를 선택하면 <br />
             연간/월간 통계 확인 가능해요.
-            <img src="./images/horokImg.png" alt="더보기 열기" />
+            <img src="./images/SOLExplorers.png" alt="더보기 열기" />
           </div>
           {/* 통계영역 */}
           <div>
