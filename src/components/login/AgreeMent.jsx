@@ -4,6 +4,7 @@ import ArticleDetail1 from './ArticleDetail1';
 import ArticleDetail2 from './ArticleDetail2';
 import ArticleDetail3 from './ArticleDetail3';
 import ArticleDetail4 from './ArticleDetail4';
+
 const AgreeMent = () => {
   let imgstatus = true;
   function agreeAllArticles() {
@@ -34,17 +35,46 @@ const AgreeMent = () => {
     <div id='agreeMentContainer'>
       <div id='agreementTop'>
         <img
+          className='backImg'
+          alt='profile'
+          src={process.env.PUBLIC_URL + '/images/backArrow.png'}
+          onClick={() => {
+            goToLogin();
+          }}
+        />
+        <img
           className='mainImg'
           alt='profile'
           src={process.env.PUBLIC_URL + '/images/LoginPoint.png'}
         />
         <div id='horok'>호록</div>
+        <div id='oneAndTwoImgBox'>
+          <img
+            className='oneAndtwo'
+            alt='profile'
+            src={process.env.PUBLIC_URL + '/images/oneBlue.png'}
+          />
+          <img
+            className='grayLine'
+            alt='profile'
+            src={process.env.PUBLIC_URL + '/images/lineGray.png'}
+          />
+          <img
+            className='oneAndtwo'
+            alt='profile'
+            src={process.env.PUBLIC_URL + '/images/twoGray.png'}
+          />
+        </div>
       </div>
       <div id='agreementBoxs'>
-        <div id='agreementText'>서비스 이용을 위한 추가 동의가 필요해요!</div>
+        <div id='agreementText'>
+          호록에 오신 것을 진심으로 환영합니다.
+          <br /> 원활한 서비스 이용을 위하여
+          <br /> 아래 약관 동의 및 회원가입이 필요합니다.
+        </div>
 
         <div id='articleBox'>
-          <div id='articleTitle'>추가 동의 항목</div>
+          {/* <div id='articleTitle'>추가 동의 항목</div> */}
           <div className='horokArticle' id='agreeAll'>
             <img
               id='agreeAllImg'
@@ -56,7 +86,7 @@ const AgreeMent = () => {
               전체 동의하기
             </div>
           </div>
-
+          <div id='line'></div>
           <div className='horokArticle'>
             <img
               id='a1profile'
@@ -68,10 +98,14 @@ const AgreeMent = () => {
               className='agreeText'
               onClick={() => agreeClick('a1', 'a1profile')}
             >
-              [필수] 호록 이용 약관 동의
+              [필수] 호록 이용 약관
             </div>
             <div className='lookArticle' onClick={() => showDetail('ac1')}>
-              보기
+              <img
+                className='rightArrows'
+                src={process.env.PUBLIC_URL + '/images/rightArrow.png'}
+                alt=''
+              />
             </div>
             <input
               type='hidden'
@@ -92,10 +126,14 @@ const AgreeMent = () => {
               className='agreeText'
               onClick={() => agreeClick('a2', 'a2profile')}
             >
-              [필수] 위치기반 서비스 이용 약관 동의
+              [필수] 위치기반 서비스 이용 약관
             </div>
             <div className='lookArticle' onClick={() => showDetail('ac2')}>
-              보기
+              <img
+                className='rightArrows'
+                src={process.env.PUBLIC_URL + '/images/rightArrow.png'}
+                alt=''
+              />
             </div>
             <input
               type='hidden'
@@ -116,10 +154,14 @@ const AgreeMent = () => {
               className='agreeText'
               onClick={() => agreeClick('a3', 'a3profile')}
             >
-              [필수] 오픈뱅킹공동업무 금융정보 조회 약관 동의{' '}
+              [필수] 오픈뱅킹공동업무 금융정보 조회 약관
             </div>
             <div className='lookArticle' onClick={() => showDetail('ac3')}>
-              보기
+              <img
+                className='rightArrows'
+                src={process.env.PUBLIC_URL + '/images/rightArrow.png'}
+                alt=''
+              />
             </div>
             <input
               type='hidden'
@@ -140,10 +182,14 @@ const AgreeMent = () => {
               className='agreeText'
               onClick={() => agreeClick('a4', 'a4profile')}
             >
-              [선택] 푸시 알림 서비스 수신 동의{' '}
+              [선택] 푸시 알림 서비스 수신
             </div>
             <div className='lookArticle' onClick={() => showDetail('ac4')}>
-              보기
+              <img
+                className='rightArrows'
+                src={process.env.PUBLIC_URL + '/images/rightArrow.png'}
+                alt=''
+              />
             </div>
             <input
               type='hidden'
@@ -181,6 +227,10 @@ const AgreeMent = () => {
     </div>
   );
 };
+
+function goToLogin() {
+  window.location.href = '/login';
+}
 
 function agreeClick(input, img) {
   let inputval = document.getElementById(input);
