@@ -13,7 +13,6 @@ const FolderListComponent = () => {
       .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
       .then((res) => {
         setFolder(res.data);
-        console.log(res.data);
       });
   };
 

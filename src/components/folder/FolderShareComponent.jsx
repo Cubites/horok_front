@@ -12,16 +12,11 @@ const FolderShareComponent = (props) => {
     try {
       const token = await getToken();
       if (navigator.share) {
-        //const blob = await fetch('/images/horok_invite.png').then(res => res.blob());
         await navigator.share({
-          title: "호록",          
+          title: "호록",
           url: `https://horok.link/invite/${token}`,
           text: `\'${user.userNickname}\' 님이 \"${location.state.folderName}\" 폴더에 초대하셨어요. <br><br> 참가해주세요!`.trim(),
-          // files: [
-          //   new File([blob], 'horok_invite.png', { type: blob.type }),
-          // ],
         });
-        console.log("공유 성공");
       } else {
         console.log("Web Share API를 지원하지 않는 브라우저입니다.");
       }
@@ -46,7 +41,6 @@ const FolderShareComponent = (props) => {
       .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`)
       .then((res) => {
         setUser(res.data);
-        console.log(res.data);
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);

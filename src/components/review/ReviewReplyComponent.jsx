@@ -28,7 +28,6 @@ const ReviewReplyComponent = () => {
         `${process.env.REACT_APP_DEV_URL}/api/reviews/replies/${folderId}/${reviewId}`
       )
       .then((res) => {
-        console.log(res.data);
         setreplyList(res.data);
       });
   };
@@ -104,7 +103,6 @@ const ReviewReplyComponent = () => {
               width: "82%",
               fontWeight: "bold",
               fontSize: "21px",
-              //   lineHeight: "38px",
               marginTop: "15px",
               marginBottom: "5px",
             }}
