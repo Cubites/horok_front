@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
-
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import './loginSNS.css';
 
 let NAVER_AUTH_URL = '';
@@ -18,7 +16,6 @@ let OAUTH2_REDIRECT_URI = process.env.REACT_APP_FRONT_URL + '/loginorsignup';
 function readQueryParam() {
   const query = new URLSearchParams(window.location.search);
   const uri = query.get('redirect_uri');
-  console.log(uri);
   if (uri !== null) {
     OAUTH2_REDIRECT_URI = process.env.REACT_APP_FRONT_URL + uri;
   }
@@ -37,8 +34,6 @@ function readQueryParam() {
     '/oauth2/authorization/google?redirect_uri=' +
     OAUTH2_REDIRECT_URI;
 }
-console.log(API_BASE_URL);
-console.log(OAUTH2_REDIRECT_URI);
 function locationOAuth2(path) {
   window.location.href = path;
 }
