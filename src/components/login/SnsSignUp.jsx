@@ -18,6 +18,39 @@ const SnsSignUp = () => {
 
   return (
     <div id='signUpContainer'>
+      <div id='signUpTop'>
+        <img
+          className='backImg'
+          alt='profile'
+          src={process.env.PUBLIC_URL + '/images/backArrow.png'}
+          onClick={() => {
+            exPage();
+          }}
+        />
+        <img
+          className='mainImg'
+          alt='profile'
+          src={process.env.PUBLIC_URL + '/images/LoginPoint.png'}
+        />
+        <div id='horok'>호록</div>
+        <div id='oneAndTwoImgBox'>
+          <img
+            className='oneAndtwo'
+            alt='profile'
+            src={process.env.PUBLIC_URL + '/images/oneGray.png'}
+          />
+          <img
+            className='grayLine'
+            alt='profile'
+            src={process.env.PUBLIC_URL + '/images/lineGray.png'}
+          />
+          <img
+            className='oneAndtwo'
+            alt='profile'
+            src={process.env.PUBLIC_URL + '/images/twoBlue.png'}
+          />
+        </div>
+      </div>
       <div id='imgAndtext'>
         <img
           id='profileImg'
@@ -68,7 +101,7 @@ async function SignupProcess() {
       formData.append('profile', applyFile.files[0]);
     }
     const response = await axios
-      .post('http://192.168.0.70:8080/login/signup', formData, {
+      .post(process.env.REACT_APP_DEV_URL + '/login/signup', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -82,6 +115,10 @@ async function SignupProcess() {
       })
       .catch(function (error) {});
   }
+}
+
+function exPage() {
+  window.history.back();
 }
 
 function fileInputClick() {

@@ -292,4 +292,5 @@ test ( div 위치 배치 )
   padding: 10px;
   background-color: rgb(201, 234, 255);
   font-family: "Noto Sans KR", sans-serif;
+  justify-content: center;
 }

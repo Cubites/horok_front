@@ -123,7 +123,7 @@ const MypageComponent = () => {
         console.log("수정 실패:", error);
       });
   };
-  //=========================월간 통계=========================
+  //월간 통계
   useEffect(() => {
     /*
       * 체크하면 통계가 나타나는 이유
@@ -146,6 +146,7 @@ const MypageComponent = () => {
           cardNumberParam += cardList[i].cardNumber;
         }
       });
+
       // 서버에서 카드 사용 통계 데이터를 가져오는 역할
       try {
         const response = await axios.get(
@@ -204,7 +205,7 @@ const MypageComponent = () => {
     });
   };
 
-  //=====================연간 통계=========================
+  //연간 통계
 
   useEffect(() => {
     //cardChecked 상태가 변경될 때마다 실행되는 함수
@@ -280,10 +281,10 @@ const MypageComponent = () => {
       },
     });
   };
-  //=====>>>>>>>>>>>>>>>>>  return 화면
+  //>>>>>>>return 화면
   return (
     <div className="mypage" id="modalScroll">
-      {/* ===========================모달_닉네임 수정 (배경 불투명 + 모달창 띄우기 + 내부 내용 )======================= */}
+      {/* =======모달_닉네임 수정 (배경 불투명 + 모달창 띄우기 + 내부 내용 )======== */}
       <div className="aaaa noshow" id="modal" onClick={Modal}>
         <div className="bbbb" onClick={Modal}>
           <div className="cccc">
@@ -306,9 +307,9 @@ const MypageComponent = () => {
           </div>
         </div>
       </div>
-      {/* =======================마이페이지 div 시작========================== */}
+      {/* ==============마이페이지 div시작========================== */}
       <div id="mypageMain">
-        {/*=============프로필 이미지 수정==========================*/}
+        {/*=============프로필 이미지 수정===========================*/}
         <div id="profileBox" onClick={UploadImage}>
           {uploadedImage ? (
             <img className="profile" src={uploadedImage} alt="프로필 없을때" />
@@ -337,7 +338,7 @@ const MypageComponent = () => {
           </div>
         </div>
 
-        {/* 등록한 카드 리스트(+토글) */}
+        {/* 등록한 카드 리스트 (+토글버튼) */}
         <div id="card">
           <div id="card_title">
             카드
@@ -350,7 +351,7 @@ const MypageComponent = () => {
               onChange={handleAllCheck}
             />
           </div>
-          {/* 카드 리스트 동적 생성 */}
+          {/* 카드 리스트 개수에 따른 동적 생성 */}
           {cardList
             .slice(0, showAllCards ? cardList.length : 2)
             .map((card, index) => (
@@ -395,7 +396,7 @@ const MypageComponent = () => {
           <div className="statusEx">
             위의 카드 리스트에서 통계를 <br /> 확인하고 카드를 선택하면 <br />
             연간/월간 통계 확인 가능해요.
-            <img src="./images/horokImg.png" alt="더보기 열기" />
+            <img src="./images/SOLExplorers.png" alt="더보기 열기" />
           </div>
           {/* 통계영역 */}
           <div>
