@@ -97,7 +97,7 @@ const MapComponent = ({latLon, setLatLon}) => {
     if(ReviewList.length === 0) {
       searchReviews()
         .then(data => {
-          if(CenterLatLon[0] === 0 && CenterLatLon[1] === 0) {
+          if(CenterLatLon && CenterLatLon[0] === 0 && CenterLatLon[1] === 0) {
             getLocation();
           }
           if(data) {
