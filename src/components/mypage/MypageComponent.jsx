@@ -71,11 +71,10 @@ const MypageComponent = () => {
     const cardChecked2 = cardChecked.map((v, i) => {
       //v : 체크 상태 , i :인덱스
       if (i === Number(value)) {
-        return checked;
+        cardChecked[i] = checked;
       }
-      return v;
+      return cardChecked[i];
     });
-
     setCardChecked([...cardChecked2]);
 
     // 모든 카드가 선택되었는지 확인
@@ -102,6 +101,10 @@ const MypageComponent = () => {
     //todo
     const { checked } = event.target;
     setAllChecked(checked);
+    if (cardList.length > 0) {
+      // 카드 체크박스 상태 업데이트
+      setCardChecked(Array(cardList.length).fill(checked));
+    }
     setCardChecked(cardChecked.map(() => checked));
   };
 
