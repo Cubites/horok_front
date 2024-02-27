@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import './mapComponent.css';
 import axios from 'axios';
 import MapViewComponent from './MapViewComponent';
+import { useNavigate } from 'react-router-dom';
 
 const MapComponent = ({latLon, setLatLon}) => {
-
+  const navigate = useNavigate();
   const [ShowFolderId, setShowFolderId] = useState(0); // 화면에 표시할 폴더의 id
   const [ReviewList, setReviewList] = useState([]); // 모든 리뷰 목록
   const [ReviewListByStore, setReviewListByStore] = useState({}); // (선택한 폴더의) 가게별 리뷰 목록
@@ -72,6 +73,7 @@ const MapComponent = ({latLon, setLatLon}) => {
       return { reviewsAll, reviewsByStore, reviewsByFolder, mostReviewNum };
     } catch (error) {
       console.error("Error that get review data.", error);
+      navigate('/login');
     }
   }
 
