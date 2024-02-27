@@ -1,4 +1,4 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./writeReview.css";
@@ -8,8 +8,6 @@ import FileUploadComponent from "./FileUploadComponent";
 const ReviewModifyComponent = () => {
   const movePage = useNavigate();
   const location = useLocation();
-  //   const { payId } = useParams();
-  //   const { storeId } = location.state;
 
   const [data, setData] = useState({});
   const [reviewId, setReveiwId] = useState(null);
@@ -38,13 +36,16 @@ const ReviewModifyComponent = () => {
 
   const getWrittenReview = (reviewId) => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/edit/${reviewId}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/edit/${reviewId}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setData(res.data);
         handleFileUpload([res.data.image1, res.data.image2, res.data.image3]);
       })
       .catch((error) => {
         console.error("error!!! : ", error);
+        movePage("/login");
       });
   };
 
@@ -62,6 +63,7 @@ const ReviewModifyComponent = () => {
         headers: {
           "Content-Type": "multipart/form-data;",
         },
+        withCredentials: true,
         baseURL: process.env.REACT_APP_DEV_URL,
       })
       .then((response) => {
@@ -70,6 +72,7 @@ const ReviewModifyComponent = () => {
       })
       .catch((error) => {
         console.log("error: ", error);
+        movePage("/login");
       });
   };
 

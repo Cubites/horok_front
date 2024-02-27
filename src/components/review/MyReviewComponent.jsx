@@ -3,10 +3,6 @@ import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./reviewList.css";
 
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -66,9 +62,15 @@ const MyReviewComponent = ({ filter, setFilter }) => {
   //리뷰 가져오는 함수
   const getMyReview = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {withCredentials: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setData(res.data);
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+        navigate("/login");
       });
   };
 

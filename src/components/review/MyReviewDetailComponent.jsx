@@ -7,7 +7,6 @@ import {
   faStar,
   faStarHalfAlt,
   faVolumeXmark,
-  // faStarEmpty,
 } from "@fortawesome/free-solid-svg-icons";
 import ImageSwiper from "./ImageSwiper";
 import ReviewModal from "./ReviewModal";
@@ -80,29 +79,23 @@ const ReviewComponent = ({ filter, folderName }) => {
       );
     }
 
-    // // Empty Stars
-    // const emptyStar = 5 - Math.ceil(reviewScore);
-    // for (let i = 0; i < emptyStar; i++) {
-    //   starIcon.push(
-    //     <FontAwesomeIcon key={`empty-${i}`} icon={["far", "star"]} />
-    //   );
-    // }
-
     return starIcon;
   };
 
   const getReview = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {withCredentials: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setReviewList(res.data);
       });
   };
 
   const handleClickMapIcon = (latitude, longitude) => {
-    // navigate("/map", {
-    //   state: { latitude: latitude, longitude: longitude },
-    // });
+    navigate("/map", {
+      state: { latitude: latitude, longitude: longitude },
+    });
   };
 
   const handleClickBackBtn = () => {
@@ -130,13 +123,14 @@ const ReviewComponent = ({ filter, folderName }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        withCredentials: true
+        withCredentials: true,
       })
       .then((response) => {
         getReview(folderId);
       })
       .catch((error) => {
         console.log("error: ", error);
+        navigate("/login");
       });
 
     setIsOpen(false);

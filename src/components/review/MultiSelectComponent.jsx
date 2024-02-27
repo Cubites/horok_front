@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./multiSelect.css";
+import { useNavigate } from "react-router-dom";
 
 const MultiSelectComponent = ({ onChange, reviewId }) => {
   // const [data, setData] = useState({});
   const [options, setOptions] = useState([]);
   // 다중 선택된 항목들을 관리하기 위한 상태
   const [selectedOptions, setSelectedOptions] = useState(["0"]);
+  const navigate = useNavigate();
 
   const getFolderList = (reviewId) => {
     if (reviewId === -1) {
       axios
-        .get(`${process.env.REACT_APP_DEV_URL}/api/folders/user`)
+        .get(`${process.env.REACT_APP_DEV_URL}/api/folders/user`, {
+          withCredentials: true,
+        })
         .then((res) => {
           const folderData = res.data.map((folder) => ({
             value: folder.folderId.toString(),
@@ -21,11 +25,13 @@ const MultiSelectComponent = ({ onChange, reviewId }) => {
         })
         .catch((error) => {
           console.error("error!!! : ", error);
+          navigate("/login");
         });
     } else if (reviewId && reviewId !== -1) {
       axios
         .get(
-          `${process.env.REACT_APP_DEV_URL}/api/folders/notshared/${reviewId}`
+          `${process.env.REACT_APP_DEV_URL}/api/folders/notshared/${reviewId}`,
+          { withCredentials: true }
         )
         .then((res) => {
           const folderData = res.data.map((folder) => ({
@@ -36,6 +42,7 @@ const MultiSelectComponent = ({ onChange, reviewId }) => {
         })
         .catch((error) => {
           console.error("error!!! : ", error);
+          navigate("/login");
         });
     }
   };

@@ -88,7 +88,11 @@ function App() {
           <Route
             path="/folder/:folderId/:reviewId"
             element={
-              <ReviewDetailComponent filter={filter} folderName={folderName} />
+              <ReviewDetailComponent
+                filter={filter}
+                folderName={folderName}
+                setLatLon={setLatLon}
+              />
             }
           />
           <Route path="/login" element={<LoginSNS />} />
