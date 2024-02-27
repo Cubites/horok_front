@@ -7,7 +7,6 @@ import {
   faStar,
   faStarHalfAlt,
   faVolumeXmark,
-  // faStarEmpty,
 } from "@fortawesome/free-solid-svg-icons";
 import ImageSwiper from "./ImageSwiper";
 import ReviewModal from "./ReviewModal";
@@ -80,29 +79,23 @@ const ReviewComponent = ({ filter, folderName }) => {
       );
     }
 
-    // // Empty Stars
-    // const emptyStar = 5 - Math.ceil(reviewScore);
-    // for (let i = 0; i < emptyStar; i++) {
-    //   starIcon.push(
-    //     <FontAwesomeIcon key={`empty-${i}`} icon={["far", "star"]} />
-    //   );
-    // }
-
     return starIcon;
   };
 
   const getReview = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {withCredentials: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setReviewList(res.data);
       });
   };
 
   const handleClickMapIcon = (latitude, longitude) => {
-    // navigate("/map", {
-    //   state: { latitude: latitude, longitude: longitude },
-    // });
+    navigate("/map", {
+      state: { latitude: latitude, longitude: longitude },
+    });
   };
 
   const handleClickBackBtn = () => {
@@ -110,8 +103,8 @@ const ReviewComponent = ({ filter, folderName }) => {
   };
 
   //modal 조작
-  const handleOpenModal = (reviewId) => {
-    setSelectedReviewId(reviewId);
+  const handleOpenModal = (clickedReviewId) => {
+    setSelectedReviewId(clickedReviewId);
     setIsOpen(true);
   };
   const handleCloseModal = () => {
@@ -120,27 +113,35 @@ const ReviewComponent = ({ filter, folderName }) => {
   };
 
   //review 삭제 기능
-  const reviewDelete = (reviewId) => {
+  const reviewDelete = (selectedReviewId) => {
+    // confirm 창으로 수정
+    // confirm(
+    //   "리뷰를 삭제하면 해당 결제 내역에 대해서는 다시 리뷰를 작성할 수 없습니다. 정말 삭제하시겠습니까?"
+    // );
     axios
       .delete(`${process.env.REACT_APP_DEV_URL}/api/reviews/${reviewId}`, {
         headers: {
           "Content-Type": "application/json",
         },
-        withCredentials: true
+        withCredentials: true,
       })
       .then((response) => {
         getReview(folderId);
       })
       .catch((error) => {
         console.log("error: ", error);
+        navigate("/login");
       });
 
     setIsOpen(false);
-    alert("리뷰가 삭제되었습니다.");
   };
 
   //review 수정 기능
-  const reviewEdit = (reviewId) => {};
+  const reviewEdit = (selectedReviewId) => {
+    navigate("/review/edit", {
+      state: { reviewId: selectedReviewId },
+    });
+  };
 
   return (
     <div id="reviewFeedContainer">
@@ -188,8 +189,8 @@ const ReviewComponent = ({ filter, folderName }) => {
                   <ReviewModal
                     isOpen={handleOpenModal} //isOpen
                     onClose={handleCloseModal}
-                    onEdit={reviewEdit(review.reviewId)}
-                    onDelete={() => reviewDelete(review.reviewId)}
+                    onEdit={() => reviewEdit(selectedReviewId)}
+                    onDelete={() => reviewDelete(selectedReviewId)}
                   />
                 )}
               </div>

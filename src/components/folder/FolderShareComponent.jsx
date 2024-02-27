@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./folderShare.css";
 
@@ -7,7 +7,7 @@ const FolderShareComponent = (props) => {
   let location = useLocation();
   const shareFolderId = location.state.folderId;
   const [user, setUser] = useState({});
-
+  const navigate = useNavigate();
   const handleShare = async () => {
     try {
       const token = await getToken();
@@ -15,7 +15,7 @@ const FolderShareComponent = (props) => {
         await navigator.share({
           title: "호록",
           url: `https://horok.link/invite/${token}`,
-          text: `\'${user.userNickname}\' 님이 \"${location.state.folderName}\" 폴더에 초대하셨어요. <br><br> 참가해주세요!`.trim(),
+          text: `\'${user.userNickname}\' 님이 \"${location.state.folderName}\" 폴더에 초대하셨어요. 참가해주세요!`.trim(),
         });
       } else {
         console.log("Web Share API를 지원하지 않는 브라우저입니다.");
@@ -28,22 +28,27 @@ const FolderShareComponent = (props) => {
   const getToken = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_DEV_URL}/api/folders/invite/${shareFolderId}`, {withCredentials: true}
+        `${process.env.REACT_APP_DEV_URL}/api/folders/invite/${shareFolderId}`,
+        { withCredentials: true }
       );
       return response.data;
     } catch (error) {
       console.error("토큰 가져오기 실패", error);
+      navigate("/login");
     }
   };
 
   const getUser = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {withCredentials: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setUser(res.data);
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);
+        navigate("/login");
       });
   };
 
@@ -80,7 +85,7 @@ const FolderShareComponent = (props) => {
           </button>
         </div>
 
-        <Link to={"/"} style={{ width: "100%" }}>
+        <Link to={"/folder/list"} style={{ width: "100%" }}>
           <div
             className="completeBox"
             style={{

@@ -10,9 +10,8 @@ import {
   // faStarEmpty,
 } from "@fortawesome/free-solid-svg-icons";
 import ImageSwiper from "./ImageSwiper";
-import { render } from "@testing-library/react";
 
-const ReviewComponent = ({ filter, folderName }) => {
+const ReviewComponent = ({ filter, folderName, setLatLon }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [reviewList, setReviewList] = useState([]);
@@ -34,7 +33,9 @@ const ReviewComponent = ({ filter, folderName }) => {
   //좋아요 정보 불러와 리뷰정보에 추가
   const getFavors = (folderId) => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/favors/${folderId}`, {withCredentials: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/favors/${folderId}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setFavors(res.data);
         updateReviewList(res.data);
@@ -135,9 +136,8 @@ const ReviewComponent = ({ filter, folderName }) => {
   };
 
   const handleClickMapIcon = (latitude, longitude) => {
-    // navigate("/map", {
-    //   state: { latitude: latitude, longitude: longitude },
-    // });
+    setLatLon([latitude, longitude]);
+    navigate("/map");
   };
 
   const handleClickBackBtn = () => {
@@ -151,6 +151,7 @@ const ReviewComponent = ({ filter, folderName }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       })
       .then((response) => {
         if (response.data === true) {
@@ -161,6 +162,7 @@ const ReviewComponent = ({ filter, folderName }) => {
       })
       .catch((error) => {
         console.log("error: ", error);
+        navigate("/login");
       });
   };
 
@@ -172,6 +174,7 @@ const ReviewComponent = ({ filter, folderName }) => {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       )
       .then((response) => {
@@ -183,6 +186,7 @@ const ReviewComponent = ({ filter, folderName }) => {
       })
       .catch((error) => {
         console.log("error: ", error);
+        navigate("/login");
       });
   };
 

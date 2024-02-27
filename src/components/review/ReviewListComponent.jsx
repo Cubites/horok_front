@@ -1,7 +1,9 @@
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./reviewList.css";
+import FolderModal from "./FolderModal";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,6 +19,41 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedFolderId, setSelectedFolderId] = useState(null);
+  const [user, setUser] = useState({});
+  const [folder, setfolder] = useState({ folderName: "", folderImg: "" });
+  const folderShare = async () => {
+    try {
+      const token = await getToken();
+      if (navigator.share) {
+        await navigator.share({
+          title: "호록",
+          url: `https://horok.link/invite/${token}`,
+          text: `\'${user.userNickname}\' 님이 \"${folder.folderName}\" 폴더에 초대하셨어요. 참가해주세요!`.trim(),
+        });
+      } else {
+        console.log("Web Share API를 지원하지 않는 브라우저입니다.");
+      }
+    } catch (error) {
+      console.error("공유 실패", error);
+    }
+  };
+  const getfolderInfo = () => {
+    axios
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/edit/${folderId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setfolder(res.data);
+      })
+      .catch((error) => {
+        navigate("/login");
+      });
+  };
 
   const sortReviews = (reviews) => {
     return reviews.slice().sort((a, b) => {
@@ -64,14 +101,85 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
 
   const getReview = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/${folderId}`, {withCredentials: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/${folderId}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setData(res.data);
+      })
+      .catch((error) => {
+        navigate("/login");
       });
   };
 
   const handleGoFolderList = () => {
     navigate("/folder/list");
+  };
+
+  //modal 조작
+  const handleOpenModal = (folderId) => {
+    setSelectedFolderId(folderId);
+    setIsOpen(true);
+  };
+  const handleCloseModal = () => {
+    setSelectedFolderId(null);
+    setIsOpen(false);
+  };
+
+  const folderEdit = (folderId) => {
+    navigate("/folder/edit", { state: { folderId } });
+  };
+
+  const getToken = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_DEV_URL}/api/folders/invite/${folderId}`,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("토큰 가져오기 실패", error);
+      navigate("/login");
+    }
+  };
+
+  const getUser = () => {
+    axios
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((error) => {
+        console.log("Error fetching user data:", error);
+        navigate("/login");
+      });
+  };
+
+  const folderDelete = (folderId) => {
+    axios
+      .delete(`${process.env.REACT_APP_DEV_URL}/api/folders/${folderId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data === true) {
+          alert("폴더가 삭제 되었습니다.");
+        } else {
+          alert("다시 시도해주세요");
+        }
+        navigate("/folder/list");
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+        navigate("/login");
+      });
+
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -80,6 +188,11 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
     }
     getReview();
   }, [folderId, filter, location.state]);
+
+  useEffect(() => {
+    getUser();
+    getfolderInfo();
+  }, []);
 
   return (
     <div id="reviewListContainer">
@@ -95,7 +208,10 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
           </div>
           <div className="headerTxt">{folderName}</div>
         </div>
-        <div className="settingBtn cursorToPointer">
+        <div
+          className="settingBtn cursorToPointer"
+          onClick={() => handleOpenModal(folderId)}
+        >
           <img
             src="/images/menudots.png"
             className="reviewThumbnail"
@@ -103,6 +219,15 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
             height="40"
           />
         </div>
+        {isOpen && (
+          <FolderModal
+            isOpen={handleOpenModal} //isOpen
+            onClose={handleCloseModal}
+            onEdit={() => folderEdit(folderId)}
+            onDelete={() => folderDelete(folderId)}
+            onShare={() => folderShare(folderId)}
+          />
+        )}
       </div>
       <div className="filterArea cursorToPointer">
         <select value={filter} onChange={(e) => setFilter(e.target.value)}>

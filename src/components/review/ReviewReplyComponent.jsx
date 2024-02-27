@@ -26,10 +26,14 @@ const ReviewReplyComponent = ({ folderName }) => {
   const getReplies = () => {
     axios
       .get(
-        `${process.env.REACT_APP_DEV_URL}/api/reviews/replies/${folderId}/${reviewId}`, {withCredentials: true}
+        `${process.env.REACT_APP_DEV_URL}/api/reviews/replies/${folderId}/${reviewId}`,
+        { withCredentials: true }
       )
       .then((res) => {
         setreplyList(res.data);
+      })
+      .catch((error) => {
+        navigate("/login");
       });
   };
 
@@ -47,7 +51,7 @@ const ReviewReplyComponent = ({ folderName }) => {
             folderReviewId: location.state.folderReviewId, //replyList[0].folderReviewId,
             replyContent: replyInputValue,
           },
-          withCredentials: true
+          withCredentials: true,
         },
         {
           headers: {
@@ -60,6 +64,9 @@ const ReviewReplyComponent = ({ folderName }) => {
           window.alert("댓글이 등록되었습니다");
           getReplies();
         }
+      })
+      .catch((error) => {
+        navigate("/login");
       });
 
     // 입력값 초기화
@@ -69,13 +76,18 @@ const ReviewReplyComponent = ({ folderName }) => {
   const deleteReplyClick = (e) => {
     const rId = e.target.getAttribute("data");
     axios
-      .delete(`${process.env.REACT_APP_DEV_URL}/api/replies/${rId}`, {withCredentials: true})
+      .delete(`${process.env.REACT_APP_DEV_URL}/api/replies/${rId}`, {
+        withCredentials: true,
+      })
 
       .then((res) => {
         if (res.data === true) {
           window.alert("댓글이 삭제되었습니다");
           getReplies();
         }
+      })
+      .catch((error) => {
+        navigate("/login");
       });
   };
 

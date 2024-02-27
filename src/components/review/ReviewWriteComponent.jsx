@@ -31,7 +31,9 @@ const ReviewWriteComponent = () => {
   // };
   const getPayInfo = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`, {withCredentials: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setData(res.data);
       })
@@ -64,6 +66,7 @@ const ReviewWriteComponent = () => {
       })
       .catch((error) => {
         console.log("error: ", error);
+        movePage("/login");
       });
   };
 
@@ -117,6 +120,7 @@ const ReviewWriteComponent = () => {
           </div>
           <div className="reviewImgArea card">
             <FileUploadComponent
+              reviewId={-1}
               className="fileUploader"
               onFileUpload={handleFileUpload}
             />
@@ -231,7 +235,10 @@ const ReviewWriteComponent = () => {
           </div>
           <div className="selectBoxHeader">공유폴더 선택</div>
           <div className="selectFoldersArea card">
-            <MultiSelectComponent onChange={handleMultiSelectChange} />
+            <MultiSelectComponent
+              reviewId={-1}
+              onChange={handleMultiSelectChange}
+            />
             <input
               type="hidden"
               name="folders"

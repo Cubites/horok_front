@@ -20,7 +20,7 @@ const InviteComponent = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredentials: true
+          withCredentials: true,
         }
       )
       .then((res) => {
@@ -32,7 +32,7 @@ const InviteComponent = () => {
           ) {
             navigate("/");
           }
-        }else if (res.data === "notExpiration") {
+        } else if (res.data === "notExpiration") {
           if (window.confirm("이미 초대된 폴더입니다.")) {
             navigate("/");
           }
@@ -47,6 +47,9 @@ const InviteComponent = () => {
         } else {
           navigate("/");
         }
+      })
+      .catch((error) => {
+        navigate("/login");
       });
   };
 

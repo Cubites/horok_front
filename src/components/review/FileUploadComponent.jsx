@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-function FileUploadComponent({ onFileUpload }) {
+function FileUploadComponent({ onFileUpload, reviewId }) {
   const [images, setImages] = useState([]);
 
   const onDrop = (acceptedFiles) => {
-    const newImages = acceptedFiles.slice(0, 3 - images.length).map((file) => ({
-      file,
-      preview: URL.createObjectURL(file),
-    }));
+    const newImages = acceptedFiles
+      .slice(0, 3 - images.length)
+      .map((file, index) => ({
+        file,
+        preview: URL.createObjectURL(file),
+        id: images.length + index,
+      }));
 
     setImages((prevImages) => [...prevImages, ...newImages]);
-
+    //setImages([...newImages]);
     const imageFiles = newImages.map((image) => image.file);
-    onFileUpload([...imageFiles]);
+    onFileUpload([...images, ...imageFiles]);
+    console.log(imageFiles);
+    //onFileUpload([...<ne />]);
   };
 
+  const removeImage = (id) => {
+    setImages((prevImages) => prevImages.filter((image) => image.id !== id));
+    onFileUpload(
+      images.filter((image) => image.id !== id).map((image) => image.file)
+    );
+  };
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       "image/*": [".png", ".jpeg", ".jpg"],
@@ -29,7 +40,13 @@ function FileUploadComponent({ onFileUpload }) {
     <>
       <div {...getRootProps()} style={dropzoneStyles}>
         <input {...getInputProps()} />
-        <p style={fontStyle}>사진을 추가해주세요(최대 3장)</p>
+        {reviewId > 0 ? (
+          <p style={fontStyle}>
+            수정할 사진을 업로드해주세요<br></br>(최대 3장)
+          </p>
+        ) : (
+          <p style={fontStyle}>사진을 추가해주세요(최대 3장)</p>
+        )}
       </div>
       <div style={imagesContainerStyles}>
         {images.map((image, index) => (
@@ -39,6 +56,7 @@ function FileUploadComponent({ onFileUpload }) {
               alt={`Uploaded ${index + 1}`}
               style={imageStyles}
             />
+            <button onClick={() => removeImage(image.id)}>X</button>
           </div>
         ))}
       </div>
