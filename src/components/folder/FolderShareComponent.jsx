@@ -15,7 +15,7 @@ const FolderShareComponent = (props) => {
         await navigator.share({
           title: "호록",
           url: `https://horok.link/invite/${token}`,
-          text: `\'${user.userNickname}\' 님이 \"${location.state.folderName}\" 폴더에 초대하셨어요. <br><br> 참가해주세요!`.trim(),
+          text: `\'${user.userNickname}\' 님이 \"${location.state.folderName}\" 폴더에 초대하셨어요. 참가해주세요!`.trim(),
         });
       } else {
         console.log("Web Share API를 지원하지 않는 브라우저입니다.");
