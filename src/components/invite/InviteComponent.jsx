@@ -20,7 +20,7 @@ const InviteComponent = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          withCredential: true
+          withCredentials: true
         }
       )
       .then((res) => {

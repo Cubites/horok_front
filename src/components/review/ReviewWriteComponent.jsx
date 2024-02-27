@@ -31,7 +31,7 @@ const ReviewWriteComponent = () => {
   // };
   const getPayInfo = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`, {withCredential: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`, {withCredentials: true})
       .then((res) => {
         setData(res.data);
       })

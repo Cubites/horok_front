@@ -93,7 +93,7 @@ const ReviewComponent = ({ filter, folderName }) => {
 
   const getReview = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {withCredential: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {withCredentials: true})
       .then((res) => {
         setReviewList(res.data);
       });

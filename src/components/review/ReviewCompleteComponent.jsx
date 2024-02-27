@@ -13,7 +13,7 @@ const ReviewCompleteComponent = () => {
 
   const updateWrittenInfo = () => {
     axios
-      .patch(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`, {withCredential: true})
+      .patch(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`, {}, {withCredentials: true})
       .then((res) => {
         // console.log(res.data);
       })

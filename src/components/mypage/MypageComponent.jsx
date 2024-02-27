@@ -70,7 +70,7 @@ const MypageComponent = () => {
   const getUser = () => {
     axios
       .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {
-        withCredential: true,
+        withCredentials: true,
       })
       .then((res) => {
         setUser(res.data);
@@ -94,7 +94,7 @@ const MypageComponent = () => {
         headers: {
           "Content-Type": "multipart/form-data;",
         },
-        withCredentials: true,
+        withCredentials: true
       })
       .then((res) => {
         if (res.status === 201) {
