@@ -50,33 +50,17 @@ const MypageComponent = () => {
     document.getElementById("modal").classList.toggle("noshow");
   };
 
-  // const handleCardCheck = (event) => {
-  //   const { checked } = event.target;
-  //   const value = event.target.value;
-
-  //   let cardChecked2 = cardChecked.map((v, i) => {
-  //     if (i === Number(value)) {
-  //       cardChecked[i] = checked;
-  //     }
-  //     return cardChecked[i];
-  //   });
-  //   setCardChecked([...cardChecked2]);
-  // };
-
   const handleCardCheck = (event) => {
-    //todo
     const { checked } = event.target;
     const value = event.target.value;
 
-    const cardChecked2 = cardChecked.map((v, i) => {
-      //v : 체크 상태 , i :인덱스
+    let cardChecked2 = cardChecked.map((v, i) => {
       if (i === Number(value)) {
         cardChecked[i] = checked;
       }
       return cardChecked[i];
     });
     setCardChecked([...cardChecked2]);
-
     // 모든 카드가 선택되었는지 확인
     const allCardsChecked = cardChecked2.every((v) => v);
     setAllChecked(allCardsChecked);
@@ -88,24 +72,14 @@ const MypageComponent = () => {
   };
 
   // 모든 체크박스 핸들러
-  // const handleAllCheck = (event) => {
-  //   const { checked } = event.target;
-  //   setAllChecked(checked);
-
-  //   // 카드 체크박스 상태 업데이트
-  //   if (cardList.length > 0) {
-  //     setCardChecked(Array(cardList.length).fill(checked));
-  //   }
-  // };
   const handleAllCheck = (event) => {
-    //todo
     const { checked } = event.target;
     setAllChecked(checked);
+
+    // 카드 체크박스 상태 업데이트
     if (cardList.length > 0) {
-      // 카드 체크박스 상태 업데이트
       setCardChecked(Array(cardList.length).fill(checked));
     }
-    setCardChecked(cardChecked.map(() => checked));
   };
 
   // 리액트랑 스프링부트 연동하는거니까
