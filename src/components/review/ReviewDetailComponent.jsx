@@ -108,7 +108,7 @@ const ReviewComponent = ({ filter, folderName }) => {
     //full star
     for (let i = 0; i < fullStars; i++) {
       starIcon.push(
-        <FontAwesomeIcon key={i} icon={faStar} style={{ color: "yellow" }} />
+        <FontAwesomeIcon key={i} icon={faStar} style={{ color: "#263CFF", }} />
       );
     }
 
@@ -118,7 +118,7 @@ const ReviewComponent = ({ filter, folderName }) => {
         <FontAwesomeIcon
           key="half"
           icon={faStarHalfAlt}
-          style={{ color: "yellow" }}
+          style={{ color: "#263CFF" }}
         />
       );
     }
