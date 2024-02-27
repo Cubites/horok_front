@@ -20,17 +20,11 @@ const MypageComponent = () => {
     false,
     false,
     false,
-    false,
-    false,
-    false,
-    false,
   ]);
   //카드 리스트
   const [cardList, setCardList] = useState([]);
-
   // 더 많은 카드 보기 토글
   const [showAllCards, setShowAllCards] = useState(false);
-
   //체크박스 선택이 되면 false->true 변경 (status 사용)
   let checkedCard = false;
 
@@ -50,7 +44,7 @@ const MypageComponent = () => {
     document.getElementById("modal").classList.toggle("noshow");
   };
 
-  // const handleCardCheck = (event) => {
+  // const handleCardCheck = (event) => { //todo
   //   const { checked } = event.target;
   //   const value = event.target.value;
 
@@ -68,8 +62,7 @@ const MypageComponent = () => {
     const { checked } = event.target;
     const value = event.target.value;
 
-    const cardChecked2 = cardChecked.map((v, i) => {
-      //v : 체크 상태 , i :인덱스
+    let cardChecked2 = cardChecked.map((v, i) => {
       if (i === Number(value)) {
         cardChecked[i] = checked;
       }
@@ -88,7 +81,7 @@ const MypageComponent = () => {
   };
 
   // 모든 체크박스 핸들러
-  // const handleAllCheck = (event) => {
+  // const handleAllCheck = (event) => { //todo
   //   const { checked } = event.target;
   //   setAllChecked(checked);
 
@@ -97,22 +90,21 @@ const MypageComponent = () => {
   //     setCardChecked(Array(cardList.length).fill(checked));
   //   }
   // };
+
   const handleAllCheck = (event) => {
     //todo
     const { checked } = event.target;
     setAllChecked(checked);
     if (cardList.length > 0) {
-      // 카드 체크박스 상태 업데이트
-      setCardChecked(Array(cardList.length).fill(checked));
+      setCardChecked(cardChecked.map(() => checked));
     }
-    setCardChecked(cardChecked.map(() => checked));
   };
 
   // 리액트랑 스프링부트 연동하는거니까
   const getUser = () => {
     axios
       .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {
-        withCredentials: true,
+        withCredential: true,
       })
       .then((res) => {
         setUser(res.data);
