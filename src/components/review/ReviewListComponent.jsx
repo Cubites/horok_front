@@ -22,7 +22,22 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState(null);
   const [user, setUser] = useState({});
-
+  const folderShare = async () => {
+    try {
+      const token = await getToken();
+      if (navigator.share) {
+        await navigator.share({
+          title: "호록",
+          url: `https://horok.link/invite/${token}`,
+          text: `\'${user.userNickname}\' 님이 \"${location.state.folderName}\" 폴더에 초대하셨어요. 참가해주세요!`.trim(),
+        });
+      } else {
+        console.log("Web Share API를 지원하지 않는 브라우저입니다.");
+      }
+    } catch (error) {
+      console.error("공유 실패", error);
+    }
+  };
   const sortReviews = (reviews) => {
     return reviews.slice().sort((a, b) => {
       switch (filter) {
@@ -96,23 +111,6 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
 
   const folderEdit = (folderId) => {
     navigate("/folder/edit", { state: { folderId } });
-  };
-
-  const folderShare = (folderId) => {
-    try {
-      const token = getToken();
-      if (navigator.share) {
-        navigator.share({
-          title: "호록",
-          url: `https://horok.link/invite/${token}`,
-          text: `\'${user.userNickname}\' 님이 \"${location.state.folderName}\" 폴더에 초대하셨어요. 참가해주세요!`.trim(),
-        });
-      } else {
-        console.log("Web Share API를 지원하지 않는 브라우저입니다.");
-      }
-    } catch (error) {
-      console.error("공유 실패", error);
-    }
   };
 
   const getToken = async () => {
