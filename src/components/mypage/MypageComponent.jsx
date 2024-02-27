@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./mypage.css";
 import axios from "axios";
 import Chart from "chart.js/auto";
+import { useNavigate } from "react-router-dom"; //로그인페이지로 redirect 하기
 
 const MypageComponent = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
   //이미지 업로드
   const [uploadedImage, setUploadedImage] = useState(null); //uploadImage 상태 초기화
@@ -78,6 +80,7 @@ const MypageComponent = () => {
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);
+        navigate("/login");
       });
   };
   useEffect(() => {
@@ -104,6 +107,7 @@ const MypageComponent = () => {
       })
       .catch((error) => {
         console.log("사진 수정 실패:", error);
+        navigate("/login");
       });
   };
 
@@ -127,6 +131,7 @@ const MypageComponent = () => {
       })
       .catch((error) => {
         console.log("수정 실패:", error);
+        navigate("/login");
       });
   };
   //월간 통계
@@ -167,6 +172,7 @@ const MypageComponent = () => {
         renderChart(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
+        navigate("/login");
       }
     };
     fetchData();
@@ -244,6 +250,7 @@ const MypageComponent = () => {
         renderChart2(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
+        navigate("/login");
       }
     };
     fetchData();
@@ -397,6 +404,7 @@ const MypageComponent = () => {
           )}
           <div className="marginBox"></div>
         </div>
+
         {/* 카드별 사용 통계 */}
         <div id="status">
           <div id="statusText">소비 통계</div>
