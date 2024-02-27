@@ -116,6 +116,7 @@ const ReviewWriteComponent = () => {
           </div>
           <div className="reviewImgArea card">
             <FileUploadComponent
+              reviewId={-1}
               className="fileUploader"
               onFileUpload={handleFileUpload}
             />
@@ -230,7 +231,10 @@ const ReviewWriteComponent = () => {
           </div>
           <div className="selectBoxHeader">공유폴더 선택</div>
           <div className="selectFoldersArea card">
-            <MultiSelectComponent onChange={handleMultiSelectChange} />
+            <MultiSelectComponent
+              reviewId={-1}
+              onChange={handleMultiSelectChange}
+            />
             <input
               type="hidden"
               name="folders"

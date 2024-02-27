@@ -2,28 +2,48 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./multiSelect.css";
 
-const MultiSelectComponent = ({ onChange }) => {
+const MultiSelectComponent = ({ onChange, reviewId }) => {
   // const [data, setData] = useState({});
   const [options, setOptions] = useState([]);
+  // 다중 선택된 항목들을 관리하기 위한 상태
+  const [selectedOptions, setSelectedOptions] = useState(["0"]);
 
-  const getFolderList = () => {
-    axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/user`)
-      .then((res) => {
-        const folderData = res.data.map((folder) => ({
-          value: folder.folderId.toString(),
-          label: folder.folderName,
-        }));
-        setOptions(folderData);
-      })
-      .catch((error) => {
-        console.error("error!!! : ", error);
-      });
+  const getFolderList = (reviewId) => {
+    if (reviewId === -1) {
+      axios
+        .get(`${process.env.REACT_APP_DEV_URL}/api/folders/user`)
+        .then((res) => {
+          const folderData = res.data.map((folder) => ({
+            value: folder.folderId.toString(),
+            label: folder.folderName,
+          }));
+          setOptions(folderData);
+        })
+        .catch((error) => {
+          console.error("error!!! : ", error);
+        });
+    } else if (reviewId && reviewId !== -1) {
+      axios
+        .get(
+          `${process.env.REACT_APP_DEV_URL}/api/folders/notshared/${reviewId}`
+        )
+        .then((res) => {
+          const folderData = res.data.map((folder) => ({
+            value: folder.folderId.toString(),
+            label: folder.folderName,
+          }));
+          setOptions(folderData);
+        })
+        .catch((error) => {
+          console.error("error!!! : ", error);
+        });
+    }
   };
 
   useEffect(() => {
-    getFolderList();
-  }, []);
+    getFolderList(reviewId);
+  }, [reviewId]);
+
   //const options = [
   //{ value: "1", label: "Option 1" },
   //{ value: "2", label: "Option 2" },
@@ -31,9 +51,6 @@ const MultiSelectComponent = ({ onChange }) => {
   //{ value: "4", label: "Option 4" },
   // 추가적인 옵션들...
   //];
-
-  // 다중 선택된 항목들을 관리하기 위한 상태
-  const [selectedOptions, setSelectedOptions] = useState([]);
 
   // 선택된 항목들이 변경될 때 실행될 함수
   const handleChange = (e) => {
