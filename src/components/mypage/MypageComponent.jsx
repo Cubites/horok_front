@@ -13,14 +13,7 @@ const MypageComponent = () => {
   const [newNickname, setNewNickname] = useState("");
   //전체 선택 체크박스가 클릭될 때 호출되는 함수 ( 모든 체크 박스의 상태를 전체 선택 체크박스와 동일하게 처리)
   const [allChecked, setAllChecked] = useState(false);
-  const [cardChecked, setCardChecked] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [cardChecked, setCardChecked] = useState([false, false, false]);
   //카드 리스트
   const [cardList, setCardList] = useState([]);
   // 더 많은 카드 보기 토글
@@ -44,19 +37,6 @@ const MypageComponent = () => {
     document.getElementById("modal").classList.toggle("noshow");
   };
 
-  // const handleCardCheck = (event) => { //todo
-  //   const { checked } = event.target;
-  //   const value = event.target.value;
-
-  //   let cardChecked2 = cardChecked.map((v, i) => {
-  //     if (i === Number(value)) {
-  //       cardChecked[i] = checked;
-  //     }
-  //     return cardChecked[i];
-  //   });
-  //   setCardChecked([...cardChecked2]);
-  // };
-
   const handleCardCheck = (event) => {
     //todo
     const { checked } = event.target;
@@ -69,36 +49,50 @@ const MypageComponent = () => {
       return cardChecked[i];
     });
     setCardChecked([...cardChecked2]);
-
-    // 모든 카드가 선택되었는지 확인
-    const allCardsChecked = cardChecked2.every((v) => v);
-    setAllChecked(allCardsChecked);
   };
 
+  // const handleCardCheck = (event) => {
+  //   //todo
+  //   const { checked } = event.target;
+  //   const value = event.target.value;
+
+  //   let cardChecked2 = cardChecked.map((v, i) => {
+  //     if (i === Number(value)) {
+  //       cardChecked[i] = checked;
+  //     }
+  //     return cardChecked[i];
+  //   });
+  //   setCardChecked([...cardChecked2]);
+
+  //   // 모든 카드가 선택되었는지 확인
+  //   const allCardsChecked = cardChecked2.every((v) => v);
+  //   setAllChecked(allCardsChecked);
+  // };
   // 토글 버튼 클릭 핸들러
   const handleToggleCards = () => {
     setShowAllCards(!showAllCards);
   };
 
   // 모든 체크박스 핸들러
-  // const handleAllCheck = (event) => { //todo
-  //   const { checked } = event.target;
-  //   setAllChecked(checked);
-
-  //   // 카드 체크박스 상태 업데이트
-  //   if (cardList.length > 0) {
-  //     setCardChecked(Array(cardList.length).fill(checked));
-  //   }
-  // };
-
   const handleAllCheck = (event) => {
     //todo
     const { checked } = event.target;
     setAllChecked(checked);
+
+    // 카드 체크박스 상태 업데이트
     if (cardList.length > 0) {
-      setCardChecked(cardChecked.map(() => checked));
+      setCardChecked(Array(cardList.length).fill(checked));
     }
   };
+
+  // const handleAllCheck = (event) => {
+  //   //todo
+  //   const { checked } = event.target;
+  //   setAllChecked(checked);
+  //   if (cardList.length > 0) {
+  //     setCardChecked(cardChecked.map(() => checked));
+  //   }
+  // };
 
   // 리액트랑 스프링부트 연동하는거니까
   const getUser = () => {
