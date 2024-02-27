@@ -22,6 +22,7 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState(null);
   const [user, setUser] = useState({});
+  const [folder, setfolder] = useState({ folderName: "", folderImg: "" });
   const folderShare = async () => {
     try {
       const token = await getToken();
@@ -29,7 +30,7 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
         await navigator.share({
           title: "호록",
           url: `https://horok.link/invite/${token}`,
-          text: `\'${user.userNickname}\' 님이 \"${location.state.folderName}\" 폴더에 초대하셨어요. 참가해주세요!`.trim(),
+          text: `\'${user.userNickname}\' 님이 \"${folder.folderName}\" 폴더에 초대하셨어요. 참가해주세요!`.trim(),
         });
       } else {
         console.log("Web Share API를 지원하지 않는 브라우저입니다.");
@@ -38,6 +39,22 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
       console.error("공유 실패", error);
     }
   };
+  const getfolderInfo = () => {
+    axios
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/edit/${folderId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setfolder(res.data);
+      })
+      .catch((error) => {
+        navigate("/login");
+      });
+  };
+
   const sortReviews = (reviews) => {
     return reviews.slice().sort((a, b) => {
       switch (filter) {
@@ -174,6 +191,7 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
 
   useEffect(() => {
     getUser();
+    getfolderInfo();
   }, []);
 
   return (
