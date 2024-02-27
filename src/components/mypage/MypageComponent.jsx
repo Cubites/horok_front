@@ -69,7 +69,9 @@ const MypageComponent = () => {
   // 리액트랑 스프링부트 연동하는거니까
   const getUser = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {withCredential: true})
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {
+        withCredential: true,
+      })
       .then((res) => {
         setUser(res.data);
         setCardList(res.data.cardsList);
@@ -91,9 +93,8 @@ const MypageComponent = () => {
       .post(`${process.env.REACT_APP_DEV_URL}/api/users/profile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
-          charset: "utf-8",
         },
-        withCredentials: true
+        withCredentials: true,
       })
       .then((res) => {
         if (res.status === 201) {
@@ -109,10 +110,14 @@ const MypageComponent = () => {
   //닉네임 업로드 axios
   const updateNickname = (userId, newNickname) => {
     axios
-      .post(`${process.env.REACT_APP_DEV_URL}/api/users/nickname`, {
-        userId: userId,
-        userNickname: newNickname,
-      }, {withCredentials: true})
+      .post(
+        `${process.env.REACT_APP_DEV_URL}/api/users/nickname`,
+        {
+          userId: userId,
+          userNickname: newNickname,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         if (res.status === 201) {
           //닉네임 수정 성공함
@@ -156,7 +161,7 @@ const MypageComponent = () => {
             params: {
               cardNumber: cardNumberParam,
             },
-            withCredentials: true
+            withCredentials: true,
           }
         );
         renderChart(response.data); // 차트를 렌더링
@@ -233,7 +238,7 @@ const MypageComponent = () => {
             params: {
               cardNumber: cardNumberParam,
             },
-            withCredentials: true
+            withCredentials: true,
           }
         );
         renderChart2(response.data); // 차트를 렌더링
