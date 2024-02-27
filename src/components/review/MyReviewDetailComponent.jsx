@@ -93,7 +93,7 @@ const ReviewComponent = ({ filter, folderName }) => {
 
   const getReview = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {withCredentials: true})
       .then((res) => {
         setReviewList(res.data);
       });
@@ -126,14 +126,12 @@ const ReviewComponent = ({ filter, folderName }) => {
     //   "리뷰를 삭제하면 해당 결제 내역에 대해서는 다시 리뷰를 작성할 수 없습니다. 정말 삭제하시겠습니까?"
     // );
     axios
-      .delete(
-        `${process.env.REACT_APP_DEV_URL}/api/reviews/${selectedReviewId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .delete(`${process.env.REACT_APP_DEV_URL}/api/reviews/${reviewId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true
+      })
       .then((response) => {
         getReview(folderId);
       })

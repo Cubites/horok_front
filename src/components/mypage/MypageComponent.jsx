@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./mypage.css";
 import axios from "axios";
 import Chart from "chart.js/auto";
+import { useNavigate } from "react-router-dom"; //로그인페이지로 redirect 하기
 
 const MypageComponent = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
   //이미지 업로드
   const [uploadedImage, setUploadedImage] = useState(null); //uploadImage 상태 초기화
@@ -11,7 +13,18 @@ const MypageComponent = () => {
   const [newNickname, setNewNickname] = useState("");
   //전체 선택 체크박스가 클릭될 때 호출되는 함수 ( 모든 체크 박스의 상태를 전체 선택 체크박스와 동일하게 처리)
   const [allChecked, setAllChecked] = useState(false);
-  const [cardChecked, setCardChecked] = useState([false, false, false]);
+  const [cardChecked, setCardChecked] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
   //카드 리스트
   const [cardList, setCardList] = useState([]);
 
@@ -37,17 +50,37 @@ const MypageComponent = () => {
     document.getElementById("modal").classList.toggle("noshow");
   };
 
+  // const handleCardCheck = (event) => {
+  //   const { checked } = event.target;
+  //   const value = event.target.value;
+
+  //   let cardChecked2 = cardChecked.map((v, i) => {
+  //     if (i === Number(value)) {
+  //       cardChecked[i] = checked;
+  //     }
+  //     return cardChecked[i];
+  //   });
+  //   setCardChecked([...cardChecked2]);
+  // };
+
   const handleCardCheck = (event) => {
+    //todo
     const { checked } = event.target;
     const value = event.target.value;
 
-    let cardChecked2 = cardChecked.map((v, i) => {
+    const cardChecked2 = cardChecked.map((v, i) => {
+      //v : 체크 상태 , i :인덱스
       if (i === Number(value)) {
-        cardChecked[i] = checked;
+        return checked;
       }
-      return cardChecked[i];
+      return v;
     });
+
     setCardChecked([...cardChecked2]);
+
+    // 모든 카드가 선택되었는지 확인
+    const allCardsChecked = cardChecked2.every((v) => v);
+    setAllChecked(allCardsChecked);
   };
 
   // 토글 버튼 클릭 핸들러
@@ -56,26 +89,35 @@ const MypageComponent = () => {
   };
 
   // 모든 체크박스 핸들러
+  // const handleAllCheck = (event) => {
+  //   const { checked } = event.target;
+  //   setAllChecked(checked);
+
+  //   // 카드 체크박스 상태 업데이트
+  //   if (cardList.length > 0) {
+  //     setCardChecked(Array(cardList.length).fill(checked));
+  //   }
+  // };
   const handleAllCheck = (event) => {
+    //todo
     const { checked } = event.target;
     setAllChecked(checked);
-
-    // 카드 체크박스 상태 업데이트
-    if (cardList.length > 0) {
-      setCardChecked(Array(cardList.length).fill(checked));
-    }
+    setCardChecked(cardChecked.map(() => checked));
   };
 
   // 리액트랑 스프링부트 연동하는거니까
   const getUser = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/users`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setUser(res.data);
         setCardList(res.data.cardsList);
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);
+        navigate("/login");
       });
   };
   useEffect(() => {
@@ -91,8 +133,8 @@ const MypageComponent = () => {
       .post(`${process.env.REACT_APP_DEV_URL}/api/users/profile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
-          charset: "utf-8",
         },
+        withCredentials: true,
       })
       .then((res) => {
         if (res.status === 201) {
@@ -102,16 +144,21 @@ const MypageComponent = () => {
       })
       .catch((error) => {
         console.log("사진 수정 실패:", error);
+        navigate("/login");
       });
   };
 
   //닉네임 업로드 axios
   const updateNickname = (userId, newNickname) => {
     axios
-      .post(`${process.env.REACT_APP_DEV_URL}/api/users/nickname`, {
-        userId: userId,
-        userNickname: newNickname,
-      })
+      .post(
+        `${process.env.REACT_APP_DEV_URL}/api/users/nickname`,
+        {
+          userId: userId,
+          userNickname: newNickname,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         if (res.status === 201) {
           //닉네임 수정 성공함
@@ -121,6 +168,7 @@ const MypageComponent = () => {
       })
       .catch((error) => {
         console.log("수정 실패:", error);
+        navigate("/login");
       });
   };
   //월간 통계
@@ -155,11 +203,13 @@ const MypageComponent = () => {
             params: {
               cardNumber: cardNumberParam,
             },
+            withCredentials: true,
           }
         );
         renderChart(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
+        navigate("/login");
       }
     };
     fetchData();
@@ -206,7 +256,6 @@ const MypageComponent = () => {
   };
 
   //연간 통계
-
   useEffect(() => {
     //cardChecked 상태가 변경될 때마다 실행되는 함수
     const fetchData = async () => {
@@ -232,11 +281,13 @@ const MypageComponent = () => {
             params: {
               cardNumber: cardNumberParam,
             },
+            withCredentials: true,
           }
         );
         renderChart2(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
+        navigate("/login");
       }
     };
     fetchData();
@@ -390,6 +441,7 @@ const MypageComponent = () => {
           )}
           <div className="marginBox"></div>
         </div>
+
         {/* 카드별 사용 통계 */}
         <div id="status">
           <div id="statusText">소비 통계</div>

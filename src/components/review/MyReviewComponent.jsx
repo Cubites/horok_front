@@ -66,7 +66,7 @@ const MyReviewComponent = ({ filter, setFilter }) => {
   //리뷰 가져오는 함수
   const getMyReview = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {withCredentials: true})
       .then((res) => {
         setData(res.data);
       });

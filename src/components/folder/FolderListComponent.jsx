@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./folderList.css";
 import axios from "axios";
 import React, { Fragment } from "react";
 
 const FolderListComponent = ({ folderName, setFolderName }) => {
   const [folder, setFolder] = useState({});
+  const navigate = useNavigate();
   let is_favor = true;
   const getFolder = () => {
     is_favor = false;
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setFolder(res.data);
+      })
+      .catch((error) => {
+        navigate("/login");
       });
   };
 

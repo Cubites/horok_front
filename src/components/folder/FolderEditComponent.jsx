@@ -1,49 +1,45 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./folderAdd.css";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import "./folderEdit.css";
 import axios from "axios";
 
 const FolderAddComponent = () => {
   // 입력된 텍스트를 저장할 state
   const [inputText, setInputText] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const [folder, setfolder] = useState({ folderName: "", folderImg: "" });
+  // 선택된 라디오 버튼의 값을 저장하는 상태
+  const [selectedValue, setSelectedValue] = useState("");
 
   // 텍스트 입력이 변경될 때 호출되는 핸들러 함수
   const handleInputChange = (event) => {
     setInputText(event.target.value);
+    setfolder((prevFolder) => ({
+      ...prevFolder,
+      folderName: event.target.value,
+    }));
   };
-
-  // 선택된 라디오 버튼의 값을 저장하는 상태
-  const [selectedValue, setSelectedValue] = useState("");
 
   // 라디오 버튼이 변경될 때 호출되는 함수
   const handleRadioChange = (event) => {
     setSelectedValue(event.target.value);
+    setfolder((prevFolder) => ({
+      ...prevFolder,
+      folderImg: event.target.value,
+    }));
   };
 
-  const folderCreate = () => {
-    if (inputText !== "") {
-      if (selectedValue !== "") {
-        foldermake();
-      } else {
-        if (window.confirm("폴더 색상을 선택해주세요")) {
-        }
-      }
-    } else {
-      if (window.confirm("폴더명을 입력해주세요")) {
-      }
-    }
-  };
-
-  const foldermake = () => {
+  const folderUpdate = () => {
     axios
-      .post(
-        `${process.env.REACT_APP_DEV_URL}/api/folders/make`,
-        JSON.stringify({
+      .patch(
+        `${process.env.REACT_APP_DEV_URL}/api/folders/update`,
+        {
           // 전달할 데이터를 객체로 정의
           folderName: inputText,
           folderImg: selectedValue,
-        }),
+          folderId: location.state.folderId,
+        },
         {
           headers: {
             "Content-Type": "application/json",
@@ -53,9 +49,7 @@ const FolderAddComponent = () => {
       )
       .then((res) => {
         if (res.data) {
-          navigate("/folder/share", {
-            state: { folderName: inputText, folderId: res.data },
-          });
+          navigate("/folder/list");
         } else {
           if (
             window.confirm("폴더 생성에 실패하였습니다. 다시 시도해주세요.")
@@ -68,18 +62,57 @@ const FolderAddComponent = () => {
       });
   };
 
+  const folderEdit = () => {
+    if (inputText !== "") {
+      if (selectedValue !== "") {
+        folderUpdate();
+      } else {
+        if (window.confirm("폴더 색상을 선택해주세요")) {
+        }
+      }
+    } else {
+      if (window.confirm("폴더명을 입력해주세요")) {
+      }
+    }
+  };
+
+  const getfolderInfo = () => {
+    axios
+      .get(
+        `${process.env.REACT_APP_DEV_URL}/api/folders/edit/${location.state.folderId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        setfolder(res.data);
+        setInputText(res.data.folderName);
+        setSelectedValue(res.data.folderImg);
+      })
+      .catch((error) => {
+        navigate("/login");
+      });
+  };
+
+  useEffect(() => {
+    getfolderInfo();
+  }, []);
+
   return (
     <div className="folderAddContainer">
       <div className="folderAddSubContainer">
         <div className="folderAddHead">
-          <h2>폴더 생성하기</h2>
+          <h2>폴더 수정하기</h2>
         </div>
         <div className="folderName">
           <p>폴더 이름</p>
           <input
             className="nameInput"
             type="text"
-            value={inputText}
+            value={folder.folderName}
             onChange={handleInputChange}
             placeholder="폴더명을 입력하세요"
           />
@@ -97,6 +130,7 @@ const FolderAddComponent = () => {
                   type="radio"
                   name="folderColor"
                   value="folder-FFBEBE"
+                  checked={folder.folderImg === "folder-FFBEBE"}
                   onChange={handleRadioChange}
                 />
               </label>
@@ -109,6 +143,7 @@ const FolderAddComponent = () => {
                   type="radio"
                   name="folderColor"
                   value="folder-FFDDBE"
+                  checked={folder.folderImg === "folder-FFDDBE"}
                   onChange={handleRadioChange}
                 />
               </label>
@@ -121,6 +156,7 @@ const FolderAddComponent = () => {
                   type="radio"
                   name="folderColor"
                   value="folder-FFFCBE"
+                  checked={folder.folderImg === "folder-FFFCBE"}
                   onChange={handleRadioChange}
                 />
               </label>
@@ -134,6 +170,7 @@ const FolderAddComponent = () => {
                   type="radio"
                   name="folderColor"
                   value="folder-D6F4B0"
+                  checked={folder.folderImg === "folder-D6F4B0"}
                   onChange={handleRadioChange}
                 />
               </label>
@@ -146,6 +183,7 @@ const FolderAddComponent = () => {
                   type="radio"
                   name="folderColor"
                   value="folder-BEE4FF"
+                  checked={folder.folderImg === "folder-BEE4FF"}
                   onChange={handleRadioChange}
                 />
               </label>
@@ -158,6 +196,7 @@ const FolderAddComponent = () => {
                   type="radio"
                   name="folderColor"
                   value="folder-BECCFF"
+                  checked={folder.folderImg === "folder-BECCFF"}
                   onChange={handleRadioChange}
                 />
               </label>
@@ -170,6 +209,7 @@ const FolderAddComponent = () => {
                   type="radio"
                   name="folderColor"
                   value="folder-D7BEFF"
+                  checked={folder.folderImg === "folder-D7BEFF"}
                   onChange={handleRadioChange}
                 />
               </label>
@@ -182,6 +222,7 @@ const FolderAddComponent = () => {
                   type="radio"
                   name="folderColor"
                   value="folder-C9C9C9"
+                  checked={folder.folderImg === "folder-C9C9C9"}
                   onChange={handleRadioChange}
                 />
               </label>
@@ -189,10 +230,10 @@ const FolderAddComponent = () => {
             </div>
           </div>
         </div>
-        <div className="fodlerComent">폴더 색상은 나중에 수정이 가능해요.</div>
+
         <div className="folderCreate">
-          <button id="folderCreateBnt" onClick={folderCreate}>
-            생성하기
+          <button id="folderCreateBnt" onClick={folderEdit}>
+            수정하기
           </button>
         </div>
       </div>

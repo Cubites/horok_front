@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
 function LoginOrSignUp() {
   // 페이지가 로드될 때 실행되는 useEffect
@@ -16,10 +15,7 @@ function LoginOrSignUp() {
     if (email === null) {
       window.location.href = '/';
     } else {
-      const param = new URLSearchParams(email, provider).toString();
-      console.log(param);
-      window.location.href =
-        'signup/agreement?email=' + email + '&' + 'provider=' + provider;
+      window.location.href = 'signup/agreement?email=' + email + '&' + 'provider=' + provider;
     }
   };
 

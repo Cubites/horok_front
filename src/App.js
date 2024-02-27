@@ -21,6 +21,7 @@ import InviteComponent from "./components/invite/InviteComponent";
 import MyReviewComponent from "./components/review/MyReviewComponent";
 import MyReviewDetailComponent from "./components/review/MyReviewDetailComponent";
 import ReviewModifyComponent from "./components/review/ReviewModifyComponent";
+import FolderEditComponent from "./components/folder/FolderEditComponent";
 
 function App() {
   const [filter, setFilter] = useState("0");
@@ -48,10 +49,6 @@ function App() {
               />
             }
           />
-          <Route path="/map" element={<MapComponent />} />
-          <Route path="/mypage" element={<MypageComponent />} />
-          <Route path="/folder/share" element={<FolderShareComponent />} />
-          <Route path="/write/:payId" element={<ReviewWriteComponent />} />
           <Route
             path="/map"
             element={<MapComponent latLon={latLon} setLatLon={setLatLon} />}
@@ -99,6 +96,12 @@ function App() {
           <Route path="/signup/agreement" element={<AgreeMent />} />
           <Route path="/loginorsignup" element={<LoginOrSignUp />} />
           <Route
+            path="/review/reply/:folderId/:reviewId"
+            element={<ReviewReplyComponent folderName={folderName} />}
+          />
+          <Route path="/invite/:inviteToken" element={<InviteComponent />} />
+          <Route path="/folder/edit" element={<FolderEditComponent />} />
+          <Route
             path="/"
             element={
               <HomeComponent
@@ -107,11 +110,6 @@ function App() {
               />
             }
           />
-          <Route
-            path="/review/reply/:folderId/:reviewId"
-            element={<ReviewReplyComponent folderName={folderName} />}
-          />
-          <Route path="/invite/:inviteToken" element={<InviteComponent />} />
           <Route path="/review/edit" element={<ReviewModifyComponent />} />
         </Routes>
       </div>

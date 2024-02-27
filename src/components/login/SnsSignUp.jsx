@@ -105,6 +105,7 @@ async function SignupProcess() {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        withCredentials: true
       })
       .then(function (response) {
         //location.href = '/login';

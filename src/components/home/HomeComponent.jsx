@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import axios from "axios";
 import React, { Fragment } from "react";
@@ -10,6 +10,7 @@ const HomeComponent = ({ folderName, setFolderName }) => {
   const [folder, setFolder] = useState({});
   const [checkedList, setCheckedList] = useState({});
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
 
   let is_favor = true;
   const createFolderList = () => {
@@ -32,29 +33,42 @@ const HomeComponent = ({ folderName, setFolderName }) => {
 
   const getUser = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setUser(res.data);
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);
+        navigate("/login");
       });
   };
   const getFolderFavor = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setFavor(res.data);
+      })
+      .catch((error) => {
+        navigate("/login");
       });
   };
 
   const getFolder = () => {
     is_favor = false;
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         setFolder(res.data);
         initializeCheckedList(res.data); // 초기화
+      })
+      .catch((error) => {
+        navigate("/login");
       });
   };
 
@@ -68,11 +82,15 @@ const HomeComponent = ({ folderName, setFolderName }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(checkedList),
+          withCredentials: true,
         }
       )
       .then((res) => {
         getFolderFavor();
         Modal();
+      })
+      .catch((error) => {
+        navigate("/login");
       });
   };
 

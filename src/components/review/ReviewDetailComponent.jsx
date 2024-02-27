@@ -34,7 +34,7 @@ const ReviewComponent = ({ filter, folderName }) => {
   //좋아요 정보 불러와 리뷰정보에 추가
   const getFavors = (folderId) => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/favors/${folderId}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/favors/${folderId}`, {withCredentials: true})
       .then((res) => {
         setFavors(res.data);
         updateReviewList(res.data);

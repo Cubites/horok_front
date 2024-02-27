@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 const MapViewComponent = ({ 
   ShowFolderId, setShowFolderId, 
@@ -9,17 +9,15 @@ const MapViewComponent = ({
 
   /* 지도 생성 함수 */
   const mapLoad = (ReviewListByStore, inputTag) => {
-    console.log('ReviewListByStore: ', ReviewListByStore);
     /** 지도 생성 **/
     let map = new naver.maps.Map(inputTag, {
-      center: new naver.maps.LatLng(CenterLatLon[0], CenterLatLon[1]),
+      center: new naver.maps.LatLng(CenterLatLon ? CenterLatLon[0] : 0, CenterLatLon ? CenterLatLon[1] : 0),
       zoom: 16
     });
     let markers = [];
 
     /** 마커 생성 **/
     for (let store in ReviewListByStore) {
-      console.log('store: ', store);
       /*** 마커 커스텀 옵션 지정 ***/
       let markerOptions = {
         position: new naver.maps.LatLng(ReviewListByStore[store].latitude, ReviewListByStore[store].longitude),
@@ -177,7 +175,9 @@ const MapViewComponent = ({
   useEffect(() => {
     mapLoadPromise()
       .then(() => {
-        mapLoad(ReviewListByStore, 'mapAreaFirst');
+        if(CenterLatLon !== 0) {
+          mapLoad(ReviewListByStore, 'mapAreaFirst');
+        }
       })
       .then(() => {
         if (document.getElementById('mapAreaSecond')) {
@@ -222,7 +222,7 @@ const MapViewComponent = ({
                 if (ShowFolderId === folder.folderId) {
                   setShowFolderId(0);
                 } else {
-                  setShowFolderId(folder.folderId)
+                  setShowFolderId(folder.folderId);
                 }
               }}
             >
