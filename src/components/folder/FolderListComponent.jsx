@@ -10,7 +10,7 @@ const FolderListComponent = ({ folderName, setFolderName }) => {
   const getFolder = () => {
     is_favor = false;
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`, {withCredential: true})
       .then((res) => {
         setFolder(res.data);
       });

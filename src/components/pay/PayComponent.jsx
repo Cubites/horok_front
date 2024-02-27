@@ -32,7 +32,7 @@ const PayComponent = () => {
 
   const getList = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/paylist`) //{params:param} userid?
+      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/paylist`, {withCredential: true}) //{params:param} userid?
       .then((res) => {
         setData(res.data);
         setTotalCnt(res.data.length);

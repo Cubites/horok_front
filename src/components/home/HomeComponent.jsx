@@ -32,7 +32,7 @@ const HomeComponent = ({ folderName, setFolderName }) => {
 
   const getUser = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, { withCredentials: true })
       .then((res) => {
         setUser(res.data);
       })
@@ -42,7 +42,7 @@ const HomeComponent = ({ folderName, setFolderName }) => {
   };
   const getFolderFavor = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`, { withCredentials: true })
       .then((res) => {
         setFavor(res.data);
       });
@@ -51,7 +51,7 @@ const HomeComponent = ({ folderName, setFolderName }) => {
   const getFolder = () => {
     is_favor = false;
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/folders/${is_favor}`, { withCredentials: true })
       .then((res) => {
         setFolder(res.data);
         initializeCheckedList(res.data); // 초기화
@@ -68,6 +68,7 @@ const HomeComponent = ({ folderName, setFolderName }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(checkedList),
+          withCredentials: true
         }
       )
       .then((res) => {

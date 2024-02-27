@@ -31,7 +31,7 @@ const ReviewWriteComponent = () => {
   // };
   const getPayInfo = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/pays/${payId}`, {withCredential: true})
       .then((res) => {
         setData(res.data);
       })
@@ -55,6 +55,7 @@ const ReviewWriteComponent = () => {
         headers: {
           "Content-Type": "multipart/form-data;",
         },
+        withCredentials: true,
         baseURL: process.env.REACT_APP_DEV_URL,
       })
       .then((response) => {

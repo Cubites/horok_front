@@ -93,7 +93,7 @@ const ReviewComponent = ({ filter, folderName }) => {
 
   const getReview = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/reviews/myreview`, {withCredential: true})
       .then((res) => {
         setReviewList(res.data);
       });
@@ -126,6 +126,7 @@ const ReviewComponent = ({ filter, folderName }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true
       })
       .then((response) => {
         getReview(folderId);

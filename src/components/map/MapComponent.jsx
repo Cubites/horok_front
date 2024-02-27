@@ -37,7 +37,7 @@ const MapComponent = ({latLon, setLatLon}) => {
   /* 리뷰 데이터 요청 */
   async function searchReviews() {
     try{
-      let reviews = await axios.post(`${process.env.REACT_APP_DEV_URL}/api/users/reviews`);
+      let reviews = await axios.post(`${process.env.REACT_APP_DEV_URL}/api/users/reviews`, {withCredential: true});
       let reviewsAll = reviews.data;
 
       // 가게별 리뷰
@@ -97,7 +97,7 @@ const MapComponent = ({latLon, setLatLon}) => {
     if(ReviewList.length === 0) {
       searchReviews()
         .then(data => {
-          if(CenterLatLon[0] === 0 && CenterLatLon[1] === 0) {
+          if(CenterLatLon && CenterLatLon[0] === 0 && CenterLatLon[1] === 0) {
             getLocation();
           }
           if(data) {
