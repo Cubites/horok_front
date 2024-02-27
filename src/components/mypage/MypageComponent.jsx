@@ -69,7 +69,7 @@ const MypageComponent = () => {
   // 리액트랑 스프링부트 연동하는거니까
   const getUser = () => {
     axios
-      .get(`${process.env.REACT_APP_DEV_URL}/api/users`)
+      .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`)
       .then((res) => {
         setUser(res.data);
         setCardList(res.data.cardsList);
@@ -206,7 +206,6 @@ const MypageComponent = () => {
   };
 
   //연간 통계
-
   useEffect(() => {
     //cardChecked 상태가 변경될 때마다 실행되는 함수
     const fetchData = async () => {
