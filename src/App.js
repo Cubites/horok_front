@@ -1,6 +1,6 @@
 import { Link, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HomeComponent from "./components/home/HomeComponent";
 import PayComponent from "./components/pay/PayComponent";
 import FolderAddComponenet from "./components/folder/FolderAddComponent";
@@ -20,6 +20,7 @@ import ReviewReplyComponent from "./components/review/ReviewReplyComponent";
 import InviteComponent from "./components/invite/InviteComponent";
 import MyReviewComponent from "./components/review/MyReviewComponent";
 import MyReviewDetailComponent from "./components/review/MyReviewDetailComponent";
+import ReviewModifyComponent from "./components/review/ReviewModifyComponent";
 import FolderEditComponent from "./components/folder/FolderEditComponent";
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
               />
             }
           />
+          <Route path="/review/edit" element={<ReviewModifyComponent />} />
         </Routes>
       </div>
       <div id="footer">

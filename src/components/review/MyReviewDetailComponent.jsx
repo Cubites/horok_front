@@ -110,8 +110,8 @@ const ReviewComponent = ({ filter, folderName }) => {
   };
 
   //modal 조작
-  const handleOpenModal = (reviewId) => {
-    setSelectedReviewId(reviewId);
+  const handleOpenModal = (clickedReviewId) => {
+    setSelectedReviewId(clickedReviewId);
     setIsOpen(true);
   };
   const handleCloseModal = () => {
@@ -120,7 +120,11 @@ const ReviewComponent = ({ filter, folderName }) => {
   };
 
   //review 삭제 기능
-  const reviewDelete = (reviewId) => {
+  const reviewDelete = (selectedReviewId) => {
+    // confirm 창으로 수정
+    // confirm(
+    //   "리뷰를 삭제하면 해당 결제 내역에 대해서는 다시 리뷰를 작성할 수 없습니다. 정말 삭제하시겠습니까?"
+    // );
     axios
       .delete(`${process.env.REACT_APP_DEV_URL}/api/reviews/${reviewId}`, {
         headers: {
@@ -136,11 +140,14 @@ const ReviewComponent = ({ filter, folderName }) => {
       });
 
     setIsOpen(false);
-    alert("리뷰가 삭제되었습니다.");
   };
 
   //review 수정 기능
-  const reviewEdit = (reviewId) => {};
+  const reviewEdit = (selectedReviewId) => {
+    navigate("/review/edit", {
+      state: { reviewId: selectedReviewId },
+    });
+  };
 
   return (
     <div id="reviewFeedContainer">
@@ -188,8 +195,8 @@ const ReviewComponent = ({ filter, folderName }) => {
                   <ReviewModal
                     isOpen={handleOpenModal} //isOpen
                     onClose={handleCloseModal}
-                    onEdit={reviewEdit(review.reviewId)}
-                    onDelete={() => reviewDelete(review.reviewId)}
+                    onEdit={() => reviewEdit(selectedReviewId)}
+                    onDelete={() => reviewDelete(selectedReviewId)}
                   />
                 )}
               </div>
