@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import React, { useEffect, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 
 function FileUploadComponent({ onFileUpload, reviewId }) {
   const [images, setImages] = useState([]);
@@ -29,7 +29,7 @@ function FileUploadComponent({ onFileUpload, reviewId }) {
   };
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      "image/*": [".png", ".jpeg", ".jpg"],
+      'image/*': ['.png', '.jpeg', '.jpg'],
     },
     onDrop,
     multiple: true,
@@ -56,7 +56,9 @@ function FileUploadComponent({ onFileUpload, reviewId }) {
               alt={`Uploaded ${index + 1}`}
               style={imageStyles}
             />
-            <button onClick={() => removeImage(image.id)}>X</button>
+            <button style={xBtnStyles} onClick={() => removeImage(image.id)}>
+              X
+            </button>
           </div>
         ))}
       </div>
@@ -65,33 +67,43 @@ function FileUploadComponent({ onFileUpload, reviewId }) {
 }
 
 const fontStyle = {
-  fontWeight: "600",
-  fontSize: "17px",
+  fontWeight: '600',
+  fontSize: '17px',
 };
 
 const dropzoneStyles = {
-  border: "2px dashed #cccccc",
-  borderRadius: "4px",
-  padding: "20px",
-  textAlign: "center",
-  cursor: "pointer",
+  border: '2px dashed #cccccc',
+  borderRadius: '4px',
+  padding: '20px',
+  textAlign: 'center',
+  cursor: 'pointer',
 };
 
 const imagesContainerStyles = {
-  display: "flex",
-  flexWrap: "wrap",
-  marginTop: "20px",
-  justifyContent: "center",
+  display: 'flex',
+  flexWrap: 'wrap',
+  marginTop: '20px',
+  justifyContent: 'center',
 };
 
 const imageContainerStyles = {
-  marginRight: "10px",
-  marginBottom: "10px",
+  marginRight: '10px',
+  marginBottom: '10px',
 };
 
 const imageStyles = {
-  maxWidth: "100px",
-  maxHeight: "100px",
+  maxWidth: '100px',
+  maxHeight: '100px',
+};
+
+const xBtnStyles = {
+  color: 'white',
+  borderRadius: '12px',
+  height: '24px',
+  width: '24px',
+  border: 'none',
+  backgroundColor: '#2448c2',
+  textAlign: 'center',
 };
 
 export default FileUploadComponent;
