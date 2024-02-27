@@ -91,7 +91,6 @@ const FolderAddComponent = () => {
         setfolder(res.data);
         setInputText(res.data.folderName);
         setSelectedValue(res.data.folderImg);
-        console.log(res.data);
       })
       .catch((error) => {
         navigate("/login");
