@@ -29,11 +29,13 @@
   border-radius: 50%;
   overflow: hidden;
   margin: 30px auto 20px auto;
+  object-fit: cover;
 }
 .mypage .profile {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: cover;
 }
 .mypage #uploadProfile {
   display: none;
