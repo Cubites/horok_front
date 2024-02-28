@@ -103,8 +103,9 @@ const MypageComponent = () => {
     setAllChecked(checked);
 
     if (cardList.length > 0) {
-      setCardChecked(Array(cardList.length).fill(checked));
-      setCardChecked(cardChecked.map(() => checked));
+      const newCardCheckd = cardChecked.map(() => checked);
+      //setCardChecked(Array(cardList.length).fill(checked));
+      setCardChecked([...newCardCheckd]);
     }
   };
 
