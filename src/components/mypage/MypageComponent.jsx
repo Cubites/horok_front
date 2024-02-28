@@ -99,7 +99,8 @@ const MypageComponent = () => {
 
   const handleAllCheck = (event) => {
     //todo
-    const { checked } = event.target.checked;
+    console.log(event.target);
+    const { checked } = event.target;
     setAllChecked(checked);
 
     if (cardList.length > 0) {
