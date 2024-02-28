@@ -101,7 +101,7 @@ const MapViewComponent = ({
           // 리뷰 박스
           reviewSet += `
             <div class='reviewOne'>
-              <img src=${review.image1} alt="review_image" />
+              <img src=${process.env.REACT_APP_DEV_URL}/show/image?imageName=${review.image1} alt="review_image" />
               <div class='reviewOneRight'>
                 <div class='paydateArea'>
                   ${review.payDate}
