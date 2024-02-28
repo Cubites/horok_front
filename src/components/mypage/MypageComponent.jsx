@@ -13,22 +13,13 @@ const MypageComponent = () => {
   const [newNickname, setNewNickname] = useState("");
   //전체 선택 체크박스가 클릭될 때 호출되는 함수 ( 모든 체크 박스의 상태를 전체 선택 체크박스와 동일하게 처리)
   const [allChecked, setAllChecked] = useState(false);
-  const [cardChecked, setCardChecked] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [cardChecked, setCardChecked] = useState([false, false, false, false]);
   //카드 리스트
   const [cardList, setCardList] = useState([]);
+
   // 더 많은 카드 보기 토글
   const [showAllCards, setShowAllCards] = useState(false);
+
   //체크박스 선택이 되면 false->true 변경 (status 사용)
   let checkedCard = false;
 
@@ -60,10 +51,6 @@ const MypageComponent = () => {
       return cardChecked[i];
     });
     setCardChecked([...cardChecked2]);
-
-    // 모든 카드가 선택되었는지 확인
-    const allCardsChecked = cardChecked2.every((v) => v);
-    setAllChecked(allCardsChecked);
   };
 
   // 토글 버튼 클릭 핸들러
@@ -71,12 +58,15 @@ const MypageComponent = () => {
     setShowAllCards(!showAllCards);
   };
 
+  // 모든 체크박스 핸들러
   const handleAllCheck = (event) => {
     //todo
     const { checked } = event.target;
     setAllChecked(checked);
+
+    // 카드 체크박스 상태 업데이트
     if (cardList.length > 0) {
-      setCardChecked(cardChecked.map(() => checked));
+      setCardChecked(Array(cardList.length).fill(checked));
     }
   };
 
@@ -84,7 +74,7 @@ const MypageComponent = () => {
   const getUser = () => {
     axios
       .get(`${process.env.REACT_APP_DEV_URL}/api/users/info`, {
-        withCredentials: true,
+        withCredential: true,
       })
       .then((res) => {
         setUser(res.data);
@@ -92,9 +82,7 @@ const MypageComponent = () => {
       })
       .catch((error) => {
         console.log("Error fetching user data:", error);
-        if (error.response.status === 401) {
-          navigate("/login");
-        }
+        navigate("/login");
       });
   };
   useEffect(() => {
@@ -121,9 +109,7 @@ const MypageComponent = () => {
       })
       .catch((error) => {
         console.log("사진 수정 실패:", error);
-        if (error.response.status === 401) {
-          navigate("/login");
-        }
+        navigate("/login");
       });
   };
 
@@ -147,9 +133,7 @@ const MypageComponent = () => {
       })
       .catch((error) => {
         console.log("수정 실패:", error);
-        if (error.response.status === 401) {
-          navigate("/login");
-        }
+        navigate("/login");
       });
   };
   //월간 통계
@@ -190,9 +174,7 @@ const MypageComponent = () => {
         renderChart(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
-        if (error.response.status === 401) {
-          navigate("/login");
-        }
+        navigate("/login");
       }
     };
     fetchData();
@@ -270,9 +252,7 @@ const MypageComponent = () => {
         renderChart2(response.data); // 차트를 렌더링
       } catch (error) {
         console.error("카드 사용 통계를 가져오는 중 오류 발생:", error);
-        if (error.response.status === 401) {
-          navigate("/login");
-        }
+        navigate("/login");
       }
     };
     fetchData();
