@@ -1,18 +1,18 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
-import axios from "axios";
-import "./reviewList.css";
-import FolderModal from "./FolderModal";
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
+import './reviewList.css';
+import FolderModal from './FolderModal';
 
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Mousewheel, Keyboard } from "swiper/modules";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const ReviewListComponent = ({ filter, setFilter, folderName }) => {
   const { folderId } = useParams();
@@ -22,28 +22,31 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState(null);
   const [user, setUser] = useState({});
-  const [folder, setfolder] = useState({ folderName: "", folderImg: "" });
+  const [folder, setfolder] = useState({ folderName: '', folderImg: '' });
   const folderShare = async () => {
     try {
       const token = await getToken();
       if (navigator.share) {
         await navigator.share({
-          title: "호록",
+          title: '호록',
           url: `https://horok.link/invite/${token}`,
           text: `\'${user.userNickname}\' 님이 \"${folder.folderName}\" 폴더에 초대하셨어요. 참가해주세요!`.trim(),
         });
       } else {
-        console.log("Web Share API를 지원하지 않는 브라우저입니다.");
+        console.log('Web Share API를 지원하지 않는 브라우저입니다.');
       }
     } catch (error) {
-      console.error("공유 실패", error);
+      console.error('공유 실패', error);
+      if (error.response.status === 401) {
+        navigate('/login');
+      }
     }
   };
   const getfolderInfo = () => {
     axios
       .get(`${process.env.REACT_APP_DEV_URL}/api/folders/edit/${folderId}`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       })
@@ -51,20 +54,22 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
         setfolder(res.data);
       })
       .catch((error) => {
-        navigate("/login");
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
   const sortReviews = (reviews) => {
     return reviews.slice().sort((a, b) => {
       switch (filter) {
-        case "0":
+        case '0':
           return compareDates(b.reviewDate, a.reviewDate);
-        case "1":
+        case '1':
           return compareDates(a.reviewDate, b.reviewDate);
-        case "2":
+        case '2':
           return b.reviewScore - a.reviewScore;
-        case "3":
+        case '3':
           return a.reviewScore - b.reviewScore;
         default:
           return 0;
@@ -108,12 +113,14 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
         setData(res.data);
       })
       .catch((error) => {
-        navigate("/login");
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
   const handleGoFolderList = () => {
-    navigate("/folder/list");
+    navigate('/folder/list');
   };
 
   //modal 조작
@@ -127,7 +134,7 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
   };
 
   const folderEdit = (folderId) => {
-    navigate("/folder/edit", { state: { folderId } });
+    navigate('/folder/edit', { state: { folderId } });
   };
 
   const getToken = async () => {
@@ -138,8 +145,10 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
       );
       return response.data;
     } catch (error) {
-      console.error("토큰 가져오기 실패", error);
-      navigate("/login");
+      console.error('토큰 가져오기 실패', error);
+      if (error.response.status === 401) {
+        navigate('/login');
+      }
     }
   };
 
@@ -152,8 +161,10 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
         setUser(res.data);
       })
       .catch((error) => {
-        console.log("Error fetching user data:", error);
-        navigate("/login");
+        console.log('Error fetching user data:', error);
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
@@ -161,22 +172,24 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
     axios
       .delete(`${process.env.REACT_APP_DEV_URL}/api/folders/${folderId}`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       })
       .then((response) => {
         console.log(response);
         if (response.data === true) {
-          alert("폴더가 삭제 되었습니다.");
+          alert('폴더가 삭제 되었습니다.');
         } else {
-          alert("다시 시도해주세요");
+          alert('다시 시도해주세요');
         }
-        navigate("/folder/list");
+        navigate('/folder/list');
       })
       .catch((error) => {
-        console.log("error: ", error);
-        navigate("/login");
+        console.log('error: ', error);
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
 
     setIsOpen(false);
@@ -195,28 +208,28 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
   }, []);
 
   return (
-    <div id="reviewListContainer">
-      <div className="inFolderHeader">
-        <div className="wrapper">
-          <div className="backBtn cursorToPointer">
+    <div id='reviewListContainer'>
+      <div className='inFolderHeader'>
+        <div className='wrapper'>
+          <div className='backBtn cursorToPointer'>
             <img
-              src="/images/backArrow.png"
-              alt="backArrow"
-              height="50"
+              src='/images/backArrow.png'
+              alt='backArrow'
+              height='50'
               onClick={handleGoFolderList}
             />
           </div>
-          <div className="headerTxt">{folderName}</div>
+          <div className='headerTxt'>{folderName}</div>
         </div>
         <div
-          className="settingBtn cursorToPointer"
+          className='settingBtn cursorToPointer'
           onClick={() => handleOpenModal(folderId)}
         >
           <img
-            src="/images/menudots.png"
-            className="reviewThumbnail"
-            alt="menuBtn"
-            height="40"
+            src='/images/menudots.png'
+            className='reviewThumbnail'
+            alt='menuBtn'
+            height='40'
           />
         </div>
         {isOpen && (
@@ -229,35 +242,35 @@ const ReviewListComponent = ({ filter, setFilter, folderName }) => {
           />
         )}
       </div>
-      <div className="filterArea cursorToPointer">
+      <div className='filterArea cursorToPointer'>
         <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-          <option value="0">최신순</option>
-          <option value="1">오래된순</option>
-          <option value="2">평점 높은순</option>
-          <option value="3">평점 낮은순</option>
+          <option value='0'>최신순</option>
+          <option value='1'>오래된순</option>
+          <option value='2'>평점 높은순</option>
+          <option value='3'>평점 낮은순</option>
         </select>
       </div>
-      <div className="reviewsArea">
-        <div className="reviewsWrapper">
+      <div className='reviewsArea'>
+        <div className='reviewsWrapper'>
           {data &&
             sortReviews(data).map((review, index) => (
-              <div className="reviewItem cursorToPointer" key={index}>
+              <div className='reviewItem cursorToPointer' key={index}>
                 {review.image1 && review.image1.length > 0 ? (
                   <img
                     src={`${process.env.REACT_APP_DEV_URL}/show/image?imageName=${review.image1}`}
-                    className="reviewThumbnail"
-                    alt="thumbnail"
-                    width="130"
-                    height="127"
+                    className='reviewThumbnail'
+                    alt='thumbnail'
+                    width='130'
+                    height='127'
                     onClick={() => handleViewReview(review.reviewId)}
                   />
                 ) : (
                   <img
-                    src="/images/sh_symbol.png"
-                    className="reviewThumbnail"
-                    alt="thumbnail"
-                    width="130"
-                    height="130"
+                    src='/images/sh_symbol.png'
+                    className='reviewThumbnail'
+                    alt='thumbnail'
+                    width='130'
+                    height='130'
                     onClick={() => handleViewReview(review.reviewId)}
                   />
                 )}

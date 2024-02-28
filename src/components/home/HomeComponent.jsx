@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "./home.css";
-import axios from "axios";
-import React, { Fragment } from "react";
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './home.css';
+import axios from 'axios';
+import React, { Fragment } from 'react';
 
 const HomeComponent = ({ folderName, setFolderName }) => {
   const [user, setUser] = useState({});
@@ -40,8 +40,10 @@ const HomeComponent = ({ folderName, setFolderName }) => {
         setUser(res.data);
       })
       .catch((error) => {
-        console.log("Error fetching user data:", error);
-        navigate("/login");
+        console.log('Error fetching user data:', error);
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
   const getFolderFavor = () => {
@@ -53,7 +55,9 @@ const HomeComponent = ({ folderName, setFolderName }) => {
         setFavor(res.data);
       })
       .catch((error) => {
-        navigate("/login");
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
@@ -68,7 +72,9 @@ const HomeComponent = ({ folderName, setFolderName }) => {
         initializeCheckedList(res.data); // 초기화
       })
       .catch((error) => {
-        navigate("/login");
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
@@ -79,7 +85,7 @@ const HomeComponent = ({ folderName, setFolderName }) => {
         checkedList,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(checkedList),
           withCredentials: true,
@@ -90,7 +96,9 @@ const HomeComponent = ({ folderName, setFolderName }) => {
         Modal();
       })
       .catch((error) => {
-        navigate("/login");
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
@@ -102,8 +110,8 @@ const HomeComponent = ({ folderName, setFolderName }) => {
 
   //Modal
   const Modal = () => {
-    document.getElementById("modal").classList.toggle("noshow");
-    document.getElementById("modalScroll").classList.toggle("hidden");
+    document.getElementById('modal').classList.toggle('noshow');
+    document.getElementById('modalScroll').classList.toggle('hidden');
   };
 
   const save = () => {
@@ -111,7 +119,7 @@ const HomeComponent = ({ folderName, setFolderName }) => {
       (value) => value === true
     ).length;
     if (favorCnt > 9) {
-      if (window.confirm("최대 9개까지 선택 가능합니다")) {
+      if (window.confirm('최대 9개까지 선택 가능합니다')) {
       }
     } else {
       getFolderFavorUpdate();
@@ -130,41 +138,41 @@ const HomeComponent = ({ folderName, setFolderName }) => {
     checkedItemHandler(value, isChecked);
   };
   return (
-    <div className="homeContainer" id="modalScroll">
-      <div className="modalContainer">
-        <div className="modalSubContainer noshow" id="modal" onClick={Modal}>
-          <div className="moadlView" onClick={Modal}>
-            <div className="modalContent">
-              <div className="modalHead">
-                <div className="modalName">
+    <div className='homeContainer' id='modalScroll'>
+      <div className='modalContainer'>
+        <div className='modalSubContainer noshow' id='modal' onClick={Modal}>
+          <div className='moadlView' onClick={Modal}>
+            <div className='modalContent'>
+              <div className='modalHead'>
+                <div className='modalName'>
                   <h1>즐겨찾기 폴더</h1>
                 </div>
-                <div className="moadlClose">
+                <div className='moadlClose'>
                   <img
-                    src="/images/main-close.png"
-                    rel=""
-                    style={{ width: "20%" }}
+                    src='/images/main-close.png'
+                    rel=''
+                    style={{ width: '20%' }}
                     onClick={Modal}
-                    alt="test"
+                    alt='test'
                   ></img>
-                  <div style={{ fontSize: "10px" }}>
+                  <div style={{ fontSize: '10px' }}>
                     최대 9개 선택 가능해요.
                   </div>
                 </div>
               </div>
-              <div className="modalBody scrollBar">
-                <div style={{ width: "85%" }}>
+              <div className='modalBody scrollBar'>
+                <div style={{ width: '85%' }}>
                   {folder &&
                     folder.length > 0 &&
                     folder.map((list, i) => (
-                      <li key={i} className="check">
+                      <li key={i} className='check'>
                         <label htmlFor={list.folderParticipantsId}>
-                          <div style={{ textAlign: "left" }}>
+                          <div style={{ textAlign: 'left' }}>
                             {list.folderName}
                           </div>
                         </label>
                         <input
-                          type="checkbox"
+                          type='checkbox'
                           checked={checkedList[list.folderParticipantsId]}
                           //defaultChecked={list.folderFavor}
                           id={list.folderParticipantsId}
@@ -175,8 +183,8 @@ const HomeComponent = ({ folderName, setFolderName }) => {
                     ))}
                 </div>
               </div>
-              <div className="favorEdit">
-                <button id="favorEditBtn" onClick={save}>
+              <div className='favorEdit'>
+                <button id='favorEditBtn' onClick={save}>
                   확인
                 </button>
               </div>
@@ -184,55 +192,55 @@ const HomeComponent = ({ folderName, setFolderName }) => {
           </div>
         </div>
       </div>
-      <div className="homeSubContainer">
-        <div className="userInfoBox">
-          <div className="userImg">
+      <div className='homeSubContainer'>
+        <div className='userInfoBox'>
+          <div className='userImg'>
             <img
               src={`${process.env.REACT_APP_DEV_URL}/show/image?imageName=${user.userProfile}`}
-              alt=""
-              className="userImgContainer"
+              alt=''
+              className='userImgContainer'
             />
           </div>
-          <div className="userInfo">
+          <div className='userInfo'>
             <div>{user.userNickname}</div>
-            <div className="cntInfo" style={{}}>
+            <div className='cntInfo' style={{}}>
               <div>
                 리뷰
-                <span style={{ fontWeight: "600" }}>
-                  {" "}
+                <span style={{ fontWeight: '600' }}>
+                  {' '}
                   {user.userReviewCnt}
-                  {"     "}
+                  {'     '}
                 </span>
               </div>
               <div>
                 폴더
-                <span style={{ fontWeight: "600" }}>
-                  {" "}
-                  {user.userFolderCnt}{" "}
+                <span style={{ fontWeight: '600' }}>
+                  {' '}
+                  {user.userFolderCnt}{' '}
                 </span>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <div className="favorName">
+          <div className='favorName'>
             <div>
-              즐겨찾기{" "}
+              즐겨찾기{' '}
               <img
-                src="/images/setting.png"
-                rel=""
+                src='/images/setting.png'
+                rel=''
                 onClick={Modal}
-                style={{ width: "9%" }}
-                alt="test"
+                style={{ width: '9%' }}
+                alt='test'
               />
             </div>
-            <Link to={"/folder/list"} style={{ fontSize: "15px" }}>
+            <Link to={'/folder/list'} style={{ fontSize: '15px' }}>
               더보기
             </Link>
           </div>
-          <div className="favorBox">
+          <div className='favorBox'>
             {folderList.map((list, l) => (
-              <div key={l} className="testBox">
+              <div key={l} className='testBox'>
                 {favor && favor.length > l && (
                   <React.Fragment>
                     <Link
@@ -242,24 +250,24 @@ const HomeComponent = ({ folderName, setFolderName }) => {
                       }}
                     >
                       <img
-                        src={"/images/" + favor[l].folderImg + "-f.png"}
-                        style={{ width: "80%" }}
-                        alt="test"
+                        src={'/images/' + favor[l].folderImg + '-f.png'}
+                        style={{ width: '80%' }}
+                        alt='test'
                       />
                     </Link>
-                    <Link to={"/folder/list"}>
+                    <Link to={'/folder/list'}>
                       <div
                         style={{
-                          lineHeight: "28px",
-                          whiteSpace: "noWrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
+                          lineHeight: '28px',
+                          whiteSpace: 'noWrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
                         }}
                       >
                         {favor[l].folderName}
                       </div>
                     </Link>
-                    <div className="partiText">
+                    <div className='partiText'>
                       {favor[l].folderParticipants}
                     </div>
                   </React.Fragment>

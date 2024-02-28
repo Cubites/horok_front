@@ -1,15 +1,15 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import React, { useEffect, useState, useRef, ReactDOM } from "react";
-import axios from "axios";
-import "./reviewDetail.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useRef, ReactDOM } from 'react';
+import axios from 'axios';
+import './reviewDetail.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faStar,
   faStarHalfAlt,
   faVolumeXmark,
   // faStarEmpty,
-} from "@fortawesome/free-solid-svg-icons";
-import ImageSwiper from "./ImageSwiper";
+} from '@fortawesome/free-solid-svg-icons';
+import ImageSwiper from './ImageSwiper';
 
 const ReviewComponent = ({ filter, folderName, setLatLon }) => {
   const location = useLocation();
@@ -41,7 +41,10 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
         updateReviewList(res.data);
       })
       .catch((error) => {
-        console.error("error: ", error);
+        console.error('error: ', error);
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
@@ -80,7 +83,7 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
   const scrollToReview = (reviewId) => {
     const element = document.getElementById(`review-${reviewId}`);
     if (element) {
-      element.scrollIntoView({ behavior: "auto", block: "start" });
+      element.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
   };
 
@@ -109,7 +112,7 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
     //full star
     for (let i = 0; i < fullStars; i++) {
       starIcon.push(
-        <FontAwesomeIcon key={i} icon={faStar} style={{ color: "#263CFF", }} />
+        <FontAwesomeIcon key={i} icon={faStar} style={{ color: '#263CFF' }} />
       );
     }
 
@@ -117,9 +120,9 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
     if (halfStar) {
       starIcon.push(
         <FontAwesomeIcon
-          key="half"
+          key='half'
           icon={faStarHalfAlt}
-          style={{ color: "#263CFF" }}
+          style={{ color: '#263CFF' }}
         />
       );
     }
@@ -137,7 +140,7 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
 
   const handleClickMapIcon = (latitude, longitude) => {
     setLatLon([latitude, longitude]);
-    navigate("/map");
+    navigate('/map');
   };
 
   const handleClickBackBtn = () => {
@@ -149,7 +152,7 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
       .post(`${process.env.REACT_APP_DEV_URL}/api/reviews/favors`, null, {
         params: { folderReviewId: folderReviewId },
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       })
@@ -161,8 +164,10 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
         }
       })
       .catch((error) => {
-        console.log("error: ", error);
-        navigate("/login");
+        console.log('error: ', error);
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
@@ -172,7 +177,7 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
         `${process.env.REACT_APP_DEV_URL}/api/reviews/favors/${folderReviewId}`,
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           withCredentials: true,
         }
@@ -185,54 +190,56 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
         }
       })
       .catch((error) => {
-        console.log("error: ", error);
-        navigate("/login");
+        console.log('error: ', error);
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
   return (
-    <div id="reviewFeedContainer">
-      <div className="inFolderHeader">
-        <div className="wrapper">
-          <div className="backBtn cursorToPointer">
+    <div id='reviewFeedContainer'>
+      <div className='inFolderHeader'>
+        <div className='wrapper'>
+          <div className='backBtn cursorToPointer'>
             <img
-              src="/images/backArrow.png"
-              alt="backArrow"
-              height="50"
+              src='/images/backArrow.png'
+              alt='backArrow'
+              height='50'
               onClick={handleClickBackBtn}
             />
           </div>
-          <div className="headerTxt">{folderName}</div>
+          <div className='headerTxt'>{folderName}</div>
         </div>
       </div>
-      <div className="feedArea">
+      <div className='feedArea'>
         {/*반복*/}
         {reviewList &&
           reviewList.map((review, index) => (
             <div
-              className="viewReview"
+              className='viewReview'
               key={index}
               id={`review-${review.reviewId}`}
             >
               {/* review header */}
-              <div className="reviewHeader">
-                <div className="reviewTitleArea">
-                  <div className="storeName">{review.storeName}</div>
-                  <div className="storeCategory">{review.storeCategory}</div>
+              <div className='reviewHeader'>
+                <div className='reviewTitleArea'>
+                  <div className='storeName'>{review.storeName}</div>
+                  <div className='storeCategory'>{review.storeCategory}</div>
                 </div>
-                <div className="settingBtn cursorToPointer">
+                <div className='settingBtn cursorToPointer'>
                   <img
-                    src="/images/menudots.png"
-                    className="reviewThumbnail"
-                    alt="menuBtn"
-                    height="30"
+                    src='/images/menudots.png'
+                    className='reviewThumbnail'
+                    alt='menuBtn'
+                    height='30'
                   />
                 </div>
               </div>
               {/* review body */}
-              <div className="reviewContentArea">
-                <div className="top">
-                  <div className="reviewImgArea">
+              <div className='reviewContentArea'>
+                <div className='top'>
+                  <div className='reviewImgArea'>
                     {
                       <ImageSwiper
                         images={[review.image1, review.image2, review.image3]}
@@ -240,33 +247,33 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
                     }
                   </div>
                 </div>
-                <div className="middle">
-                  <div className="left">
-                    <div className="reviewScore">
+                <div className='middle'>
+                  <div className='left'>
+                    <div className='reviewScore'>
                       {scoreToStar(review.reviewScore)}
                     </div>
-                    <div className="reviewDate">
+                    <div className='reviewDate'>
                       {dateArrayToDateString(review.reviewDate)}
                     </div>
                   </div>
-                  <div className="right">
-                    <div className="locationBtn cursorToPointer">
+                  <div className='right'>
+                    <div className='locationBtn cursorToPointer'>
                       <img
-                        src="/images/horokpin.png"
-                        className="reviewImg"
-                        alt="test"
-                        height="30"
+                        src='/images/horokpin.png'
+                        className='reviewImg'
+                        alt='test'
+                        height='30'
                         onClick={() =>
                           handleClickMapIcon(review.latitude, review.longitude)
                         }
                       />
                     </div>
-                    <div className="replyBtn cursorToPointer">
+                    <div className='replyBtn cursorToPointer'>
                       <img
-                        src="/images/replyBtn.png"
-                        className="replyBtn"
-                        alt="test"
-                        height="25"
+                        src='/images/replyBtn.png'
+                        className='replyBtn'
+                        alt='test'
+                        height='25'
                         onClick={() => {
                           navigate(
                             `/review/reply/${folderId}/${review.reviewId}`,
@@ -278,13 +285,13 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
                       />
                       {review.replyCnt}개
                     </div>
-                    <div className="favorBtn cursorToPointer">
+                    <div className='favorBtn cursorToPointer'>
                       {review.favor && review.favor.isFavor ? (
                         <img
-                          src="/images/favorBtn_fill.png"
-                          className="favorBtn fill"
-                          alt="test"
-                          height="25"
+                          src='/images/favorBtn_fill.png'
+                          className='favorBtn fill'
+                          alt='test'
+                          height='25'
                           onClick={() => {
                             handleRemoveFavor(
                               review.folderReviewId,
@@ -294,10 +301,10 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
                         />
                       ) : (
                         <img
-                          src="/images/favorBtn.png"
-                          className="favorBtn"
-                          alt="test"
-                          height="25"
+                          src='/images/favorBtn.png'
+                          className='favorBtn'
+                          alt='test'
+                          height='25'
                           onClick={() =>
                             handleAddFavor(
                               review.folderReviewId,
@@ -313,8 +320,8 @@ const ReviewComponent = ({ filter, folderName, setLatLon }) => {
                     </div>
                   </div>
                 </div>
-                <div className="bottom">
-                  <div className="reviewContent">{review.reviewContent}</div>
+                <div className='bottom'>
+                  <div className='reviewContent'>{review.reviewContent}</div>
                 </div>
               </div>
             </div>

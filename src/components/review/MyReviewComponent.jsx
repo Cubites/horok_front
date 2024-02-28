@@ -1,12 +1,12 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
-import axios from "axios";
-import "./reviewList.css";
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
+import './reviewList.css';
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const MyReviewComponent = ({ filter, setFilter }) => {
   const [data, setData] = useState([]);
@@ -17,13 +17,13 @@ const MyReviewComponent = ({ filter, setFilter }) => {
   const sortReviews = (reviews) => {
     return reviews.slice().sort((a, b) => {
       switch (filter) {
-        case "0":
+        case '0':
           return compareDates(b.reviewDate, a.reviewDate);
-        case "1":
+        case '1':
           return compareDates(a.reviewDate, b.reviewDate);
-        case "2":
+        case '2':
           return b.reviewScore - a.reviewScore;
-        case "3":
+        case '3':
           return a.reviewScore - b.reviewScore;
         default:
           return 0;
@@ -69,13 +69,15 @@ const MyReviewComponent = ({ filter, setFilter }) => {
         setData(res.data);
       })
       .catch((error) => {
-        console.log("error: ", error);
-        navigate("/login");
+        console.log('error: ', error);
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
   const handleGoFolderList = () => {
-    navigate("/folder/list");
+    navigate('/folder/list');
   };
 
   useEffect(() => {
@@ -86,50 +88,50 @@ const MyReviewComponent = ({ filter, setFilter }) => {
   }, [filter, location.state]);
 
   return (
-    <div id="reviewListContainer">
-      <div className="inFolderHeader">
-        <div className="wrapper">
-          <div className="backBtn cursorToPointer">
+    <div id='reviewListContainer'>
+      <div className='inFolderHeader'>
+        <div className='wrapper'>
+          <div className='backBtn cursorToPointer'>
             <img
-              src="/images/backArrow.png"
-              alt="backArrow"
-              height="50"
+              src='/images/backArrow.png'
+              alt='backArrow'
+              height='50'
               onClick={handleGoFolderList}
             />
           </div>
-          <div className="headerTxt">내 리뷰</div>
+          <div className='headerTxt'>내 리뷰</div>
         </div>
-        <div className="settingBtn"></div>
+        <div className='settingBtn'></div>
       </div>
-      <div className="filterArea cursorToPointer">
+      <div className='filterArea cursorToPointer'>
         <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-          <option value="0">최신순</option>
-          <option value="1">오래된순</option>
-          <option value="2">평점 높은순</option>
-          <option value="3">평점 낮은순</option>
+          <option value='0'>최신순</option>
+          <option value='1'>오래된순</option>
+          <option value='2'>평점 높은순</option>
+          <option value='3'>평점 낮은순</option>
         </select>
       </div>
-      <div className="reviewsArea">
-        <div className="reviewsWrapper">
+      <div className='reviewsArea'>
+        <div className='reviewsWrapper'>
           {data &&
             sortReviews(data).map((review, index) => (
-              <div className="reviewItem cursorToPointer" key={index}>
+              <div className='reviewItem cursorToPointer' key={index}>
                 {review.image1 && review.image1.length > 0 ? (
                   <img
                     src={`${process.env.REACT_APP_DEV_URL}/show/image?imageName=${review.image1}`}
-                    className="reviewThumbnail"
-                    alt="thumbnail"
-                    width="130"
-                    height="127"
+                    className='reviewThumbnail'
+                    alt='thumbnail'
+                    width='130'
+                    height='127'
                     onClick={() => handleViewReview(review.reviewId)}
                   />
                 ) : (
                   <img
-                    src="/images/sh_symbol.png"
-                    className="reviewThumbnail"
-                    alt="thumbnail"
-                    width="130"
-                    height="130"
+                    src='/images/sh_symbol.png'
+                    className='reviewThumbnail'
+                    alt='thumbnail'
+                    width='130'
+                    height='130'
                     onClick={() => handleViewReview(review.reviewId)}
                   />
                 )}

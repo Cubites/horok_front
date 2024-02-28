@@ -1,15 +1,15 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
-import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
-import "./reviewDetail.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import axios from 'axios';
+import './reviewDetail.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faStar,
   faStarHalfAlt,
   faVolumeXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import ImageSwiper from "./ImageSwiper";
-import ReviewModal from "./ReviewModal";
+} from '@fortawesome/free-solid-svg-icons';
+import ImageSwiper from './ImageSwiper';
+import ReviewModal from './ReviewModal';
 
 const ReviewComponent = ({ filter, folderName }) => {
   const location = useLocation();
@@ -35,7 +35,7 @@ const ReviewComponent = ({ filter, folderName }) => {
   const scrollToReview = (reviewId) => {
     const element = document.getElementById(`review-${reviewId}`);
     if (element) {
-      element.scrollIntoView({ behavior: "auto", block: "start" });
+      element.scrollIntoView({ behavior: 'auto', block: 'start' });
     }
   };
 
@@ -64,7 +64,7 @@ const ReviewComponent = ({ filter, folderName }) => {
     //full star
     for (let i = 0; i < fullStars; i++) {
       starIcon.push(
-        <FontAwesomeIcon key={i} icon={faStar} style={{ color: "yellow" }} />
+        <FontAwesomeIcon key={i} icon={faStar} style={{ color: 'yellow' }} />
       );
     }
 
@@ -72,9 +72,9 @@ const ReviewComponent = ({ filter, folderName }) => {
     if (halfStar) {
       starIcon.push(
         <FontAwesomeIcon
-          key="half"
+          key='half'
           icon={faStarHalfAlt}
-          style={{ color: "yellow" }}
+          style={{ color: 'yellow' }}
         />
       );
     }
@@ -93,7 +93,7 @@ const ReviewComponent = ({ filter, folderName }) => {
   };
 
   const handleClickMapIcon = (latitude, longitude) => {
-    navigate("/map", {
+    navigate('/map', {
       state: { latitude: latitude, longitude: longitude },
     });
   };
@@ -121,7 +121,7 @@ const ReviewComponent = ({ filter, folderName }) => {
     axios
       .delete(`${process.env.REACT_APP_DEV_URL}/api/reviews/${reviewId}`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       })
@@ -129,8 +129,10 @@ const ReviewComponent = ({ filter, folderName }) => {
         getReview(folderId);
       })
       .catch((error) => {
-        console.log("error: ", error);
-        navigate("/login");
+        console.log('error: ', error);
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
 
     setIsOpen(false);
@@ -138,51 +140,51 @@ const ReviewComponent = ({ filter, folderName }) => {
 
   //review 수정 기능
   const reviewEdit = (selectedReviewId) => {
-    navigate("/review/edit", {
+    navigate('/review/edit', {
       state: { reviewId: selectedReviewId },
     });
   };
 
   return (
-    <div id="reviewFeedContainer">
-      <div clsaaName="modalBackdrop"></div>
-      <div className="inFolderHeader">
-        <div className="wrapper">
-          <div className="backBtn cursorToPointer">
+    <div id='reviewFeedContainer'>
+      <div clsaaName='modalBackdrop'></div>
+      <div className='inFolderHeader'>
+        <div className='wrapper'>
+          <div className='backBtn cursorToPointer'>
             <img
-              src="/images/backArrow.png"
-              alt="backArrow"
-              height="50"
+              src='/images/backArrow.png'
+              alt='backArrow'
+              height='50'
               onClick={handleClickBackBtn}
             />
           </div>
-          <div className="headerTxt">내 리뷰</div>
+          <div className='headerTxt'>내 리뷰</div>
         </div>
       </div>
-      <div className="feedArea">
+      <div className='feedArea'>
         {/*반복*/}
         {reviewList &&
           reviewList.map((review, index) => (
             <div
-              className="viewReview"
+              className='viewReview'
               key={index}
               id={`review-${review.reviewId}`}
             >
               {/* review header */}
-              <div className="reviewHeader">
-                <div className="reviewTitleArea">
-                  <div className="storeName">{review.storeName}</div>
-                  <div className="storeCategory">{review.storeCategory}</div>
+              <div className='reviewHeader'>
+                <div className='reviewTitleArea'>
+                  <div className='storeName'>{review.storeName}</div>
+                  <div className='storeCategory'>{review.storeCategory}</div>
                 </div>
                 <div
-                  className="settingBtn cursorToPointer"
+                  className='settingBtn cursorToPointer'
                   onClick={() => handleOpenModal(review.reviewId)}
                 >
                   <img
-                    src="/images/menudots.png"
-                    className="reviewThumbnail"
-                    alt="menuBtn"
-                    height="30"
+                    src='/images/menudots.png'
+                    className='reviewThumbnail'
+                    alt='menuBtn'
+                    height='30'
                   />
                 </div>
                 {isOpen && (
@@ -195,9 +197,9 @@ const ReviewComponent = ({ filter, folderName }) => {
                 )}
               </div>
               {/* review body */}
-              <div className="reviewContentArea">
-                <div className="top">
-                  <div className="reviewImgArea">
+              <div className='reviewContentArea'>
+                <div className='top'>
+                  <div className='reviewImgArea'>
                     {
                       <ImageSwiper
                         images={[review.image1, review.image2, review.image3]}
@@ -205,23 +207,23 @@ const ReviewComponent = ({ filter, folderName }) => {
                     }
                   </div>
                 </div>
-                <div className="middle">
-                  <div className="left">
-                    <div className="reviewScore">
+                <div className='middle'>
+                  <div className='left'>
+                    <div className='reviewScore'>
                       {scoreToStar(review.reviewScore)}
                     </div>
-                    <div className="reviewDate">
+                    <div className='reviewDate'>
                       {dateArrayToDateString(review.reviewDate)}
                     </div>
                   </div>
-                  <div className="right">
-                    <div className="locationBtn"></div>
-                    <div className="replyBtn"></div>
-                    <div className="favorBtn"></div>
+                  <div className='right'>
+                    <div className='locationBtn'></div>
+                    <div className='replyBtn'></div>
+                    <div className='favorBtn'></div>
                   </div>
                 </div>
-                <div className="bottom">
-                  <div className="reviewContent">{review.reviewContent}</div>
+                <div className='bottom'>
+                  <div className='reviewContent'>{review.reviewContent}</div>
                 </div>
               </div>
             </div>

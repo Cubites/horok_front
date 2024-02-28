@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import "./multiSelect.css";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import './multiSelect.css';
+import { useNavigate } from 'react-router-dom';
 
 const MultiSelectComponent = ({ onChange, reviewId }) => {
   // const [data, setData] = useState({});
   const [options, setOptions] = useState([]);
   // 다중 선택된 항목들을 관리하기 위한 상태
-  const [selectedOptions, setSelectedOptions] = useState(["0"]);
+  const [selectedOptions, setSelectedOptions] = useState(['0']);
   const navigate = useNavigate();
 
   const getFolderList = (reviewId) => {
@@ -24,8 +24,10 @@ const MultiSelectComponent = ({ onChange, reviewId }) => {
           setOptions(folderData);
         })
         .catch((error) => {
-          console.error("error!!! : ", error);
-          navigate("/login");
+          console.error('error!!! : ', error);
+          if (error.response.status === 401) {
+            navigate('/login');
+          }
         });
     } else if (reviewId && reviewId !== -1) {
       axios
@@ -41,8 +43,10 @@ const MultiSelectComponent = ({ onChange, reviewId }) => {
           setOptions(folderData);
         })
         .catch((error) => {
-          console.error("error!!! : ", error);
-          navigate("/login");
+          console.error('error!!! : ', error);
+          if (error.response.status === 401) {
+            navigate('/login');
+          }
         });
     }
   };
@@ -69,8 +73,8 @@ const MultiSelectComponent = ({ onChange, reviewId }) => {
     onChange(selectedValues);
 
     //선택하지 않음 선택시 다른 항목 선택 취소
-    if (selectedValues.includes("0")) {
-      setSelectedOptions(["0"]);
+    if (selectedValues.includes('0')) {
+      setSelectedOptions(['0']);
     } else {
       setSelectedOptions(selectedValues);
     }
@@ -81,9 +85,9 @@ const MultiSelectComponent = ({ onChange, reviewId }) => {
       multiple
       value={selectedOptions}
       onChange={handleChange}
-      className="multiSelectBox"
+      className='multiSelectBox'
     >
-      <option value="0">선택하지 않음</option>
+      <option value='0'>선택하지 않음</option>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

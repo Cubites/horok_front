@@ -4,7 +4,7 @@ import axios from 'axios';
 import MapViewComponent from './MapViewComponent';
 import { useNavigate } from 'react-router-dom';
 
-const MapComponent = ({latLon, setLatLon}) => {
+const MapComponent = ({ latLon, setLatLon }) => {
   const navigate = useNavigate();
   const [ShowFolderId, setShowFolderId] = useState(0); // 화면에 표시할 폴더의 id
   const [ReviewList, setReviewList] = useState([]); // 모든 리뷰 목록
@@ -27,18 +27,22 @@ const MapComponent = ({latLon, setLatLon}) => {
             storeCategory: review.storeCategory,
             latitude: review.latitude,
             longitude: review.longitude,
-            reviews: [review]
+            reviews: [review],
           };
         }
       }
     }
     return reviewsByStore;
-  }
+  };
 
   /* 리뷰 데이터 요청 */
   async function searchReviews() {
-    try{
-      let reviews = await axios.post(`${process.env.REACT_APP_DEV_URL}/api/users/reviews`, {}, {withCredentials: true});
+    try {
+      let reviews = await axios.post(
+        `${process.env.REACT_APP_DEV_URL}/api/users/reviews`,
+        {},
+        { withCredentials: true }
+      );
       let reviewsAll = reviews.data;
 
       // 가게별 리뷰
@@ -58,7 +62,7 @@ const MapComponent = ({latLon, setLatLon}) => {
           reviewsByFolderObject[`folder${review.folderId}`] = {
             folderId: review.folderId,
             folderName: review.folderName,
-            folderColor: `#${review.folderImg.split("-")[1]}`
+            folderColor: `#${review.folderImg.split('-')[1]}`,
           };
         }
       }
@@ -67,57 +71,70 @@ const MapComponent = ({latLon, setLatLon}) => {
         reviewsByFolder.push(reviewsByFolderObject[folderKey]);
       }
 
-      console.log("reviewsAll: ", reviewsAll);
-      console.log("reviewsByStore: ", reviewsByStore)
+      console.log('reviewsAll: ', reviewsAll);
+      console.log('reviewsByStore: ', reviewsByStore);
       console.log('reviewsByFolderObject: ', reviewsByFolderObject);
       return { reviewsAll, reviewsByStore, reviewsByFolder, mostReviewNum };
     } catch (error) {
-      console.error("Error that get review data.", error);
-      navigate('/login');
+      console.error('Error that get review data.', error);
+      if (error.response.status === 401) {
+        navigate('/login');
+      }
     }
   }
 
   /* 현재 위치의 위도, 경도 값 반환 */
   const getLocation = () => {
-    if (navigator.geolocation) { // GPS를 지원하면
-      navigator.geolocation.getCurrentPosition(function (position) {
-        setCenterLatLon([position.coords.latitude, position.coords.longitude]);
-      }, function (error) {
-        console.error("Error that get geoLocation values(latitude, longitude).", error);
-      }, {
-        enableHighAccuracy: false,
-        maximumAge: 0,
-        timeout: Infinity
-      });
+    if (navigator.geolocation) {
+      // GPS를 지원하면
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          setCenterLatLon([
+            position.coords.latitude,
+            position.coords.longitude,
+          ]);
+        },
+        function (error) {
+          console.error(
+            'Error that get geoLocation values(latitude, longitude).',
+            error
+          );
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity,
+        }
+      );
     } else {
       alert('현재 위치를 표시하려면 위치 설정을 켜주세요.');
     }
-  }
+  };
 
   /* 리뷰 데이터 요청 */
   useEffect(() => {
-    if(ReviewList.length === 0) {
-      searchReviews()
-        .then(data => {
-          if(CenterLatLon && CenterLatLon[0] === 0 && CenterLatLon[1] === 0) {
-            getLocation();
-          }
-          if(data) {
-            setReviewList(data.reviewsAll);
-            setReviewListByStore(data.reviewsByStore);
-            setFolderList(data.reviewsByFolder);
-            setReviewNumMax(data.mostReviewNum);
-          }
-        });
+    if (ReviewList.length === 0) {
+      searchReviews().then((data) => {
+        if (CenterLatLon && CenterLatLon[0] === 0 && CenterLatLon[1] === 0) {
+          getLocation();
+        }
+        if (data) {
+          setReviewList(data.reviewsAll);
+          setReviewListByStore(data.reviewsByStore);
+          setFolderList(data.reviewsByFolder);
+          setReviewNumMax(data.mostReviewNum);
+        }
+      });
     } else {
       setReviewListByStore(collectReviewsByStore(ReviewList, ShowFolderId));
     }
   }, [ShowFolderId]);
-  
+
   return (
-    <div id="mapContainer">
+    <div id='mapContainer'>
       <MapViewComponent
-        ShowFolderId={ShowFolderId} setShowFolderId={setShowFolderId}
+        ShowFolderId={ShowFolderId}
+        setShowFolderId={setShowFolderId}
         ReviewListByStore={ReviewListByStore}
         FolderList={FolderList}
         ReviewNumMax={ReviewNumMax}
@@ -125,7 +142,7 @@ const MapComponent = ({latLon, setLatLon}) => {
         setLatLon={setLatLon}
       />
     </div>
-  )
-}
+  );
+};
 
-export default MapComponent
+export default MapComponent;

@@ -47,7 +47,9 @@ const ReviewModifyComponent = () => {
       })
       .catch((error) => {
         console.error('error!!! : ', error);
-        //movePage("/login");
+        if (error.response.status === 401) {
+          movePage('/login');
+        }
       });
   };
 
@@ -74,7 +76,9 @@ const ReviewModifyComponent = () => {
       })
       .catch((error) => {
         console.log('error: ', error);
-        //movePage('/login');
+        if (error.response.status === 401) {
+          movePage('/login');
+        }
       });
   };
 

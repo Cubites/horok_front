@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import "./reply.css";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import './reply.css';
+import axios from 'axios';
 
 const ReviewReplyComponent = ({ folderName }) => {
   const navigate = useNavigate(); //변수 할당시켜서 사용
   const [replyList, setreplyList] = useState({});
-  const [replyInputValue, setReplyInputValue] = useState("");
+  const [replyInputValue, setReplyInputValue] = useState('');
   const { folderId, reviewId } = useParams();
   const location = useLocation();
 
@@ -20,7 +20,7 @@ const ReviewReplyComponent = ({ folderName }) => {
       dateObject.getMonth() + 1
     )
       .toString()
-      .padStart(2, "0")}-${dateObject.getDate().toString().padStart(2, "0")}`;
+      .padStart(2, '0')}-${dateObject.getDate().toString().padStart(2, '0')}`;
     return formattedDate;
   };
   const getReplies = () => {
@@ -33,7 +33,9 @@ const ReviewReplyComponent = ({ folderName }) => {
         setreplyList(res.data);
       })
       .catch((error) => {
-        navigate("/login");
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
@@ -55,26 +57,28 @@ const ReviewReplyComponent = ({ folderName }) => {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       )
       .then((res) => {
         if (res.data === true) {
-          window.alert("댓글이 등록되었습니다");
+          window.alert('댓글이 등록되었습니다');
           getReplies();
         }
       })
       .catch((error) => {
-        navigate("/login");
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
 
     // 입력값 초기화
-    setReplyInputValue("");
+    setReplyInputValue('');
   };
 
   const deleteReplyClick = (e) => {
-    const rId = e.target.getAttribute("data");
+    const rId = e.target.getAttribute('data');
     axios
       .delete(`${process.env.REACT_APP_DEV_URL}/api/replies/${rId}`, {
         withCredentials: true,
@@ -82,12 +86,14 @@ const ReviewReplyComponent = ({ folderName }) => {
 
       .then((res) => {
         if (res.data === true) {
-          window.alert("댓글이 삭제되었습니다");
+          window.alert('댓글이 삭제되었습니다');
           getReplies();
         }
       })
       .catch((error) => {
-        navigate("/login");
+        if (error.response.status === 401) {
+          navigate('/login');
+        }
       });
   };
 
@@ -97,67 +103,67 @@ const ReviewReplyComponent = ({ folderName }) => {
 
   return (
     <>
-      <div id="replyContainer">
-        <div className="replyHeader">
-          <div className="wrapper">
-            <div className="backBtn cursorToPointer">
+      <div id='replyContainer'>
+        <div className='replyHeader'>
+          <div className='wrapper'>
+            <div className='backBtn cursorToPointer'>
               <img
-                src="/images/backArrow.png"
-                alt="backArrow"
-                height="50"
+                src='/images/backArrow.png'
+                alt='backArrow'
+                height='50'
                 onClick={handleGoBack}
               />
             </div>
-            <div className="headerTxt">{folderName}</div>
+            <div className='headerTxt'>{folderName}</div>
           </div>
         </div>
-        <div className="replyBody scrollBar">
+        <div className='replyBody scrollBar'>
           <div
             style={{
-              width: "82%",
-              fontWeight: "bold",
-              fontSize: "21px",
-              marginTop: "15px",
-              marginBottom: "5px",
+              width: '82%',
+              fontWeight: 'bold',
+              fontSize: '21px',
+              marginTop: '15px',
+              marginBottom: '5px',
             }}
           >
             <p>댓글</p>
           </div>
-          <div style={{ width: "85%" }}>
+          <div style={{ width: '85%' }}>
             {replyList &&
               replyList.length > 0 &&
               replyList.map((list, i) => (
-                <li key={i} className="replyList">
-                  <div className="replyImg">
+                <li key={i} className='replyList'>
+                  <div className='replyImg'>
                     <img
                       src={`${process.env.REACT_APP_DEV_URL}/show/image?imageName=${list.userProfile}`}
-                      alt=""
-                      className="replyImgContainer"
+                      alt=''
+                      className='replyImgContainer'
                     />
                   </div>
-                  <div className="replyContent">
-                    <div className="replyInfo">
+                  <div className='replyContent'>
+                    <div className='replyInfo'>
                       <p
                         style={{
-                          fontWeight: "600",
+                          fontWeight: '600',
                         }}
                       >
                         {list.userNickname}
                       </p>
-                      <p style={{ fontSize: "10px" }}>
+                      <p style={{ fontSize: '10px' }}>
                         {formatReplyDate(list.replyDate)}
                       </p>
                     </div>
                     <div
                       style={{
-                        display: "flex",
-                        justifyContent: "space-between",
+                        display: 'flex',
+                        justifyContent: 'space-between',
                       }}
                     >
-                      <p style={{ fontSize: "12px" }}>{list.replyContent}</p>
+                      <p style={{ fontSize: '12px' }}>{list.replyContent}</p>
                       {list.loginId === list.userId && (
                         <div
-                          style={{ fontSize: "10px", color: "#808080" }}
+                          style={{ fontSize: '10px', color: '#808080' }}
                           onClick={deleteReplyClick}
                           data={list.replyId}
                         >
@@ -170,14 +176,14 @@ const ReviewReplyComponent = ({ folderName }) => {
               ))}
           </div>
         </div>
-        <div className="replyBottom">
+        <div className='replyBottom'>
           <input
-            type="text"
-            className="replyInput"
+            type='text'
+            className='replyInput'
             value={replyInputValue}
             onChange={(e) => setReplyInputValue(e.target.value)}
           />
-          <button className="replyBtn" onClick={handleButtonClick}>
+          <button className='replyBtn' onClick={handleButtonClick}>
             작성
           </button>
         </div>
