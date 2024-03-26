@@ -1,0 +1,53 @@
+.shareContainer {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: #f7f8fc;
+}
+.shareSubContainer {
+  width: 65%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shareSubContainer h1 {
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 38px;
+}
+
+.shareSubContainer p {
+  font-size: 15px;
+  text-align: center;
+}
+
+.shareSubContainer h2 {
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0 auto;
+}
+
+.shareSubContainer .completeBox {
+  width: 100%;
+  height: 75px;
+  background-color: #ffffff; /* 배경색을 흰색으로 지정 */
+  border: 1px solid #fff; /* 테두리를 회색으로 지정 */
+  border-radius: 20px; /* 둥근 테두리 반경을 10px로 지정 */
+  padding: 0 15px; /* 내부 여백 설정 */
+  box-sizing: border-box; /* 테두리와 여백을 포함한 전체 크기로 설정 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  color: #000; /* 텍스트 색상 설정 */
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}

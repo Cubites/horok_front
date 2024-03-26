@@ -1,0 +1,127 @@
+#replyContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cursorToPointer {
+  cursor: pointer;
+}
+
+#replyContainer > .replyHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 12%;
+  /* margin-top: 15px;
+    margin-bottom: 20px; */
+  background-color: #f7f8fc;
+  border-bottom: 2.5px solid #d3d3d3;
+}
+
+#replyContainer > .replyHeader > .wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#replyContainer > .replyHeader > .wrapper > .headerTxt {
+  font-size: 27px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+#replyContainer > .replyBody {
+  background-color: #fff;
+  height: 80%;
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+  justify-content: start;
+}
+
+#replyContainer > .replyBody .replyList {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: 1px solid #d3d3d3;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+#replyContainer > .replyBody .replyList > .replyImg {
+  display: flex;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: solid 0.1px #d3d3d3;
+}
+
+#replyContainer > .replyBody .replyList > .replyContent {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+#replyContainer > .replyBody .replyList > .replyContent > .replyInfo {
+  width: 100%;
+  display: flex;
+  margin-bottom: 7px;
+  justify-content: space-between;
+}
+
+#replyContainer > .replyBody .replyList > .replyImg > .replyImgContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#replyContainer > .scrollBar {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.scrollBar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #263cff; /* 스크롤바의 색상 */
+  border-radius: 10px;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+  background: #d5dbef; /*스크롤바 뒷 배경 색상*/
+}
+
+#replyContainer > .replyBottom > .replyInput {
+  border: solid 0.1px #d3d3d3;
+  width: 270px;
+  height: 30px;
+  border-radius: 20px;
+}
+
+#replyContainer > .replyBottom > .replyBtn {
+  background-color: #263cff;
+  border-radius: 20px;
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  width: 55px;
+  height: 25px;
+}
+#replyContainer > .replyBottom {
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}

@@ -1,0 +1,84 @@
+#reviewListContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cursorToPointer {
+  cursor: pointer;
+}
+
+#reviewListContainer > .inFolderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 12%;
+  /* margin-top: 15px;
+  margin-bottom: 20px; */
+  background-color: #fff;
+  border-bottom: 2.5px solid #d3d3d3;
+}
+
+#reviewListContainer > .inFolderHeader > .wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#reviewListContainer > .inFolderHeader > .wrapper > .headerTxt {
+  font-size: 27px;
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
+#reviewListContainer > .filterArea {
+  /* margin-right: 15px;
+  margin-bottom: 20px; */
+  margin: 15px 15px 20px 0;
+  margin-left: auto;
+}
+
+#reviewListContainer > .filterArea > select {
+  font-size: 17.5px;
+  border-radius: 5px;
+  border: 1px solid rgba(223, 223, 223, 0.933);
+  background-color: #fff;
+}
+
+#reviewListContainer > .filterArea > select:focus {
+  outline: none;
+}
+
+#reviewListContainer > .reviewsArea {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#reviewListContainer > .reviewsArea > .reviewsWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  gap: 5px;
+}
+
+#reviewListContainer > .reviewsArea > .reviewsWrapper > .reviewItem {
+  width: 32.4%;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  margin: 5px 0 5px 0;
+  display: flex;
+  justify-content: center;
+}
+
+#reviewListContainer
+  > .reviewsArea
+  > .reveiwsWrapper
+  > .reviewItem
+  > .reviewThumbnail {
+  object-fit: cover;
+}

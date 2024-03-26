@@ -1,0 +1,202 @@
+.homeContainer {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: #f7f8fc;
+}
+
+.homeSubContainer {
+  width: 80%;
+  height: 90%;
+}
+
+.homeContainer .userInfoBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.5em;
+  width: 100%;
+  justify-content: space-between;
+}
+.homeContainer .testBox {
+  width: 33%;
+  text-align: center;
+  font-size: 1em;
+  position: relative;
+}
+.homeContainer .partiText {
+  position: absolute;
+  top: 54%;
+  left: 45%;
+}
+.homeContainer .favorBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.homeContainer .favorName {
+  display: flex;
+  margin: 35px 5px 10px 5px;
+  justify-content: space-between;
+  font-size: 1.3em;
+  align-items: center;
+}
+
+.homeContainer .userImg {
+  display: flex;
+  width: 106px;
+  height: 106px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.homeContainer .userImgContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeContainer .userInfo {
+  height: 60px;
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.homeContainer .cntInfo {
+  display: flex;
+  width: 150px;
+  justify-content: space-between;
+}
+
+/* modal css */
+.homeContainer .modalContainer {
+  z-index: 10001;
+}
+.modalContainer .modalSubContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modalContainer .moadlView {
+  width: 90%;
+  height: 95%;
+  background-color: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+}
+.modalContainer .modalContent {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  flex-direction: column;
+}
+.modalContainer .modalName {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 19px;
+  letter-spacing: -0.017em;
+  margin: 30px 0 20px 10px;
+}
+.modalContainer .modalHead {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+.modalContainer .moadlClose {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+.modalContainer .modalBody {
+  background-color: #f7f8fc;
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+  justify-content: space-between;
+}
+
+.modalContainer #favorEditBtn {
+  background-color: #263cff;
+  border-radius: 20px;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  width: 250px;
+  height: 40px;
+}
+.modalContainer .hidden {
+  position: relative;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+.modalContainer .noshow {
+  display: none;
+}
+
+.modalContainer .check {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 27px;
+  border-bottom: 1px solid #d3d3d3;
+  padding-bottom: 5px;
+  /* padding-right: 20px; */
+}
+
+.modalContainer .scrollBar {
+  /* width: 85%; */
+  height: 100%;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.modalContainer .favorEdit {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modalContainer .scrollBar::-webkit-scrollbar {
+  width: 10px; /* 스크롤바의 너비 */
+}
+
+.modalContainer .scrollBar::-webkit-scrollbar-thumb {
+  height: 30%; /* 스크롤바의 길이 */
+  background: #263cff; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
+}
+
+.modalContainer .scrollBar::-webkit-scrollbar-track {
+  background: #d5dbef; /*스크롤바 뒷 배경 색상*/
+}

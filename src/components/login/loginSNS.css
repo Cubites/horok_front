@@ -1,0 +1,59 @@
+#loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  z-index: 120;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #f3f6fa;
+}
+
+#loginContainer > #imgBox {
+  padding-top: 20px;
+  height: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+#imgBox > .mainImg {
+  width: 40px;
+  height: 120px;
+  display: block;
+}
+#imgBox > #point {
+  width: 16px;
+  height: 26px;
+}
+#logintextBox {
+  display: flex;
+  flex-direction: column;
+}
+#logintextBox > .loginText {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+}
+#logintextBox > #textTop {
+  font-size: 16px;
+}
+
+#logintextBox > #textBottom {
+  font-size: 10px;
+}
+
+#loginImgBox {
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#loginImgBox > .socialImg {
+  width: 160px;
+}

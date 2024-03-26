@@ -1,0 +1,234 @@
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+/* 속성 부여 */
+/* .displayNone{
+  display: none;
+} */
+
+#mapContainer{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 전체 */
+#mapViewContainer{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+/* 지도 영역 */
+#mapViewContainer>#mapBox{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#mapViewContainer>#mapBox>#mapAreaFirst,
+#mapViewContainer>#mapBox>#mapAreaSecond{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+}
+#mapViewContainer>#mapBox>#mapAreaFirst{z-index: 2;}
+#mapViewContainer>#mapBox>#mapAreaSecond{z-index:1;}
+
+/* 폴더 목록 영역 */
+#mapViewContainer>#folderListBox{
+  width: 35%;
+  height: 50px;
+  border-radius: 15px;
+  background-color: white;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 10px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+  /* flex 가로 슬라이드 */
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+.folderIconOuterStyle{
+  width: 36px; 
+  height: 36px; 
+  border-radius: 50%;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  cursor: pointer;
+  /* flex 가로 슬라이드 */
+  flex: 0 0 auto;
+}
+.folderIconInnerStyle{
+  width: 28px; 
+  height: 28px; 
+  border: 2px solid #fff; 
+  border-radius: 50%;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  font-weight: bold;
+}
+#folderListBox>.folderIconOuterStyle{
+  margin-right: 10px;
+}
+
+/* 리뷰 목록 영역 */
+#mapViewContainer>#reviewBox{
+  width: 100%;
+  height: 0;
+  position: absolute;
+  z-index: 90;
+  bottom: 0;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background-color: white;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+}
+
+#mapViewContainer>#reviewBox.upAndDown{
+  /* animation: upAndDown .5s ease both; */
+  /* animation-timing-function: cubic-bezier(.68, 1.55, .265, 1); */
+  /* transform: translateY(-40%); */
+  height: 50%;
+  transition: height .5s ease;
+  /* transition-timing-function: cubic-bezier(.68, 1.55, .265, 1); */
+}
+#mapViewContainer>#reviewBox.upAndDow.downAnimation{
+  height: 0;
+  transition: height .5s ease;
+}
+
+@keyframes upAndDown {
+  0%{ height: 0; }
+  100%{ height: 40%; }
+}
+
+/* 리뷰 목록 영역 - 드래그 바 */
+#mapViewContainer>#reviewBox>#dragBar{
+  width: 100%;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#mapViewContainer>#reviewBox>#dragBar>#barImg{
+  width: 30%;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #BECCFF;
+}
+
+/* 리뷰 목록 영역 - 상호명 */
+#mapViewContainer>#reviewBox>#reviewArea{
+  width: 100%;
+  height: calc(100% - 20px);
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewStoreName{
+  width: 100%;
+  height: 40px;
+  padding-top: 10px;
+  padding-left: 20px;
+  font-size: 25px;
+  font-weight: bold;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewStoreName>span{
+  margin-left: 5px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #999;
+}
+
+/* 리뷰 목록 영역 - 개별 리뷰 */
+#mapViewContainer .icon-star, 
+#mapViewContainer .icon-star-half-empty,
+#mapViewContainer .icon-star-empty{ 
+  color: #263CFF;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea{
+  width: 100%;
+  height: calc(100% - 60px);
+  overflow-y: scroll;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne{
+  width: 100%;
+  height: 130px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+  margin: 10px 0;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne img{
+  display: block;
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  margin-left: 20px;
+  border-radius: 5px;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight{
+  width: calc(100% - 170px);
+  margin-right: 20px;
+  height: 110px;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.paydateArea{
+  width: 100%;
+  height: 12px;
+  color: #999;
+  font-size: 12px;
+  text-align: end;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.starAndName{
+  width: 100%;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.starAndName>.starArea{
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.starAndName>.nameArea{
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+  font-size: 13px;
+}
+#mapViewContainer>#reviewBox>#reviewArea>#reviewDetailsArea>.reviewOne>.reviewOneRight>.reviewContentArea{
+  width: 100%;
+  height: 65px;
+  padding-top: 5px;
+  font-size: 13px;
+  line-height: 15px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.reviewContentArea::-webkit-scrollbar {
+  display: block;
+  width: 4px;
+}
+.reviewContentArea::-webkit-scrollbar-thumb {
+  background-color: #2f3542;
+  border-radius: 2px;
+}
+.reviewContentArea::-webkit-scrollbar-track {
+  background-color: white;
+}
