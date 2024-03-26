@@ -19,7 +19,7 @@
 
 ## 서비스 구조
 
-![process](https://github.com/Cubites/horok_front/assets/75084369/7cce384b-f132-4a27-a7d2-4fa5126520cf)
+![image](https://github.com/Cubites/horok_front/assets/75084369/234fc76b-7d31-4c7f-8b9f-33538a985538)
 
 ## 프로젝트 진행 순서
 <details>
