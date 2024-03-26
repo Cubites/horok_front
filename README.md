@@ -14,7 +14,12 @@
 | API 서버 개발 | ![Spring Boot](https://img.shields.io/badge/Spring_Boot-%232E5918?logo=springboot) ![JPA](https://img.shields.io/badge/JPA-%232E5918) |
 | DB | ![MariaDB](https://img.shields.io/badge/mariadb-%23007ACC?logo=mariadb) ![Redis](https://img.shields.io/badge/redis-%2350162D?logo=redis) |
 | 서버 | ![Amazon EC2](https://img.shields.io/badge/Amazon_EC2-%23e5780c?logo=Amazon%20EC2) ![Amazon RDS](https://img.shields.io/badge/Amazon%20RDS-%23302CB2?logo=Amazon%20rds) ![Amazon Route 53](https://img.shields.io/badge/Amazon%20Route%2053-%23562DB1?logo=Amazon%20route%2053) |
-| 배포 | ![Jenkins](https://img.shields.io/badge/Jenkins-%23D24939?logo=jenkins&logoColor=000000) ![Docker](https://img.shields.io/badge/docker-%23517A9E?logo=docker) |
+| 배포 | ![Jenkins](https://img.shields.io/badge/Jenkins-%23D24939?logo=jenkins&logoColor=000000) ![Docker](https://img.shields.io/badge/docker-%23517A9E?logo=docker) ![Nginx](https://img.shields.io/badge/Nginx-%23009639?logo=nginx) |
+
+
+## 서비스 구조
+
+![process](https://github.com/Cubites/horok_front/assets/75084369/7cce384b-f132-4a27-a7d2-4fa5126520cf)
 
 ## 프로젝트 진행 순서
 <details>
